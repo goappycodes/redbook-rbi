@@ -28,5 +28,8 @@
     "pg": "^8.23.0",
     "typescript": "^7.0.2"
   },
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "node": ">=20.9"
+  }
 }

@@ -95,6 +95,24 @@ Per `09-decisions.md`:
 - The About figures and every report date are placeholders.
 - Most links are `#`. Set them in the CMS.
 
+## Deploying on Vercel
+
+Project `redbook-rbi` (team *appycodes-oneoff-projects*) builds from `main` on every push. `vercel.json` pins functions to London (`lhr1`), next to the Supabase database in eu-west-2.
+
+**Environment variables the app actually reads:**
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or `_ANON_KEY`), `NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET`
+- `NEXT_PUBLIC_BASE_PATH`, `NEXT_PUBLIC_SITE_URL`
+- `RESEND_API_KEY`, `NOTIFY_FROM`, `NOTIFY_TO`, `NOTIFY_TO_REQUEST_INDEX`
+- `SUPABASE_SERVICE_ROLE_KEY` (optional)
+
+**Not needed on Vercel:** `DATABASE_URL` and `SUPABASE_DB_PASSWORD` are only for `scripts/db.mjs` on a developer machine. Leave them out of Vercel.
+
+- **`NEXT_PUBLIC_*` values are baked in at build time.** Redeploy after changing one.
+- **`NEXT_PUBLIC_SITE_URL`** must be the public URL. If it's left at `localhost`, the production `*.vercel.app` domain is used instead.
+- **Deployment Protection:** Vercel Authentication is on by default for `*.vercel.app` URLs. Either add the real domain or turn protection off for production, or visitors meet a Vercel login.
+- **Supabase → Authentication → URL Configuration:** add the deployed origin's `/admin/auth/callback` to the Redirect URLs, or password-reset links won't work.
+- **Preview deployments** share the production database. Editing content from a preview edits the live page.
+
 ## Hosting notes (from `08-build-notes.md`)
 
 - Serving under `redbookagency.com/redbook-intelligence` needs `NEXT_PUBLIC_BASE_PATH`, not only a proxy rewrite.
