@@ -1,0 +1,320 @@
+{
+  "_comment": "PLACEHOLDER FIGURES - every number here was invented for the prototype. Replace wholesale before launch.",
+  "meta": {
+    "year": "2026/27",
+    "base_year": "2023/24",
+    "readings": [
+      "2023/24",
+      "2024/25",
+      "2025/26",
+      "2026/27"
+    ],
+    "axis": {
+      "foot": 100,
+      "head": 150
+    },
+    "locked": "overall",
+    "max_selected": 4
+  },
+  "order": [
+    "overall",
+    "labour",
+    "materials",
+    "rawbuild",
+    "construction",
+    "fees",
+    "ohp",
+    "prelims",
+    "landscaping",
+    "ffe",
+    "allin"
+  ],
+  "series": {
+    "overall": {
+      "label": "Overall Luxury Projects Index",
+      "note": "The headline measure. What it costs to deliver a luxury residential scheme end to end, set at 100 in the base year and weighted across every sub-index at its share of a typical project.",
+      "london": {
+        "v": 128.6,
+        "y": 9.7,
+        "b": 28.6,
+        "a": [
+          100.0,
+          112.6,
+          118.9,
+          128.6
+        ]
+      },
+      "country": {
+        "v": 124.1,
+        "y": 8.2,
+        "b": 24.1,
+        "a": [
+          100.0,
+          110.6,
+          115.9,
+          124.1
+        ]
+      }
+    },
+    "labour": {
+      "label": "Labour Index",
+      "note": "Site labour: trades, supervision and site management, measured as the cost of getting a unit of work done rather than as headline wage rates.",
+      "london": {
+        "v": 131.2,
+        "y": 17.3,
+        "b": 31.2,
+        "a": [
+          100.0,
+          118.4,
+          113.9,
+          131.2
+        ]
+      },
+      "country": {
+        "v": 127.4,
+        "y": 15.2,
+        "b": 27.4,
+        "a": [
+          100.0,
+          116.2,
+          112.2,
+          127.4
+        ]
+      }
+    },
+    "materials": {
+      "label": "Materials Index",
+      "note": "The basket of materials prime residential work actually uses, from structure and glazing to joinery, stone and finishes, weighted by typical spend.",
+      "london": {
+        "v": 126.1,
+        "y": 1.3,
+        "b": 26.1,
+        "a": [
+          100.0,
+          121.3,
+          124.8,
+          126.1
+        ]
+      },
+      "country": {
+        "v": 123.8,
+        "y": 1.2,
+        "b": 23.8,
+        "a": [
+          100.0,
+          119.4,
+          122.6,
+          123.8
+        ]
+      }
+    },
+    "rawbuild": {
+      "label": "Raw Build Cost Index",
+      "note": "Construction cost before anything is added on top: labour and materials in place, without preliminaries, overheads or profit.",
+      "london": {
+        "v": 129.4,
+        "y": 13.6,
+        "b": 29.4,
+        "a": [
+          100.0,
+          106.2,
+          115.8,
+          129.4
+        ]
+      },
+      "country": {
+        "v": 125.6,
+        "y": 11.8,
+        "b": 25.6,
+        "a": [
+          100.0,
+          105.4,
+          113.8,
+          125.6
+        ]
+      }
+    },
+    "construction": {
+      "label": "Construction Cost Index",
+      "note": "The contractor's full figure for building the scheme, being raw build cost plus preliminaries, overheads and profit.",
+      "london": {
+        "v": 132.4,
+        "y": 10.3,
+        "b": 32.4,
+        "a": [
+          100.0,
+          109.8,
+          122.1,
+          132.4
+        ]
+      },
+      "country": {
+        "v": 128.0,
+        "y": 8.9,
+        "b": 28.0,
+        "a": [
+          100.0,
+          108.5,
+          119.1,
+          128.0
+        ]
+      }
+    },
+    "fees": {
+      "label": "Professional Fees Index",
+      "note": "Architects, engineers, project managers, cost consultants and specialist designers, tracked against construction cost.",
+      "london": {
+        "v": 119.8,
+        "y": 12.9,
+        "b": 19.8,
+        "a": [
+          100.0,
+          103.4,
+          106.9,
+          119.8
+        ]
+      },
+      "country": {
+        "v": 117.9,
+        "y": 11.7,
+        "b": 17.9,
+        "a": [
+          100.0,
+          103.1,
+          106.2,
+          117.9
+        ]
+      }
+    },
+    "ohp": {
+      "label": "Contractors OH&Ps Index",
+      "note": "The overhead and profit a contractor adds to the raw build cost, tracked as a percentage of it.",
+      "london": {
+        "v": 122.5,
+        "y": 7.9,
+        "b": 22.5,
+        "a": [
+          100.0,
+          113.8,
+          114.6,
+          122.5
+        ]
+      },
+      "country": {
+        "v": 120.3,
+        "y": 7.1,
+        "b": 20.3,
+        "a": [
+          100.0,
+          112.5,
+          113.2,
+          120.3
+        ]
+      }
+    },
+    "prelims": {
+      "label": "Contractors Preliminaries Index",
+      "note": "Running the site rather than building on it: welfare, scaffolding, plant, site management, insurances and programme costs.",
+      "london": {
+        "v": 124.9,
+        "y": 7.7,
+        "b": 24.9,
+        "a": [
+          100.0,
+          120.6,
+          117.2,
+          124.9
+        ]
+      },
+      "country": {
+        "v": 122.1,
+        "y": 6.8,
+        "b": 22.1,
+        "a": [
+          100.0,
+          118.3,
+          115.3,
+          122.1
+        ]
+      }
+    },
+    "landscaping": {
+      "label": "Landscaping Index",
+      "note": "Everything outside the building line: hard and soft landscaping, garden structures, drainage, external lighting and planting.",
+      "london": {
+        "v": 133.8,
+        "y": 19.6,
+        "b": 33.8,
+        "a": [
+          100.0,
+          118.0,
+          114.2,
+          133.8
+        ]
+      },
+      "country": {
+        "v": 129.2,
+        "y": 16.9,
+        "b": 29.2,
+        "a": [
+          100.0,
+          115.6,
+          112.3,
+          129.2
+        ]
+      }
+    },
+    "ffe": {
+      "label": "FF&E Index",
+      "note": "Loose furniture, fittings and equipment specified for the finished house. Anything built in sits under construction cost instead.",
+      "london": {
+        "v": 117.3,
+        "y": 9.4,
+        "b": 17.3,
+        "a": [
+          100.0,
+          112.5,
+          107.9,
+          117.3
+        ]
+      },
+      "country": {
+        "v": 116.1,
+        "y": 8.7,
+        "b": 16.1,
+        "a": [
+          100.0,
+          111.6,
+          107.4,
+          116.1
+        ]
+      }
+    },
+    "allin": {
+      "label": "All-in Project Cost Index",
+      "note": "The whole bill a client carries: construction, professional fees, FF&E, landscaping, statutory costs and contingency.",
+      "london": {
+        "v": 130.7,
+        "y": 8.8,
+        "b": 30.7,
+        "a": [
+          100.0,
+          108.5,
+          121.9,
+          130.7
+        ]
+      },
+      "country": {
+        "v": 126.4,
+        "y": 7.6,
+        "b": 26.4,
+        "a": [
+          100.0,
+          107.3,
+          118.8,
+          126.4
+        ]
+      }
+    }
+  }
+}

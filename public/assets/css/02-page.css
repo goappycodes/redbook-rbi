@@ -1,0 +1,955 @@
+/* ---------- header: no fill, logo centred, nav split either side ---------- */
+.wf-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:none;border:0;
+  transition:transform .55s var(--ease),color .5s ease;
+  color:var(--red);
+}
+.wf-header.is-up{transform:translateY(-101%);}
+.wf-header.is-over-dark{color:#fff;}
+.wf-bar{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  gap:36px;padding:22px 0;
+}
+.wf-logo{
+  width:84px;height:40px;display:block;justify-self:center;
+  background:currentColor;
+  -webkit-mask:url(../img/rbi-logo.png) no-repeat center/contain;
+          mask:url(../img/rbi-logo.png) no-repeat center/contain;
+  transition:opacity .4s ease;
+}
+.wf-logo:hover{opacity:.78;}
+.wf-nav{display:flex;gap:34px;align-items:center;}
+.wf-nav--l{justify-content:flex-start;}
+.wf-nav--r{justify-content:flex-end;}
+.wf-nav a{
+  font-family:'MinervaModern',Georgia,serif;font-size:17.6px;line-height:22.88px;
+  letter-spacing:1px;text-transform:uppercase;color:currentColor;
+  padding-bottom:2px;border-bottom:1px solid transparent;
+  white-space:nowrap;transition:border-color .35s ease,opacity .35s ease;
+}
+.wf-nav a:hover{opacity:.7;}
+.wf-nav a.is-active{border-bottom-color:currentColor;}
+.wf-menu{display:none;font-size:14px;letter-spacing:3px;text-transform:uppercase;
+  font-weight:500;color:currentColor;justify-self:end;}
+
+/* ---------- section bar: appears once the hero is behind you ---------- */
+.sec-nav{
+  position:fixed;left:0;right:0;top:0;z-index:99;
+  background:var(--red);color:#fff;
+  transform:translateY(-110%);
+  transition:transform .55s var(--ease),top .45s var(--ease);
+  will-change:transform;
+}
+.sec-nav.is-on{transform:none;}
+/* every label stays in view - the row wraps, it never scrolls sideways */
+.sec-nav__track{
+  display:flex;align-items:stretch;flex-wrap:wrap;justify-content:center;
+  padding:0 clamp(8px,1.4vw,26px);
+}
+.sn-s{display:none;}
+.sec-nav a{
+  position:relative;display:flex;align-items:center;white-space:nowrap;
+  padding:14px clamp(9px,1.15vw,19px);
+  font-size:clamp(9px,.76vw,11px);line-height:1.2;font-weight:500;
+  letter-spacing:clamp(.5px,.1vw,1.5px);text-transform:uppercase;
+  color:rgba(255,255,255,.72);
+  transition:color .35s ease,background .35s ease;
+}
+
+.sec-nav a::after{
+  content:'';position:absolute;left:clamp(9px,1.15vw,19px);right:clamp(9px,1.15vw,19px);bottom:9px;height:1px;
+  background:#fff;transform:scaleX(0);transform-origin:0 50%;
+  transition:transform .5s var(--ease);
+}
+.sec-nav a:hover{color:#fff;}
+.sec-nav a:hover::after{transform:scaleX(1);}
+.sec-nav a.is-here{color:#fff;}
+.sec-nav a.is-here::after{transform:scaleX(1);}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;min-height:100svh;display:flex;align-items:center;
+  padding:110px 0 96px;background:var(--plum);overflow:hidden;
+}
+.hero__flow{
+  position:absolute;inset:0;width:100%;height:100%;
+  display:block;z-index:0;
+}
+.hero{cursor:crosshair;}
+.hero__inner{cursor:auto;}
+.hero__inner a{cursor:pointer;}
+.hero__scrim{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(102deg, rgba(43,8,21,.66) 0%, rgba(43,8,21,.30) 44%, rgba(43,8,21,0) 74%),
+    linear-gradient(to top, rgba(43,8,21,.50) 0%, rgba(43,8,21,0) 42%);
+}
+.hero__inner{position:relative;z-index:3;width:100%;color:#fff;}
+.hero__inner .lede{color:rgba(255,255,255,.90);max-width:520px;}
+.hero__eyebrow{color:#fff;}
+.hero .h-display{color:#fff;}
+/* ---------- media ---------- */
+.media{position:relative;overflow:hidden;background:var(--parch-2);}
+.media img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform 1.4s var(--ease),filter 1.4s var(--ease);}
+.media--1x1{aspect-ratio:1/1;}
+
+/* report covers - RedBook Red, numeral and title set flush left inside */
+.cover{
+  position:relative;display:flex;flex-direction:column;
+  aspect-ratio:3/4;padding:20px 20px 0;overflow:hidden;
+  background:var(--parch-2);
+  transition:transform .65s var(--ease),box-shadow .65s var(--ease),background .65s var(--ease);
+}
+.cover__plate{
+  position:relative;display:block;flex:1;overflow:hidden;
+}
+.cover__img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform 1.4s var(--ease);
+}
+.cover:hover .cover__img{transform:scale(1.05);}
+.cover:hover{transform:translateY(-5px);box-shadow:0 26px 48px -24px rgba(43,8,21,.38);
+  background:var(--parch-3);}
+.cover__hint{
+  position:absolute;inset:0;z-index:3;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(60,16,19,.44);color:#fff;
+  font-size:13px;font-weight:500;letter-spacing:3px;text-transform:uppercase;
+  opacity:0;transition:opacity .45s var(--ease);
+}
+.cover:hover .cover__hint{opacity:1;}
+.cover__cap{display:block;padding:15px 0 18px;}
+.cover__n{
+  display:block;font-family:'MinervaModern',Georgia,serif;font-size:20px;line-height:1;
+  color:var(--red);margin-bottom:8px;
+}
+.cover__t{
+  display:block;font-family:'MinervaModern',Georgia,serif;font-weight:400;
+  font-size:22px;line-height:1.25;color:var(--plum);
+  /* two lines is the floor. Where a longer title needs more, script raises
+     every title in that year to match - see levelCardTitles(). */
+  min-height:2.5em;
+}
+.cover__d{display:block;margin-top:9px;font-size:12px;letter-spacing:2.4px;
+  text-transform:uppercase;color:var(--mute);white-space:nowrap;}
+/* the fixed report label, set as a label rather than as the number it replaces,
+   so the subject below it stays the headline */
+.cover__n--label{
+  font-family:'Barlow',Helvetica,Arial,sans-serif;
+  font-size:11px;line-height:1;letter-spacing:2.4px;text-transform:uppercase;
+  margin-bottom:8px;
+}
+/* restricted: the card is shown and dated, but it does not open */
+.cover--locked{cursor:default;}
+.cover--locked:hover{transform:none;box-shadow:none;background:var(--parch-2);}
+.cover--locked:hover .cover__img{transform:none;}
+.cover--locked .cover__hint{display:none;}
+.cover__lock{
+  position:absolute;right:10px;top:10px;z-index:4;
+  width:30px;height:30px;display:grid;place-items:center;border-radius:50%;
+  background:rgba(43,8,21,.74);color:#fff;
+}
+.cover__lock svg{width:15px;height:15px;fill:none;stroke:currentColor;
+  stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+/* the standfirst above the list of what is still to come */
+.row-intro{margin-bottom:18px;}
+.row-intro .eyebrow{margin-bottom:6px;}
+/* the caption takes the leftover height and the date is pushed to its foot, so
+   published lines stay level across a row whatever the titles wrap to */
+
+
+/* ---------- report year picker ---------- */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+/* a line break that only applies on a phone. The space sits BEFORE it, so the
+   words still read as one line when the break is switched off. */
+.br-m{display:none;}
+.rep-bar{display:flex;align-items:center;justify-content:flex-end;gap:14px;margin-bottom:26px;}
+.rep-bar__l{font-size:12px;letter-spacing:2.4px;text-transform:uppercase;color:var(--mute);}
+.rep-sel{position:relative;display:inline-flex;align-items:center;color:var(--ink-70);
+  transition:color .4s var(--ease);}
+.rep-sel select{
+  appearance:none;-webkit-appearance:none;border-radius:0;
+  background:none;border:1px solid var(--line-warm);
+  padding:11px 46px 11px 18px;margin:0;
+  font-family:'Barlow',Helvetica,Arial,sans-serif;font-size:12px;font-weight:500;
+  letter-spacing:2.4px;text-transform:uppercase;color:currentColor;cursor:pointer;
+  transition:border-color .4s var(--ease);
+}
+.rep-sel::after{
+  content:'';position:absolute;right:19px;top:50%;width:7px;height:7px;
+  border-right:1px solid currentColor;border-bottom:1px solid currentColor;
+  transform:translateY(-70%) rotate(45deg);pointer-events:none;
+}
+.rep-sel:hover{color:var(--red);}
+.rep-sel:hover select{border-color:var(--red);}
+.rep-sel select:focus-visible{outline:1px solid var(--red);outline-offset:2px;}
+/* .grid sets display:grid, which would beat the hidden attribute's UA rule */
+.grid[hidden]{display:none;}
+
+/* ---------- pillars: all three on the page, each one clickable ---------- */
+/* minmax(0,1fr), not 1fr: a plain 1fr track cannot shrink below its content,
+   so the longest button label was making its column wider than the other two */
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px;}
+/* which means the label has to be allowed to wrap */
+/* full width, so every ring lands on the right edge of the plate above it and
+   the three read as one line rather than three ragged ones */
+.pcard .rb-btn{white-space:normal;padding-right:78px;width:100%;}
+.pcard{display:flex;flex-direction:column;color:inherit;}
+.pcard__media{
+  position:relative;aspect-ratio:16/10;overflow:hidden;margin-bottom:26px;
+  background:var(--red);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;
+  transition:background .55s var(--ease);
+}
+/* the plate carries the same flow as the hero, drifting rather than answering
+   the pointer; hovering settles it to flat parchment */
+.pcard__flow{
+  position:absolute;inset:0;width:100%;height:100%;display:block;
+  transition:opacity .55s var(--ease);
+}
+/* the flow's highlights are bright enough to swallow white type at this size,
+   so a plum wash sits over it; it lifts with the flow on hover */
+.pcard__media::after{
+  content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:rgba(43,8,21,.34);
+  transition:opacity .55s var(--ease);
+}
+.pcard:hover .pcard__media::after{opacity:0;}
+.pcard:hover .pcard__media{background:var(--parch-2);}
+.pcard:hover .pcard__flow{opacity:0;}
+/* on hover the whole plate goes red and the icon and caption knock out to white */
+.pico{
+  position:relative;z-index:2;
+  /* sized from the plate, so all three keep step as the columns narrow */
+  width:clamp(38px,24%,62px);height:auto;aspect-ratio:1;display:block;
+  fill:none;stroke:#fff;stroke-width:1.25;
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .8s var(--ease),stroke .55s var(--ease);
+}
+.pico .pico__d{fill:#fff;stroke:none;transition:fill .55s var(--ease);}
+.pcard:hover .pico{transform:scale(1.07);}
+.pcard:hover .pico{stroke:var(--red);}
+.pcard:hover .pico .pico__d{fill:var(--red);}
+.pcard__cap{
+  position:relative;z-index:2;
+  font-size:clamp(11px,1.15vw,13px);line-height:1;font-weight:500;
+  letter-spacing:clamp(2px,.24vw,2.8px);
+  text-transform:uppercase;color:#fff;
+  transition:color .5s var(--ease);
+}
+.pcard:hover .pcard__cap{color:var(--red);}
+/* the whole card is the link, so its ring draws from a hover anywhere on it */
+.pcard:hover .rb-btn__ring circle{stroke-dashoffset:0;}
+/* the label beside the plate, for the compact layout on a phone */
+.pcard__name{display:none;}
+.pcard__copy{font-size:16px;line-height:24px;color:var(--ink-70);margin:0;}
+/* On a touch screen :hover latches after a tap and will not let go, so the
+   plates hold their own state and the card answers to the tap itself. */
+@media (hover:none){
+  .pcard:hover .pcard__media{background:var(--red);}
+  .pcard:hover .pcard__media::after{opacity:1;}
+  .pcard:hover .pcard__flow{opacity:1;}
+  .pcard:hover .pico{stroke:#fff;transform:none;}
+  .pcard:hover .pico .pico__d{fill:#fff;}
+  .pcard:hover .pcard__cap{color:#fff;}
+  .cover:hover{transform:none;box-shadow:none;}
+  .cover:hover .cover__img{transform:none;}
+}
+.pcard__foot{margin-top:auto;padding-top:26px;}
+
+/* ---------- the interactive layer: filled boxes ----------
+   No rules - the box edges are the bounding limits. 01 in RedBook Red,
+   02/03 in warm grey, white type throughout, content inset from the left. */
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
+.tbox{
+  position:relative;display:flex;flex-direction:column;overflow:hidden;
+  padding:38px 30px 32px 34px;min-height:330px;color:#fff;
+  transition:transform .55s var(--ease),box-shadow .55s var(--ease),
+             background-color .5s var(--ease);
+}
+.tbox--live{background:var(--red);}
+.tbox--locked{background:var(--grey-box);color:var(--plum);}
+.tbox:hover{
+  transform:translateY(-7px);
+  box-shadow:0 28px 50px -26px rgba(43,8,21,.45);
+}
+.tbox--live:hover{background:#7C262A;}
+.tbox--locked:hover{background:#E4E0DB;}
+
+.tbox__n{
+  font-family:'MinervaModern',Georgia,serif;font-size:62px;line-height:1;
+  margin-bottom:26px;color:rgba(255,255,255,.62);
+  transition:color .5s var(--ease);
+}
+.tbox:hover .tbox__n{color:rgba(255,255,255,.85);}
+
+.tbox__t{
+  font-family:'MinervaModern',Georgia,serif;font-weight:400;
+  font-size:25px;line-height:1.24;margin:0 0 14px;color:#fff;
+  -webkit-text-stroke:0 currentColor;
+  transition:-webkit-text-stroke-width .45s var(--ease);
+}
+.tbox--live:hover .tbox__t{-webkit-text-stroke:.5px currentColor;}
+.tbox__c{
+  font-size:16px;line-height:24px;margin:0 0 44px;
+  color:rgba(255,255,255,.82);max-width:30ch;
+}
+.tbox__foot{margin-top:auto;min-height:44px;display:flex;align-items:center;}
+
+/* the ring answers a hover anywhere on the box, not just on the link */
+.tbox--live:hover .rb-btn__ring circle{stroke-dashoffset:0;}
+/* The tool boxes are narrower than this button at some widths. `nowrap` (inherited
+   from .rb-btn) pushed the ring and arrow past the box, which clips them because
+   .tbox is overflow:hidden. Let the label wrap instead, and trim the reserved space
+   to the ring's own 44px plus a gap. */
+.tbox .rb-btn{white-space:normal;padding-right:56px;}
+/* Below the widest container the cards would otherwise shrink with their column,
+   because a 3/4 card takes its height from its width. The plate holds a fixed
+   height instead, so the card and the picture are one size all the way down. */
+@media (max-width:1140px){
+  #reports .cover{aspect-ratio:auto;}
+  #reports .cover__plate{flex:none;height:220px;}
+}
+/* Three abreast for as long as they can be made to fit. Rather than dropping the
+   grid to two, the box tightens and the label wraps. */
+@media (max-width:1060px){
+  .tools{gap:22px;}
+  .tbox{padding:28px 22px 26px 24px;min-height:300px;}
+  .tbox__n{font-size:48px;margin-bottom:20px;}
+  .tbox__t{font-size:21px;margin-bottom:12px;}
+  .tbox__c{font-size:14px;line-height:21px;margin-bottom:30px;}
+  .tbox .rb-btn{font-size:11px;letter-spacing:1.6px;padding-right:52px;}
+  .tbox__lock{font-size:10px;letter-spacing:1.8px;gap:8px;}
+}
+
+.tbox__lock{
+  display:flex;align-items:center;gap:11px;
+  font-size:12px;line-height:1;letter-spacing:2.6px;text-transform:uppercase;
+  color:rgba(255,255,255,.78);
+}
+.tbox__lockicon{
+  width:15px;height:15px;flex:0 0 auto;display:block;
+  fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;
+}
+/* the locked boxes sit on a light ground, so their type flips to plum */
+.tbox--locked .tbox__n{color:rgba(43,8,21,.24);}
+.tbox--locked:hover .tbox__n{color:rgba(43,8,21,.38);}
+.tbox--locked .tbox__lock{color:var(--mute);}
+
+/* ---------- editorial figures ---------- */
+.figure{}
+.figure__n{
+  font-family:'MinervaModern',Georgia,serif;font-size:clamp(42px,4.6vw,64px);
+  line-height:1;margin:0 0 8px;color:var(--plum);font-variant-numeric:tabular-nums;
+}
+.figure__l{font-size:13px;line-height:1.35;letter-spacing:2px;
+  text-transform:uppercase;color:var(--mute);margin:0;}
+.figure__l::after{content:'*';font-size:.85em;vertical-align:super;line-height:0;
+  margin-left:1px;letter-spacing:0;}
+.figure__note{margin:24px 0 0;font-size:10px;letter-spacing:1.3px;
+  text-transform:uppercase;color:var(--mute);}
+/* the whole block sits at the foot and grows upward, so the column headings
+   ride directly above the stack however many indices are on show */
+.index-stats{display:flex;flex-direction:column;justify-content:flex-end;}
+#statRows{display:flex;flex-direction:column;}
+/* reads as a table, but with no column rules - the alignment does the work */
+.stat-head,.stat{
+  display:grid;grid-template-columns:1fr 74px 84px;
+  column-gap:10px;align-items:baseline;
+}
+.stat-head{padding-bottom:10px;}
+.stat-head span{
+  font-size:10.5px;letter-spacing:1.6px;text-transform:uppercase;
+  color:var(--mute);text-align:right;
+}
+.stat{border-bottom:1px solid var(--line);padding:16px 0;}
+.stat__l{
+  grid-column:1 / -1;font-size:13px;line-height:18px;color:var(--mute);margin:3px 0 0;
+}
+/* a note against each index, explaining what it actually measures */
+.info{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:15px;height:15px;flex:0 0 auto;margin-left:8px;border-radius:50%;
+  /* dimmed with a translucent colour rather than opacity: opacity would apply
+     to the note inside it as well, and would trap the note's z-index in the
+     mark's own stacking context */
+  border:1px solid currentColor;color:rgba(139,133,127,.62);
+  font-family:'Barlow',Helvetica,Arial,sans-serif;font-size:9.5px;font-weight:600;
+  font-style:normal;line-height:1;letter-spacing:0;text-transform:none;
+  cursor:help;vertical-align:1px;transition:color .3s ease;
+}
+.info:hover,.info:focus{color:var(--red);outline:none;}
+/* fixed at every width and placed by script: it has to escape the picker's own
+   scroller, and a note anchored to a mark near an edge would otherwise hang off
+   the screen. The script sets left and top. */
+.info__t{
+  position:fixed;left:0;top:0;right:auto;bottom:auto;transform:none;
+  width:min(280px,calc(100vw - 24px));padding:13px 15px;text-align:left;
+  background:#fff;color:var(--ink-70);border:1px solid var(--line-warm);
+  box-shadow:0 20px 44px -22px rgba(43,8,21,.42);
+  font-size:12.5px;line-height:18px;font-weight:400;letter-spacing:0;text-transform:none;
+  opacity:0;visibility:hidden;pointer-events:none;z-index:60;
+  transition:opacity .25s var(--ease),visibility .25s;
+}
+.info:hover .info__t,.info:focus .info__t{opacity:1;visibility:visible;}
+.cx__foot{border-top:1px solid var(--line);margin-top:6px;padding:4px 20px 0;}
+.cx__clear{
+  background:none;border:0;padding:12px 0;cursor:pointer;
+  font-family:'Barlow',Helvetica,Arial,sans-serif;font-size:11px;font-weight:500;
+  letter-spacing:2.2px;text-transform:uppercase;color:var(--mute);
+  transition:color .3s ease;
+}
+.cx__clear:hover{color:var(--red);}
+.cx__clear:focus-visible{outline:1px solid var(--red);outline-offset:2px;}
+.cx__clear[disabled]{opacity:.35;cursor:default;color:var(--mute);}
+/* the picker row keeps its name and note apart */
+.cx__name{flex:1;}
+/* inside the picker the note clears the panel entirely, rather than covering
+   the very list it is describing; the script works that out from the panel. */
+.stat--main .stat__num,
+.stat--main .stat__d,
+.stat--main .stat__l{color:var(--red);}
+/* the changes sit well back from the index value itself */
+.stat__d{
+  font-size:13px;line-height:1;letter-spacing:.4px;color:var(--mute);
+  text-align:right;font-variant-numeric:tabular-nums;
+}
+.journal{margin-top:76px;border-top:1px solid var(--line);}
+.jrow{
+  position:relative;display:grid;
+  grid-template-columns:110px 1fr 120px 44px;
+  gap:24px;align-items:center;
+  padding:24px 0;border-bottom:1px solid var(--line);
+  transition:padding-left .5s var(--ease);
+}
+.jrow:hover{padding-left:12px;}
+.jrow__d{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);}
+.jrow__t{
+  font-family:'MinervaModern',Georgia,serif;font-size:21px;line-height:1.3;
+  color:var(--plum);transition:color .45s var(--ease);
+}
+.jrow:hover .jrow__t{color:var(--red);}
+.jrow__k{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);}
+/* same ring-and-arrow as every other action on the page */
+.jrow__a{position:relative;width:44px;height:44px;color:var(--plum);justify-self:end;}
+.jrow:hover .jrow__a{color:var(--red);}
+.jrow:hover .rb-btn__ring circle{stroke-dashoffset:0;}
+.spine-actions{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:24px;margin-top:26px;flex-wrap:wrap;
+}
+.section--dark .stat{border-bottom-color:var(--line-dark);}
+.stat__num{
+  font-family:'MinervaModern',Georgia,serif;font-size:44px;line-height:1;
+  margin:0;color:var(--plum);
+}
+/* the sub-indices read smaller than the overall one; this was an inline size,
+   which no breakpoint could get at */
+.stat__num--sub{font-size:32px;}
+.section--dark .stat__num{color:var(--onDark);}
+
+.chart{
+  height:400px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);
+  position:relative;margin-left:38px;
+}
+/* the axis readings sit in the margin, clear of the plot */
+.chart__y{
+  position:absolute;left:-38px;width:30px;text-align:right;
+  font-size:11px;letter-spacing:1.2px;color:var(--mute);font-variant-numeric:tabular-nums;
+}
+.chart__y--hi{top:-6px;}
+.chart__y--lo{bottom:-6px;}
+.chart__x{
+  display:flex;justify-content:space-between;margin:10px 0 0 38px;
+  font-size:11px;letter-spacing:1.2px;color:var(--mute);
+}
+.cline{opacity:0;transition:opacity .4s ease;}
+.cline{pointer-events:none;stroke-linecap:butt;stroke-linejoin:miter;
+  transition:opacity .35s ease,stroke-width .35s ease;}
+/* pointing at a row in the table brings its line forward and sends the rest back */
+.chart.is-focus .cline{opacity:.15;}
+.chart.is-focus .cline.is-hot{opacity:1;stroke-width:3;}
+.cline-seg{fill:none;stroke-linecap:butt;stroke-linejoin:miter;pointer-events:none;
+  stroke-width:3.4;}
+
+/* an invisible fat stroke over each line, so the pointer has something to find */
+.cline-hit{fill:none;stroke:transparent;stroke-width:16;pointer-events:stroke;cursor:default;}
+.chart__tip{
+  position:absolute;z-index:6;pointer-events:none;transform:translate(-50%,-150%);
+  background:#fff;border:1px solid var(--line-warm);padding:7px 11px;white-space:nowrap;
+  font-size:12px;line-height:1;color:var(--plum);
+  box-shadow:0 14px 30px -18px rgba(43,8,21,.42);
+  opacity:0;visibility:hidden;transition:opacity .18s ease,visibility .18s;
+}
+.chart__tip.is-on{opacity:1;visibility:visible;}
+.cline[data-on="1"]{opacity:1;}
+
+/* the control bar spans the whole grid, so the right-hand control lines up
+   with the "From base" column rather than with the chart */
+.idx-bar{display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;margin-bottom:22px;}
+.seg{display:inline-flex;border:1px solid var(--line-warm);}
+.seg__b{
+  background:none;border:0;cursor:pointer;padding:11px 20px;color:var(--plum);
+  font-family:inherit;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+.seg__b + .seg__b{border-left:1px solid var(--line-warm);}
+.seg__b:hover{background:var(--parch-2);}
+.seg__b.is-on{background:var(--parch-4);color:var(--plum);}
+.seg__b:focus-visible{outline:1px solid var(--plum);outline-offset:2px;}
+/* customise your view */
+.cx{position:relative;}
+.cx__btn{
+  display:inline-flex;align-items:center;gap:10px;background:none;cursor:pointer;
+  border:1px solid var(--line-warm);padding:11px 18px;color:var(--plum);
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
+  transition:border-color .4s var(--ease),color .4s var(--ease);
+}
+.cx__btn:hover{border-color:var(--red);color:var(--red);}
+.cx__btn i{
+  width:7px;height:7px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);transition:transform .4s var(--ease);
+}
+.cx__btn[aria-expanded="true"] i{transform:translateY(1px) rotate(-135deg);}
+/* fixed and placed by script, so the whole panel is always on screen: where it
+   will not fit beneath the button it rides up over it, which is what the close
+   control is for. */
+.cx__panel{
+  /* below the section nav (99) and the site header (100): nothing on this page
+     is allowed to paint over either bar */
+  position:fixed;left:0;top:0;z-index:90;width:320px;max-width:calc(100vw - 24px);
+  max-height:calc(100vh - 24px);overflow:hidden;
+  background:#fff;border:1px solid var(--line-warm);padding:0 0 6px;
+  box-shadow:0 20px 44px -22px rgba(43,8,21,.34);
+  display:flex;flex-direction:column;
+}
+/* the list is the only thing that scrolls, and only up and down: the note and
+   Clear all hold their place at the top and bottom of the panel */
+.cx__panel #cxRows{
+  flex:1 1 auto;min-height:0;
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+}
+/* display:flex above would beat the UA rule for [hidden], so it is restated */
+.cx__panel[hidden]{display:none;}
+.cx__head,.cx__foot{flex:0 0 auto;}
+#cxRows{min-height:0;}
+.cx__head{
+  display:flex;align-items:flex-start;gap:6px;
+  background:#fff;border-bottom:1px solid var(--line);
+}
+.cx__head .cx__note{flex:1;border-bottom:0;padding-right:4px;}
+.cx__x{
+  flex:0 0 auto;width:36px;height:36px;margin:2px 2px 0 0;padding:0;
+  background:none;border:0;cursor:pointer;color:var(--mute);
+  display:grid;place-items:center;transition:color .3s ease;
+}
+.cx__x:hover{color:var(--red);}
+.cx__x svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.5;}
+.cx__x:focus-visible{outline:1px solid var(--red);outline-offset:-2px;}
+.cx__note{
+  margin:0;padding:12px 20px;background:#fff;
+  border-bottom:1px solid var(--line);
+  font-size:11px;line-height:16px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mute);
+}
+.cx__note.is-full{color:var(--red);}
+.cx__group{
+  padding:13px 20px 6px;font-size:10px;letter-spacing:2.2px;
+  text-transform:uppercase;color:var(--mute);
+}
+.cx__row{
+  display:flex;align-items:center;gap:12px;padding:9px 20px;cursor:pointer;
+  font-size:14px;color:var(--ink-70);transition:background .3s ease,color .3s ease;
+}
+.cx__row:hover{background:var(--parch-1);color:var(--plum);}
+.cx__row input{accent-color:var(--red);width:15px;height:15px;margin:0;cursor:pointer;}
+/* the overall index is always plotted, so its box is shown ticked but inert */
+.cx__row.is-locked{cursor:default;color:var(--plum);}
+.cx__row.is-locked:hover{background:none;}
+.cx__row.is-locked input{cursor:default;}
+.cx__row.is-locked .cx__lock{
+  margin-left:auto;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--mute);
+}
+/* once four are on, the rest are spent until something is turned off */
+.cx__row.is-spent{opacity:.38;cursor:not-allowed;}
+.cx__row.is-spent:hover{background:none;color:var(--ink-70);}
+.cx__row.is-spent input{cursor:not-allowed;}
+.cx__sw{width:18px;height:2px;flex:0 0 auto;}
+.chart__legend{
+  display:flex;gap:10px 22px;flex-wrap:wrap;justify-content:flex-start;
+  margin:20px 0 0 38px;font-size:13px;color:var(--mute);
+}
+.chart__legend span{display:inline-flex;align-items:center;gap:8px;}
+.chart__legend i{width:18px;height:2px;display:block;flex:0 0 auto;}
+.chart svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+
+.row-list{border-top:1px solid var(--plum);}
+.row-item{
+  display:grid;grid-template-columns:56px 1.05fr 1.5fr 132px;gap:30px;
+  padding:26px 0;border-bottom:1px solid var(--line);align-items:start;
+  transition:background .45s ease;
+}
+.row-item__t{
+  font-family:'MinervaModern',Georgia,serif;font-size:20px;line-height:1.25;
+  color:var(--plum);
+}
+.row-item__d{font-size:15px;line-height:23px;color:var(--ink-70);}
+.row-item__w{
+  font-size:12px;letter-spacing:2.4px;text-transform:uppercase;color:var(--mute);
+  text-align:right;white-space:nowrap;
+}
+.row-item:hover{background:var(--warm);}
+.row-item__idx{font-family:'MinervaModern',Georgia,serif;font-size:20px;color:var(--red);}
+/* the intro rows share one four-column grid, so every hairline lines up */
+.about-row{align-items:start;}
+.value{transition:opacity .5s var(--ease);}
+.value__t{
+  font-family:'MinervaModern',Georgia,serif;font-weight:400;
+  font-size:20px;line-height:1.3;margin:0 0 10px;color:var(--plum);
+}
+.value__c{font-size:14px;line-height:21px;color:var(--mute);margin:0;}
+/* one paragraph in place of the four values. It runs the full width of the row,
+   so it starts and ends on the same lines as the headline above it and the
+   figures below, and both its edges are flush. */
+.about-note .value__c{max-width:none;margin:0;text-align:justify;}
+/* on a phone the measure is too short to justify without opening gaps */
+@media (max-width:620px){ .about-note .value__c{text-align:left;} }
+
+.chip{
+  border:1px solid var(--line-warm);padding:9px 20px;background:none;cursor:pointer;
+  font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-70);
+  transition:all .4s var(--ease);
+}
+.chip.is-on{background:var(--plum);border-color:var(--plum);color:#fff;}
+
+.form-row{display:flex;margin-top:24px;max-width:520px;}
+/* the exchange block is centred, so its form has to be too, and its own text
+   stays left-aligned inside the field */
+.form-row--center{margin-left:auto;margin-right:auto;text-align:left;}
+.form-row .ctrl{
+  flex:1;height:54px;border:1px solid var(--line-warm);border-right:0;background:#fff;
+  display:flex;align-items:center;padding:0 18px;color:var(--mute);font-size:15px;
+}
+.form-row .rb-btn{padding:0 70px 0 24px;border:1px solid var(--line-warm);border-left:0;background:#fff;}
+/* a real field, wearing the same clothes as the read-only bars above */
+.form-row input.ctrl{
+  font-family:'Barlow',Helvetica,Arial,sans-serif;color:var(--plum);
+  border-radius:0;-webkit-appearance:none;appearance:none;outline:none;width:100%;
+}
+.form-row input.ctrl::placeholder{color:var(--mute);}
+/* The field carries border-right:0 and the button border-left:0 - they make one
+   box between them. Focusing the field alone would light up only its three
+   sides, so the row lights both, exactly as the invalid state does. */
+.form-row:focus-within .ctrl,
+.form-row:focus-within .rb-btn{border-color:var(--red);}
+.form-row input.ctrl:focus{outline:none;}
+.form-row{position:relative;}
+/* the message is taken out of the flow, so a field turning red cannot shove
+   the layout around it */
+.form-err,.form-ok{
+  position:absolute;top:calc(100% + 7px);left:0;margin:0;
+  font-size:12px;line-height:16px;letter-spacing:.2px;
+}
+.form-err{color:var(--red);}
+.form-ok{color:var(--mute);}
+/* the field and its button are one control with a shared outline, so both
+   sides have to turn, or the red runs round three sides and stops */
+.form-row.is-bad .ctrl,
+.form-row.is-bad .rb-btn{border-color:var(--red);}
+.dlg .form-row{margin-bottom:12px;}
+.dlg .form-err,.dlg .form-ok{top:calc(100% + 2px);font-size:11.5px;}
+
+/* ---------- the exchange, halved ----------
+   The two sides share one grid rather than sitting in separate columns, so a
+   heading that wraps to two lines on the right cannot push its own standfirst,
+   prompt and field out of step with the left. display:contents lets each side's
+   children take part in the parent grid directly; every row is then as tall as
+   the taller of its two cells and both sides start together. The rule down the
+   middle is painted by the grid itself, since an element set to contents has no
+   box of its own to hang a border on. */
+.xch{
+  display:grid;grid-template-columns:1fr 1fr;column-gap:56px;align-items:start;
+  background:linear-gradient(var(--line-warm),var(--line-warm)) no-repeat center;
+  background-size:1px 100%;
+}
+.xch__col{display:contents;}
+.xch__col:first-child  > *{grid-column:1;}
+.xch__col:last-child   > *{grid-column:2;}
+/* the row has to be named as well as the column: auto-placement only moves
+   forward, so without this the right-hand side lands below the left instead
+   of beside it. Both sides carry the same five parts in the same order. */
+.xch__col > *:nth-child(1){grid-row:1;}
+.xch__col > *:nth-child(2){grid-row:2;}
+.xch__col > *:nth-child(3){grid-row:3;}
+.xch__col > *:nth-child(4){grid-row:4;}
+.xch__col > *:nth-child(5){grid-row:5;}
+.xch__col > *:nth-child(6){grid-row:6;}
+/* each side is half a column, so the display sizes have to come down with it */
+.xch h2{font-size:clamp(22px,2.5vw,32px);margin-bottom:14px;}
+.xch .lede{font-size:clamp(15px,1.25vw,17px);line-height:1.6;margin-bottom:0;}
+.xch .body{font-size:clamp(14px,1.15vw,15px);margin-top:22px;}
+.xch .form-row{max-width:none;margin-top:18px;}
+.xch .form-row .ctrl{padding:0 14px;font-size:14px;}
+.xch .form-row .rb-btn{
+  padding:0 52px 0 18px;font-size:12px;letter-spacing:1.8px;white-space:nowrap;
+}
+@media (max-width:980px){
+  .xch{grid-template-columns:1fr;background:none;}
+  .xch__col > *:nth-child(n){grid-column:1;grid-row:auto;}  /* stacked: flow again */
+  .xch__col:last-child > *:first-child{margin-top:48px;}
+}
+
+/* while a popup owns the screen the page beneath it holds still */
+html.is-locked,html.is-locked body{overflow:hidden;}
+
+/* ---------- request the full index ---------- */
+.dlg{
+  position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:rgba(43,8,21,.42);
+  opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s;
+}
+.dlg.is-open{opacity:1;visibility:visible;}
+.dlg__panel{
+  background:var(--parch-1);width:min(520px,100%);max-height:88vh;overflow-y:auto;
+  padding:40px 40px 34px;position:relative;
+  transform:translateY(14px);transition:transform .45s var(--ease);
+}
+.dlg.is-open .dlg__panel{transform:none;}
+.dlg__t{
+  font-family:'MinervaModern',Georgia,serif;font-weight:400;text-transform:uppercase;
+  font-size:28px;line-height:1.15;color:var(--red);margin:0 0 6px;
+}
+.dlg__s{font-size:14px;line-height:21px;color:var(--ink-70);margin:0 0 26px;}
+.dlg__x{
+  position:absolute;top:14px;right:14px;width:36px;height:36px;padding:0;
+  background:none;border:0;cursor:pointer;color:var(--mute);
+  display:grid;place-items:center;transition:color .3s ease;
+}
+.dlg__x:hover{color:var(--red);}
+.dlg__x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;}
+.dlg .form-row{margin-top:0;margin-bottom:12px;max-width:none;}
+.dlg .form-row .ctrl{border-right:1px solid var(--line-warm);}
+/* that rule restores the field's right border at the same weight as the state
+   rules below, and wins on order, so both states are restated here or the one
+   edge stays neutral */
+.dlg .form-row:focus-within .ctrl,
+.dlg .form-row.is-bad .ctrl{border-color:var(--red);}
+.dlg__foot{display:flex;justify-content:flex-end;margin-top:22px;}
+@media (max-width:620px){ .dlg__panel{padding:32px 24px 26px;} }
+
+/* ---------- footer ---------- */
+.wf-footer{background:var(--plum);color:var(--onDark);padding:90px 0 44px;}
+.wf-footer__mark{height:40px;width:auto;margin-bottom:26px;}
+.wf-footer a:hover{color:#fff;}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .section{padding:66px 0;}
+  .g-3,.g-4{grid-template-columns:repeat(2,1fr);}
+  /* the reports hold three abreast right down to phone width */
+  #reports .grid.g-3{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+  #reports .cover{padding:14px 14px 0;}
+  .cover__n{font-size:17px;margin-bottom:6px;}
+  .cover__t{font-size:17px;min-height:2.5em;}
+  .cover__d{font-size:10px;letter-spacing:1.6px;}
+  .cover__cap{padding:12px 0 14px;}
+  .about-row{gap:34px 30px;}
+  /* the four figures hold one row: the numerals shrink, the grid does not break */
+  .figures{grid-template-columns:repeat(4,minmax(0,1fr));gap:30px 18px;}
+  .figure__n{font-size:clamp(24px,5vw,42px);}
+  .figure__l{font-size:11px;letter-spacing:1.2px;}
+  /* still three abreast, tightened again rather than broken up */
+  .tools{gap:16px;}
+  .tbox{min-height:0;padding:22px 16px 20px 18px;}
+  .tbox--locked{min-height:180px;}
+  .tbox__n{font-size:38px;margin-bottom:14px;}
+  .tbox__t{font-size:18px;margin-bottom:10px;}
+  .tbox__c{font-size:13px;line-height:19px;margin-bottom:22px;}
+  .tbox .rb-btn{font-size:10px;letter-spacing:1.1px;padding-right:48px;}
+  .tbox__lock{font-size:9px;letter-spacing:1.2px;gap:6px;}
+  .nl__l{min-height:0!important;}
+  .span-4,.span-5,.span-6,.span-7,.span-8{grid-column:span 12;}
+  /* the index holds the chart and the readings side by side: the chart gives up
+     width instead, right down to the point where the readings would break up */
+  #index .span-7{grid-column:span 7;}
+  #index .span-5{grid-column:span 5;}
+  #index .pl-col{padding-left:18px;}
+  .chart{height:330px;margin-left:30px;}
+  .chart__y{left:-30px;width:24px;font-size:10px;}
+  .chart__x{margin-left:30px;font-size:10px;letter-spacing:.6px;}
+  .chart__legend{margin-left:30px;font-size:12px;gap:8px 16px;}
+  .stat-head,.stat{grid-template-columns:1fr 52px 60px;column-gap:8px;}
+  .stat-head span{font-size:9.5px;letter-spacing:1.2px;}
+  .stat{padding:12px 0;}
+  .stat--main .stat__num{font-size:34px;}
+  /* the overall index holds its size and the rest come down, so the difference
+     between them survives at the narrow widths */
+  .stat__num--sub{font-size:24px;}
+  .stat__d{font-size:12px;}
+  .stat__l{font-size:12px;line-height:17px;}
+  /* the readings sit against the right edge, so their notes open leftwards */
+  #statRows .info__t{right:0;left:auto;top:calc(100% + 8px);transform:none;width:min(260px,68vw);}
+  .g-12{gap:36px 20px;}
+  .pl-col{padding-left:0;}
+  /* three abreast as far down as the type allows: the columns tighten and the
+     link label wraps rather than the grid dropping to one */
+  .pgrid{gap:18px;}
+  .pcard__media{margin-bottom:16px;}
+  .pcard__copy{font-size:14px;line-height:20px;}
+  .pcard__foot{padding-top:16px;}
+  .pcard .rb-btn{font-size:10px;letter-spacing:1.1px;padding-right:64px;min-height:38px;}
+  .exchange__cta{margin-top:44px;}
+  /* the date stays in line with the title, as it is at full width, instead of
+     dropping to a line of its own and making every row a block. The copy sits
+     under the title in its own column rather than running the width of the row. */
+  .row-item{grid-template-columns:40px minmax(0,1fr) auto;gap:6px 24px;padding:20px 0;}
+  .row-item > *:nth-child(1){grid-column:1;grid-row:1;}
+  .row-item > *:nth-child(2){grid-column:2;grid-row:1;}
+  .row-item > *:nth-child(3){grid-column:2;grid-row:2;}
+  .row-item > *:nth-child(4){grid-column:3;grid-row:1;}
+  .row-item__d{max-width:56ch;}
+  .jrow{grid-template-columns:1fr 44px;gap:6px 20px;}
+  .jrow__d{grid-column:1;}
+  .jrow__t{grid-column:1;}
+  .jrow__k{grid-column:1;}
+  .jrow__a{grid-column:2;grid-row:1 / span 3;}
+  .spine-actions{margin-top:22px;}
+  .wf-nav{display:none;}
+  .wf-bar{grid-template-columns:auto 1fr;gap:0;}
+  .wf-logo{justify-self:start;width:66px;height:31px;}
+  .wf-menu{display:block;}
+  .sec-nav a{padding:11px 10px;letter-spacing:.5px;font-size:10px;}
+  .sec-nav__track{padding:4px 10px;}
+  .sn-f{display:none;}
+  .sn-s{display:inline;}
+}
+@media (max-width:620px){
+  /* two across rather than one: the values, the figures, the reports and the
+     newshub tiles all read better paired than stacked */
+  .g-2,.g-3,.g-4{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 16px;}
+  .figures{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 16px;}
+  .section{padding:64px 0;}
+  .card{padding:30px 24px 28px;}
+  .btn-row{gap:24px;}
+  .figure__n{font-size:clamp(30px,9vw,42px);}
+  .figure__l{font-size:11px;letter-spacing:1.4px;}
+  /* the card is no longer a fixed 3:4 with the picture taking what is left:
+     the picture is the 3:4 and the caption sits under it, so it runs long */
+  /* the blurbs are gone here, so the card is the whole grid item: every row is
+     cut to the tallest and each card fills it, which makes them all one size */
+  #reports .grid.g-3{grid-auto-rows:1fr;}
+  #reports .grid.g-3 > div{display:flex;flex-direction:column;}
+  #reports .cover{aspect-ratio:auto;flex:1;padding:10px 10px 0;}
+  #reports .cover__plate{flex:none;height:auto;aspect-ratio:3/4;}
+  .cover__cap{padding:11px 0 13px;}
+  .cover__t{font-size:16px;min-height:2.5em;}
+  .cover__n{font-size:15px;margin-bottom:5px;}
+  .cover__d{font-size:9.5px;letter-spacing:1.4px;margin-top:6px;}
+  /* two across on a phone */
+  #reports .grid.g-3{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 16px;}
+  /* the pictures say enough; the blurbs under them do not earn the height */
+  #reports .grid.g-3 .small{display:none;}
+  .row-item__d{display:none;}
+  /* number, title and date on one line now the description has gone */
+  .row-item{grid-template-columns:34px 1fr auto;gap:0 12px;padding:16px 0;align-items:baseline;}
+  .row-item > *:nth-child(3){display:none;}
+  .row-item > *:nth-child(4){grid-column:3;grid-row:1;}
+  .row-item__t{font-size:17px;grid-column:2;}
+  .row-item__w{font-size:9.5px;letter-spacing:1.2px;}
+  /* a compact square plate with the text beside it, so all three pillars are on
+     the screen together rather than a scroll apart */
+  .pgrid{grid-template-columns:1fr;gap:14px;}
+  .pcard{
+    display:grid;grid-template-columns:78px minmax(0,1fr);
+    column-gap:14px;align-items:start;
+  }
+  /* spanning the rows is not enough on its own: the card aligns its items to
+     the start, so the plate has to be told to fill the height it spans */
+  .pcard__media{
+    grid-column:1;grid-row:1 / span 3;align-self:stretch;
+    aspect-ratio:auto;margin-bottom:0;gap:0;
+  }
+  .pcard__cap{display:none;}          /* the label moves out beside the plate */
+  .pcard .pico{width:40%;}
+  .pcard__name{
+    display:block;grid-column:2;grid-row:1;margin:0 0 5px;
+    font-size:11px;line-height:1;font-weight:500;letter-spacing:2px;
+    text-transform:uppercase;color:var(--red);
+  }
+  .pcard__copy{grid-column:2;grid-row:2;font-size:13px;line-height:19px;}
+  .pcard__foot{grid-column:2;grid-row:3;margin-top:0;padding-top:10px;}
+  .pcard .rb-btn{min-height:34px;font-size:10px;letter-spacing:1.1px;padding-right:60px;}
+  /* the flagship on its own line, the two in development paired beneath.
+     Both row and column have to be named: auto-placement would otherwise fill
+     the space beside the flagship with the first of the locked pair. */
+  .tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+  .tools > *:nth-child(1){grid-column:1 / -1;grid-row:1;}
+  .tools > *:nth-child(2){grid-column:1;grid-row:2;}
+  .tools > *:nth-child(3){grid-column:2;grid-row:2;}
+  .tbox{padding:18px 14px 16px;min-height:0;}
+  .tbox--locked{aspect-ratio:1;min-height:0;} /* the pair beneath stay square */
+  .tbox--live{aspect-ratio:auto;}         /* full width, height from content */
+  .tbox__n{font-size:30px;}
+  .tbox__t{font-size:16px;margin-bottom:8px;}
+  .tbox__c{font-size:12px;line-height:17px;margin-bottom:18px;}
+  /* the flagship spans the full width here, so its ring and arrow fit again;
+     only the locked pair are too narrow, and they carry no button at all */
+  .tbox .rb-btn{font-size:10px;letter-spacing:1.2px;padding-right:52px;}
+  .tbox__lock{font-size:8px;letter-spacing:.6px;gap:5px;flex-wrap:wrap;line-height:1.3;}
+  .tbox__lock svg{flex:0 0 auto;}
+  /* the region toggle and the picker are cut down until they share one row */
+  .idx-bar{flex-wrap:nowrap;gap:10px;margin-bottom:18px;}
+  .seg__b{padding:9px 10px;font-size:9.5px;letter-spacing:.9px;white-space:nowrap;}
+  .cx__btn{padding:9px 11px;font-size:9.5px;letter-spacing:.9px;gap:7px;white-space:nowrap;}
+  .cx__btn i{width:6px;height:6px;}
+  /* only now do the readings drop below the chart */
+  #index .span-7,#index .span-5{grid-column:span 12;}
+  #index .pl-col{padding-left:0;}
+  .index-stats{height:auto!important;margin-top:0!important;grid-template-rows:none;}
+  .stat-head,.stat{grid-template-columns:1fr 60px 70px;column-gap:10px;}
+  /* a shallower chart, so the index values sit in the same screenful */
+  .chart{height:210px;margin-left:30px;}
+  .chart__y{left:-30px;width:24px;font-size:10px;}
+  .chart__x{margin-left:30px;font-size:10px;}
+  .chart__legend{margin:14px 0 0 30px;font-size:12px;gap:8px 16px;}
+  /* the picker becomes a sheet, so it can never hang off the side. Its width is
+     measured in vw rather than left against right, so it is the viewport that
+     sets it and not whatever containing block the fixed position resolves to. */
+  .cx__panel{
+    left:16px!important;right:auto;bottom:16px;top:auto!important;
+    width:calc(100vw - 32px);max-width:none;
+    max-height:70vh;
+  }
+  /* the hero's button was 379px wide in a 350px column, which pushed the whole
+     page sideways on a phone */
+  .rb-btn--boxed{
+    padding:0 20px;min-height:52px;font-size:11.5px;letter-spacing:1.6px;
+    white-space:normal;text-align:center;
+  }
+  .hero .btn-row{width:100%;}
+  .hero .rb-btn--boxed{width:100%;}
+  .br-m{display:inline;}
+  /* stacked, so the rings have to land on the same vertical. The links take the
+     full width and their rings sit against the same right edge. */
+  .spine-actions{flex-direction:column;align-items:stretch;gap:18px;}
+  .spine-actions .rb-btn{width:100%;}
+  .pcard .rb-btn{width:100%;}
+  /* iOS Safari zooms the page in on any field under 16px, and will not zoom
+     back out on its own. Every text field is .ctrl. */
+  .form-row input.ctrl,
+  .xch .form-row input.ctrl,
+  .dlg .form-row input.ctrl{font-size:16px;}
+  /* seven labels have to share one row, and at 390 the old size put Newshub on
+     a second line. Size and padding now scale with the screen so the row holds
+     down to 375; flex-wrap stays as the backstop for anything narrower. */
+  .sec-nav a{
+    font-size:clamp(8.4px,2.4vw,9px);
+    padding:9px clamp(3px,1vw,6px);letter-spacing:0;
+  }
+  .sec-nav a::after{left:clamp(3px,1vw,6px);right:clamp(3px,1vw,6px);bottom:6px;}
+  .sec-nav__track{padding:3px 4px;}
+}

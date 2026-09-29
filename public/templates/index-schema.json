@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RedBook Index payload",
+  "description": "One file per index year. Validate every upload against this before it is written - a malformed file does not fail loudly, it renders an empty chart.",
+  "type": "object",
+  "required": [
+    "meta",
+    "order",
+    "series"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": [
+        "year",
+        "readings",
+        "axis",
+        "regions",
+        "locked",
+        "max_selected"
+      ],
+      "properties": {
+        "year": {
+          "type": "string",
+          "pattern": "^[0-9]{4}/[0-9]{2}$"
+        },
+        "base_year": {
+          "type": "string",
+          "pattern": "^[0-9]{4}/[0-9]{2}$"
+        },
+        "readings": {
+          "description": "X axis labels, oldest first. Every region of every series must carry exactly this many values.",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 8,
+          "items": {
+            "type": "string"
+          }
+        },
+        "axis": {
+          "description": "Fixed plot range, not fitted to the data. head must exceed the largest value in the file or that line is clipped.",
+          "type": "object",
+          "required": [
+            "foot",
+            "head"
+          ],
+          "properties": {
+            "foot": {
+              "type": "number"
+            },
+            "head": {
+              "type": "number"
+            }
+          }
+        },
+        "regions": {
+          "description": "The toggle. Two entries. `key` must match the per-series region keys; `label` is what the toggle shows.",
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "required": [
+              "key",
+              "label"
+            ],
+            "properties": {
+              "key": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20
+              }
+            }
+          }
+        },
+        "locked": {
+          "description": "Key of the series that is always plotted and cannot be deselected.",
+          "type": "string"
+        },
+        "max_selected": {
+          "description": "Including the locked one.",
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 6
+        }
+      }
+    },
+    "order": {
+      "description": "Display order in the picker and the table. Must list every key in `series`, with meta.locked first.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "series": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "label"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "note": {
+            "description": "Shown in the (i) popover. Plain text.",
+            "type": "string",
+            "maxLength": 300
+          }
+        },
+        "patternProperties": {
+          "^(?!label$|note$)[a-z][a-z0-9_]*$": {
+            "$ref": "#/$defs/region"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "region": {
+      "type": "object",
+      "required": [
+        "a"
+      ],
+      "properties": {
+        "a": {
+          "description": "The plotted readings, oldest first. Length must equal meta.readings.length.",
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "v": {
+          "description": "Headline value. Derived from the last entry of `a` when absent.",
+          "type": "number"
+        },
+        "y": {
+          "description": "Percentage change across the final segment. Derived when absent.",
+          "type": "number"
+        },
+        "b": {
+          "description": "Percentage change from the first reading. Derived when absent.",
+          "type": "number"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+# env files (keep .env.example committed)
+.env
+.env*.local
+!.env.example
+
+# raw credentials dump
+supabase.txt
+
+# next.js
+/node_modules
+/.next/
+/out/
+/build
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# local tooling
+.claude/

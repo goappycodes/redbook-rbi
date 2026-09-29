@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RedBook Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/01-foundation.css">
+<link rel="stylesheet" href="assets/css/02-page.css">
+</head>
+<body>
+<div class="scroll-bar" id="scrollBar"></div>
+
+<header class="wf-header" id="siteHeader">
+  <div class="container">
+    <div class="wf-bar">
+      <nav class="wf-nav wf-nav--l">
+        <a href="#">About Us</a>
+        <a href="#">Services</a>
+        <a href="#">Our Team</a>
+      </nav>
+      <a class="wf-logo" href="#" aria-label="RedBook"></a>
+      <nav class="wf-nav wf-nav--r">
+        <a href="#pillars" class="is-active">RedBook Intelligence</a>
+        <a href="#">News</a>
+        <a href="#">Contact</a>
+      </nav>
+      <span class="wf-menu">Menu</span>
+    </div>
+  </div>
+</header>
+
+<nav class="sec-nav" id="secNav" aria-label="Sections">
+  <div class="sec-nav__track">
+    <a href="#about" data-sec="about"><span class="sn-f">What we stand for</span><span class="sn-s">About</span></a>
+    <a href="#pillars" data-sec="pillars"><span class="sn-f">The Three Pillars</span><span class="sn-s">Pillars</span></a>
+    <a href="#reports" data-sec="reports"><span class="sn-f">Research</span><span class="sn-s">Research</span></a>
+    <a href="#index" data-sec="index"><span class="sn-f">Data</span><span class="sn-s">Data</span></a>
+    <a href="#tools" data-sec="tools"><span class="sn-f">Tools</span><span class="sn-s">Tools</span></a>
+    <a href="#exchange" data-sec="exchange"><span class="sn-f">Contribute/Contact</span><span class="sn-s">Contribute/Contact</span></a>
+    <a href="#newsletter" data-sec="newsletter"><span class="sn-f">Newshub</span><span class="sn-s">Newshub</span></a>
+  </div>
+</nav>
+<!-- ================= 01 - HERO ================= -->
+<section class="hero" id="hero">
+  <canvas class="hero__flow" id="heroFlow" aria-hidden="true"></canvas>
+  <div class="hero__scrim"></div>
+  <div class="container hero__inner">
+    <p class="eyebrow hero__eyebrow" data-reveal>RedBook Intelligence</p>
+    <h1 class="h-display" id="heroHeadline">
+      <span class="ln"><span class="ln__i" data-text="Research," style="--i:0">Research,</span></span>
+      <span class="ln"><span class="ln__i" data-text="data" style="--i:1">data</span></span>
+      <span class="ln"><span class="ln__i" data-text="&amp; tools" style="--i:2">&amp; tools</span></span>
+    </h1>
+    <p class="lede" data-reveal style="--i:4;margin-top:30px">
+      The intelligence hub for luxury residential projects – built for you.
+    </p>
+    <div class="btn-row" data-reveal style="--i:5">
+      <a class="rb-btn rb-btn--light rb-btn--boxed" href="#pillars">Explore RedBook Intelligence</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 - WHAT RBi IS ================= -->
+<section class="section" id="about">
+  <div class="container">
+    <p class="eyebrow eyebrow--red" data-reveal>What we stand for</p>
+    <h2 class="h-1" data-reveal style="--i:1">Data tells you what&rsquo;s happened to costs. Intelligence tells you what to do about it.</h2>
+
+    <div class="about-row about-note" style="margin-top:38px">
+      <p class="value__c" data-reveal>RedBook Intelligence exists to turn industry data into valuable insights. We make an often opaque world more transparent, bringing clarity to the numbers and data that can be applied. RBi is research designed to be used, quoted or presented to clients as well as within the industry. Trust is earned by consistently providing information that helps people make better decisions, something we strive to do.</p>
+    </div>
+
+    <div class="grid g-4 about-row figures" style="margin-top:46px">
+      <div class="figure" data-reveal style="--i:0"><p class="figure__n" data-count="200" data-suffix="+">0</p><p class="figure__l">Contributing<br>practices</p></div>
+      <div class="figure" data-reveal style="--i:1"><p class="figure__n" data-count="2800">0</p><p class="figure__l">Projects<br>logged</p></div>
+      <div class="figure" data-reveal style="--i:2"><p class="figure__n" data-count="14" data-prefix="&pound;" data-suffix="B+">0</p><p class="figure__l">Project<br>value</p></div>
+      <div class="figure" data-reveal style="--i:3"><p class="figure__n" data-count="350" data-suffix="k+">0</p><p class="figure__l">Data<br>points</p></div>
+    </div>
+    <p class="figure__note">*&nbsp;<span class="brand">RBi</span> Statistics 26/27</p>
+  </div>
+</section>
+
+<!-- ================= 03 - THE THREE PILLARS ================= -->
+<section class="section section--parch" id="pillars">
+  <div class="container">
+    <div class="grid g-12" style="margin-bottom:38px">
+      <div class="span-12">
+        <p class="eyebrow eyebrow--red" data-reveal>The intelligence hub</p>
+        <h2 class="h-2" data-reveal style="--i:1;margin-bottom:0">RedBook Intelligence</h2>
+      </div>
+    </div>
+
+    <div class="pgrid">
+      <a class="pcard" href="#reports" data-reveal style="--i:0">
+        <div class="pcard__media">
+          <canvas class="pcard__flow" aria-hidden="true"></canvas>
+          <svg class="pico" viewBox="0 0 48 48" aria-hidden="true"><path d="M13 11h16v18"/><path d="M13 11v26h11"/><path d="M17 17h8M17 21h8"/><circle cx="30" cy="29" r="7"/><path d="M35 34l4 4"/></svg>
+          <span class="pcard__cap">Research</span>
+        </div>
+        <p class="pcard__name">Research</p>
+        <p class="pcard__copy">Focused papers segmented by topic and by audience. Written to be read, not to be academic.</p>
+        <div class="pcard__foot"><span class="rb-btn" style="pointer-events:none">Read the research
+          <span class="rb-btn__arrow"></span>
+          <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+        </span></div>
+      </a>
+
+      <a class="pcard" href="#index" data-reveal style="--i:1">
+        <div class="pcard__media">
+          <canvas class="pcard__flow" aria-hidden="true"></canvas>
+          <svg class="pico" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 32h28"/><path d="M10 23 17 26 24 20 31 23 38 17"/><circle cx="38" cy="17" r="1.8" class="pico__d"/></svg>
+          <span class="pcard__cap">Data</span>
+        </div>
+        <p class="pcard__name">Data</p>
+        <p class="pcard__copy">The data spine. Total project-cost movement, year on year, base 100 from Year 1.</p>
+        <div class="pcard__foot"><span class="rb-btn" style="pointer-events:none">See the index
+          <span class="rb-btn__arrow"></span>
+          <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+        </span></div>
+      </a>
+
+      <a class="pcard" href="#tools" data-reveal style="--i:2">
+        <div class="pcard__media">
+          <canvas class="pcard__flow" aria-hidden="true"></canvas>
+          <svg class="pico" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 9h20v30H14z"/><path d="M18 14h12v5H18z"/><circle cx="19" cy="25" r="1.4" class="pico__d"/><circle cx="24" cy="25" r="1.4" class="pico__d"/><circle cx="29" cy="25" r="1.4" class="pico__d"/><circle cx="19" cy="31" r="1.4" class="pico__d"/><circle cx="24" cy="31" r="1.4" class="pico__d"/><circle cx="29" cy="31" r="1.4" class="pico__d"/></svg>
+          <span class="pcard__cap">Tools</span>
+        </div>
+        <p class="pcard__name">Tools</p>
+        <p class="pcard__copy">Where the data stops being something to read about and becomes something you run against your own scheme.</p>
+        <div class="pcard__foot"><span class="rb-btn" style="pointer-events:none">Open the tools
+          <span class="rb-btn__arrow"></span>
+          <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+        </span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 - REPORTS ================= -->
+<section class="section" id="reports">
+  <div class="container">
+    <div class="grid g-12" style="margin-bottom:38px">
+      <div class="span-12">
+        <p class="eyebrow eyebrow--red" data-reveal>Research</p>
+        <h2 class="h-1 h-1--nowrap" data-reveal style="--i:1">REDBOOK INTELLIGENCE REPORTS</h2>
+        <p class="lede" data-reveal style="--i:2;margin:22px 0 0;max-width:640px">Annual industry data reports with key findings and insights from RBi data.</p>
+      </div>
+      </div>
+
+    <div class="rep-bar" data-reveal>
+      <span class="rep-bar__l">Year</span>
+      <span class="rep-sel">
+        <label class="sr-only" for="repYear">Report year</label>
+        <select id="repYear">
+          <option value="2026/27">2026/27</option>
+          <option value="2025/26">2025/26</option>
+          <option value="2024/25">2024/25</option>
+        </select>
+      </span>
+    </div>
+    <div class="grid g-3" style="margin-bottom:38px" data-repyear="2026/27">
+      <div data-reveal style="--i:0">
+        <a class="cover" href="#">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2026-27-01-sentiment.jpg" alt=""><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n cover__n--label">RBi Report</span><span class="cover__t">Sentiment</span><span class="cover__d">Published 01/26</span></span>
+        </a>
+        <p class="small" style="margin-top:16px">What clients, advisors and contractors expect over the next twelve months: appetite, hesitancy, and where the two diverge between London and the country.</p>
+      </div>
+      <div data-reveal style="--i:1">
+        <a class="cover" href="#">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2026-27-02-costs.jpg" alt=""><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n cover__n--label">RBi Report</span><span class="cover__t">Costs</span><span class="cover__d">Published 03/26</span></span>
+        </a>
+        <p class="small" style="margin-top:16px">Where total project costs have moved since Year 1, which components drove the shift, and what that means for a scheme being priced today.</p>
+      </div>
+      <div data-reveal style="--i:2">
+        <a class="cover" href="#">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2026-27-03-clients.jpg" alt=""><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n cover__n--label">RBi Report</span><span class="cover__t">Clients</span><span class="cover__d">Published 05/26</span></span>
+        </a>
+        <p class="small" style="margin-top:16px">Who is building, what they are building, and how they make decisions. Segmented by budget band and by region.</p>
+      </div>
+    </div>
+    <div class="grid g-3" style="margin-bottom:38px" data-repyear="2025/26" hidden>
+      <div data-reveal style="--i:0">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-01-welcome.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">01</span><span class="cover__t">Welcome</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:1">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-02-unwrapping-property-projects.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">02</span><span class="cover__t">Unwrapping Property Projects</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:2">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-03-clients.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">03</span><span class="cover__t">Clients</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:3">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-04-costs.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">04</span><span class="cover__t">Costs</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:4">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-05-time.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">05</span><span class="cover__t">Time</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:5">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-06-planning-and-heritage.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">06</span><span class="cover__t">Planning &amp; Heritage</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:6">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-07-what-do-clients-want.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">07</span><span class="cover__t">What Do Clients Want?</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:7">
+        <a class="cover" href="https://redbookagency.com/theredbookindex/" target="_blank" rel="noopener">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-08-our-predictions.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__n">08</span><span class="cover__t">Our Predictions</span><span class="cover__d">Published 10/25</span></span>
+        </a>
+      </div>
+      <div data-reveal style="--i:8">
+        <div class="cover cover--locked" aria-disabled="true" title="Available to contributors on release">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2025-26-09-contributor-report.jpg" alt="" loading="lazy"><span class="cover__hint">Click to read</span><span class="cover__lock" aria-label="Restricted"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></svg></span></span>
+          <span class="cover__cap"><span class="cover__n">09</span><span class="cover__t">Contributor Report</span><span class="cover__d">Published 10/25</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="grid g-3" style="margin-bottom:38px" data-repyear="2024/25" hidden>
+      <div data-reveal style="--i:0">
+        <a class="cover" href="#">
+          <span class="cover__plate"><img class="cover__img" src="assets/img/report-2024-25-redbook-intelligence-report.jpg" alt=""><span class="cover__hint">Click to read</span></span>
+          <span class="cover__cap"><span class="cover__t">RedBook Intelligence Report</span><span class="cover__d">Published 10/24</span></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="row-intro" data-reveal data-repyear="2026/27">
+      <p class="eyebrow eyebrow--red">Future reports</p>
+    </div>
+    <div class="row-list" data-reveal data-repyear="2026/27">
+      <div class="row-item"><span class="row-item__idx">04</span><span class="row-item__t">Timelines</span><span class="row-item__d">How long schemes actually take against how long they were promised, and the points at which programmes most often slip.</span><span class="row-item__w">Coming 07/26</span></div>
+      <div class="row-item"><span class="row-item__idx">05</span><span class="row-item__t">Planning &amp; Heritage</span><span class="row-item__d">Borough-by-borough approval rates, refusal reasons and policy summaries for listed buildings and conservation-area work.</span><span class="row-item__w">Coming 09/26</span></div>
+      <div class="row-item"><span class="row-item__idx">06</span><span class="row-item__t">What Do Clients Want</span><span class="row-item__d">The brief behind the brief: the rooms, finishes and outcomes clients ask for most often, and what each one costs to deliver.</span><span class="row-item__w">Coming 11/26</span></div>
+      <div class="row-item"><span class="row-item__idx">07</span><span class="row-item__t">Project Finance</span><span class="row-item__d">How lenders, brokers and underwriters price luxury residential risk, and the points at which schemes most often stall on funding.</span><span class="row-item__w">Coming 01/27</span></div>
+      <div class="row-item"><span class="row-item__idx">08</span><span class="row-item__t">Contributor Report</span><span class="row-item__d">What the practices themselves told us: salaries, margins and charge-out rates, gathered across the year and returned in full.</span><span class="row-item__w">Coming 03/27</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 - THE INDEX ================= -->
+<section class="section section--parch" id="index">
+  <div class="container">
+    <div class="grid g-12" style="margin-bottom:38px">
+      <div class="span-12">
+        <p class="eyebrow eyebrow--red" data-reveal>Data</p>
+        <h2 class="h-1 h-1--nowrap" data-reveal style="--i:1">The RedBook Index</h2>
+        <p class="lede" data-reveal style="--i:2;margin:22px 0 0;max-width:640px">Tracking the change in key metrics across luxury residential project costs.</p>
+      </div>
+      </div>
+
+    <div class="idx-tile" id="indexTile">
+    <div class="idx-bar">
+      <div class="seg" id="regionSeg" role="group" aria-label="Region">
+        <button class="seg__b is-on" type="button" data-region="london" aria-pressed="true">London</button>
+        <button class="seg__b" type="button" data-region="country" aria-pressed="false">Country</button>
+      </div>
+      <div class="cx" id="cx">
+        <button class="cx__btn" type="button" id="cxBtn" aria-expanded="false" aria-controls="cxPanel">
+          Customise your view<i></i>
+        </button>
+        <div class="cx__panel" id="cxPanel" hidden>
+          <div class="cx__head">
+            <p class="cx__note" id="cxNote">Select up to four. The overall index is always shown.</p>
+            <button class="cx__x" type="button" id="cxClose" aria-label="Close">
+              <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13"/></svg>
+            </button>
+          </div>
+          <div id="cxRows"></div>
+          <div class="cx__foot">
+            <button type="button" class="cx__clear" id="cxClear">Clear all</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid g-12" style="align-items:start">
+      <div class="span-7" data-reveal>
+        <div class="chart">
+          <span class="chart__y chart__y--hi">150</span>
+          <span class="chart__y chart__y--lo">100</span>
+          <span class="chart__tip" id="chartTip" aria-hidden="true"></span>
+          <svg viewBox="0 0 600 300" preserveAspectRatio="none" aria-hidden="true">
+            <g id="clines"></g>
+          </svg>
+        </div>
+        <div class="chart__x">
+          <span>2023/24</span><span>2024/25</span><span>2025/26</span><span>2026/27</span>
+        </div>
+        <div class="chart__legend" id="chartLegend"></div>
+      </div>
+      <div class="span-5 pl-col">
+        <div class="index-stats">
+          <div class="stat-head">
+            <span></span><span>From &rsquo;25</span><span>From base</span>
+          </div>
+          <div id="statRows"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spine-actions">
+      <a class="rb-btn" href="#">Export your graph
+        <span class="rb-btn__arrow"></span>
+        <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+      </a>
+      <a class="rb-btn" href="#" id="reqIndex">Request full index
+        <span class="rb-btn__arrow"></span>
+        <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+      </a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 - TOOLS ================= -->
+<section class="section" id="tools">
+  <div class="container">
+    <div class="grid g-12" style="margin-bottom:38px">
+      <div class="span-12">
+        <p class="eyebrow eyebrow--red" data-reveal>Tools</p>
+        <h2 class="h-1 h-1--nowrap" data-reveal style="--i:1">REDBOOK INTELLIGENCE TOOLS</h2>
+        <p class="lede" data-reveal style="--i:2;margin:22px 0 0">Where the data stops being something to read and becomes something you can run against your own scheme.</p>
+      </div>
+      </div>
+
+    <div class="tools">
+      <a class="tbox tbox--live" href="#" data-reveal style="--i:0">
+        <span class="tbox__n">01</span>
+        <h3 class="tbox__t">Feasibility<br>calculator</h3>
+        <p class="tbox__c">The flagship. Put a scheme in, get a cost range out, benchmarked against real project data.</p>
+        <div class="tbox__foot">
+          <span class="rb-btn rb-btn--light">Open the calculator
+            <span class="rb-btn__arrow"></span>
+            <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+          </span>
+        </div>
+      </a>
+
+      <div class="tbox tbox--locked" data-reveal style="--i:1">
+        <span class="tbox__n">02</span>
+        <div class="tbox__foot">
+          <span class="tbox__lock"><svg class="tbox__lockicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.6" width="14" height="10.4" rx="1"/><path d="M8.2 10.6V7.4a3.8 3.8 0 0 1 7.6 0v3.2"/></svg><span>In development</span></span>
+        </div>
+      </div>
+
+      <div class="tbox tbox--locked" data-reveal style="--i:2">
+        <span class="tbox__n">03</span>
+        <div class="tbox__foot">
+          <span class="tbox__lock"><svg class="tbox__lockicon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.6" width="14" height="10.4" rx="1"/><path d="M8.2 10.6V7.4a3.8 3.8 0 0 1 7.6 0v3.2"/></svg><span>In development</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 - THE EXCHANGE ================= -->
+<section class="section section--parch" id="exchange">
+  <div class="container">
+    <div class="xch">
+      <div class="xch__col">
+        <p class="eyebrow eyebrow--red" data-reveal>Collective knowledge</p>
+        <h2 class="h-2" data-reveal style="--i:1">Are you a design or delivery<br>professional in this industry?</h2>
+        <p class="lede" data-reveal style="--i:2">Contribute to the report in exchange for your data.</p>
+        <p class="body" data-reveal style="--i:3;margin-top:22px">Register your interest in participation for 27/28</p>
+        <form class="form-row" data-validate novalidate data-reveal style="--i:4">
+          <input class="ctrl" type="email" name="email" autocomplete="email" placeholder="Email address" spellcheck="false" required>
+          <button class="rb-btn" type="submit">Register <span class="rb-btn__arrow"></span>
+            <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+          </button>
+        </form>
+      </div>
+      <div class="xch__col">
+        <p class="eyebrow eyebrow--red" data-reveal>Contact us</p>
+        <h2 class="h-2" data-reveal style="--i:1">Interested in acquiring<br>RedBook data?</h2>
+        <p class="lede" data-reveal style="--i:2">Tailored data for your project or development.</p>
+        <p class="body" data-reveal style="--i:3;margin-top:22px">Tell us what you are working on</p>
+        <form class="form-row" data-validate novalidate data-reveal style="--i:4">
+          <input class="ctrl" type="email" name="email" autocomplete="email" placeholder="Email address" spellcheck="false" required>
+          <button class="rb-btn" type="submit">Get in touch <span class="rb-btn__arrow"></span>
+            <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 - WHAT WE STAND FOR ================= -->
+<!-- ================= 08 - NEWSLETTER ================= -->
+<section class="section" id="newsletter">
+  <div class="container">
+    <div class="grid g-12 nl">
+      <div class="span-6 nl__l">
+        <p class="eyebrow eyebrow--red" data-reveal>Monthly</p>
+        <h2 class="h-2" data-reveal style="--i:1">The RB<span class="rbi-i">i</span> Newshub</h2>
+        <form class="form-row" data-validate novalidate data-reveal style="--i:3">
+          <input class="ctrl" type="email" name="email" autocomplete="email" placeholder="Email address" spellcheck="false" required>
+          <button class="rb-btn" type="submit">Subscribe <span class="rb-btn__arrow"></span>
+            <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+          </button>
+        </form>
+      </div>
+      <div class="span-6 pl-col">
+        <div class="grid g-2" style="gap:24px">
+          <div data-reveal style="--i:0">
+            <div class="media media--1x1"><img src="assets/img/newshub-the-podcast.jpg" alt=""></div>
+            <p class="tracked" style="margin:16px 0 6px">The <br class="br-m">podcast</p>
+            <p class="small">Monthly, with a designer, data expert or industry CEO.</p>
+          </div>
+          <div data-reveal style="--i:1">
+            <div class="media media--1x1"><img src="assets/img/newshub-news-and-lifestyle.jpg" alt=""></div>
+            <p class="tracked" style="margin:16px 0 6px">News &amp; <br class="br-m">Lifestyle</p>
+            <p class="small">Where human-interest and talking-head material lives.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="journal" data-reveal>
+      <a class="jrow" href="#"><span class="jrow__d">Sep 2026</span><span class="jrow__t">What the Q3 tender returns are telling us</span><span class="jrow__k">Journal</span><span class="jrow__a"><span class="rb-btn__arrow"></span><svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg></span></a>
+      <a class="jrow" href="#"><span class="jrow__d">Aug 2026</span><span class="jrow__t">Why professional fees are lagging build costs</span><span class="jrow__k">Article</span><span class="jrow__a"><span class="rb-btn__arrow"></span><svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg></span></a>
+      <a class="jrow" href="#"><span class="jrow__d">Aug 2026</span><span class="jrow__t">Five schemes that came in under budget, and why</span><span class="jrow__k">Journal</span><span class="jrow__a"><span class="rb-btn__arrow"></span><svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg></span></a>
+      <a class="jrow" href="#"><span class="jrow__d">Jul 2026</span><span class="jrow__t">Landscaping: the line item nobody forecasts</span><span class="jrow__k">Article</span><span class="jrow__a"><span class="rb-btn__arrow"></span><svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg></span></a>
+      <a class="jrow" href="#"><span class="jrow__d">Jul 2026</span><span class="jrow__t">Talking to lenders about prime residential risk</span><span class="jrow__k">Journal</span><span class="jrow__a"><span class="rb-btn__arrow"></span><svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="wf-footer">
+  <div class="container">
+    <div class="grid g-12" style="gap:40px 20px">
+      <div class="span-4">
+        <img class="wf-footer__mark" src="assets/img/footer-mark.png" alt="RedBook Intelligence">
+        <p class="small" style="color:var(--onDark-45)">An intelligence hub of research, data and tools.</p>
+      </div>
+      <div class="span-4">
+        <p class="tracked" style="margin-bottom:14px">RedBook Intelligence</p>
+        <p class="small" style="color:var(--onDark-70)">Reports &middot; The Index &middot; Tools &middot; Contribute data</p>
+      </div>
+      <div class="span-4">
+        <p class="tracked" style="margin-bottom:14px">Follow</p>
+        <p class="small" style="color:var(--onDark-70)">Instagram &middot; LinkedIn</p>
+        <p class="small" style="margin-top:20px;color:var(--onDark-45)">Privacy Policy &middot; &copy; 2026 RedBook<br>The Red Book Agency Limited Trading As RedBook, No. 07534026</p>
+      </div>
+    </div>
+  </div>
+</footer>
+<script id="rbFlowVS" type="x-shader/x-vertex">
+attribute vec2 aPos;
+void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }
+</script>
+
+<script id="rbFlowFS" type="x-shader/x-fragment">
+precision highp float;
+
+#define RIPPLES 4
+
+uniform vec2  uRes;
+uniform float uTime;
+uniform vec2  uMouse;
+uniform vec2  uHeading;
+uniform float uEnergy;
+uniform float uPresence;
+uniform vec2  uRipplePos[RIPPLES];
+uniform float uRippleAge[RIPPLES];
+
+vec3 mod289(vec3 x){ return x - floor(x * (1.0/289.0)) * 289.0; }
+vec2 mod289(vec2 x){ return x - floor(x * (1.0/289.0)) * 289.0; }
+vec3 permute(vec3 x){ return mod289(((x*34.0)+1.0)*x); }
+
+float snoise(vec2 v){
+  const vec4 C = vec4(0.211324865405187, 0.366025403784439,
+                     -0.577350269189626, 0.024390243902439);
+  vec2 i  = floor(v + dot(v, C.yy));
+  vec2 x0 = v - i + dot(i, C.xx);
+  vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+  i = mod289(i);
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0))
+                          + i.x + vec3(0.0, i1.x, 1.0));
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m; m = m*m;
+  vec3 x  = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h  = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+  m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+  vec3 g;
+  g.x  = a0.x * x0.x + h.x * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+float fbm(vec2 p){
+  float f = 0.0, a = 0.62;
+  for (int i = 0; i < 3; i++){ f += a * snoise(p); p *= 2.03; a *= 0.26; }
+  return f;
+}
+
+const vec3 PAPER   = vec3(0.94901961, 0.87843137, 0.85882353);
+const vec3 BLUSH   = vec3(0.89803922, 0.69411765, 0.65098039);
+const vec3 ROSE    = vec3(0.83137255, 0.50196078, 0.44705882);
+const vec3 EMBER   = vec3(0.75686275, 0.38431373, 0.33725490);
+const vec3 FLAME   = vec3(0.65490196, 0.26666667, 0.23921569);
+const vec3 VIVID   = vec3(0.76078431, 0.08235294, 0.12156863);
+const vec3 DEEP    = vec3(0.43529412, 0.12941176, 0.13725490);
+const float BIAS  = 0.100;
+const float GAMMA = 0.680;
+
+vec3 ramp(float x){
+  vec3 c = mix(PAPER, BLUSH, smoothstep(0.00, 0.34, x));
+  c = mix(c, ROSE,  smoothstep(0.34, 0.48, x));
+  c = mix(c, EMBER, smoothstep(0.45, 0.57, x));
+  c = mix(c, FLAME, smoothstep(0.52, 0.63, x));
+  c = mix(c, VIVID, smoothstep(0.58, 0.72, x));
+  return c;
+}
+
+void main(){
+  vec2 p  = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
+  vec2 m  = (uMouse          - 0.5 * uRes) / uRes.y;
+  vec2 pn = (gl_FragCoord.xy / uRes - 0.5) * 2.0;
+  vec2 mn = uMouse / uRes;
+
+  float t = uTime * 0.045;
+
+  vec2  hd = uHeading;
+  vec2  nr = vec2(-hd.y, hd.x);
+  vec2  d  = p - m;
+  float across = dot(d, nr);
+  float along  = dot(d, hd);
+
+  float band  = exp(-across * across * 4.5)
+              * (0.55 + 0.45 * exp(-along * along * 0.30));
+  vec2  smear = hd * band * uEnergy * 0.34;
+  vec2  buckle = nr * band * uEnergy * 0.055 * sin(along * 3.4 - uTime * 1.5);
+
+  vec2  wave = vec2(0.0);
+  float ring = 0.0;
+  for (int i = 0; i < RIPPLES; i++){
+    float age = uRippleAge[i];
+    if (age < 6.0) {
+      vec2  rp   = p - (uRipplePos[i] - 0.5 * uRes) / uRes.y;
+      float rl   = length(rp);
+      float rad  = age * 0.60;
+      float bandR = exp(-pow((rl - rad) * 2.6, 2.0));
+      float life = exp(-age * 0.85);
+      float wv   = sin((rl - rad) * 7.5) * bandR * life;
+      ring += wv;
+      wave += rp / (rl + 0.10) * wv * 0.24;
+    }
+  }
+
+  vec2 q0 = p + smear + buckle + wave;
+
+  vec2 q = vec2( fbm(q0 * 0.50 + vec2( 0.0,  t)),
+                 fbm(q0 * 0.50 + vec2( 3.4, -t) + 2.1) );
+  vec2 r = vec2( fbm(q0 * 0.62 + 0.42 * q + vec2(1.7, 9.2) + 0.42 * t),
+                 fbm(q0 * 0.62 + 0.42 * q + vec2(8.3, 2.8) - 0.36 * t) );
+  float f = fbm(q0 * 0.58 + 0.66 * r);
+
+  float tilt = (mn.x - 0.5) * 0.95 * uPresence;
+  vec2  gdir = normalize(vec2(tilt + 0.30, 1.0));
+  float lift = (mn.y - 0.5) * 0.34 * uPresence;
+  float comp = 0.5 + dot(pn, gdir) * 0.52 + lift;
+
+  float v = pow(clamp(comp + f * 0.50 + ring * 0.30 + BIAS, 0.0, 1.0), GAMMA);
+
+  float sh = dot(pn, normalize(vec2(0.48 + tilt * 0.5, 0.88))) * 0.66 + 0.40
+           + fbm(q0 * 0.44 + vec2(4.1, t * 0.9)) * 0.38
+           + lift * 0.25;
+  float shade = smoothstep(0.46, 1.04, sh);
+
+  vec3 col = ramp(v);
+  col = mix(col, DEEP, shade * smoothstep(0.50, 0.80, v));
+
+  float dz = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
+  col += (dz - 0.5) * (1.7 / 255.0) * (1.0 - shade * step(0.80, v));
+
+  gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+}
+</script>
+
+<script src="assets/js/01-hero-flow.js" defer></script>
+
+<script src="assets/js/02-page.js" defer></script>
+
+<link rel="stylesheet" href="assets/css/03-rail.css">
+
+<nav class="rail" id="rail" aria-label="Page navigation">
+  <button class="rail__b rail__top" data-act="top" aria-label="Back to top">
+    <svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21"/></svg>
+    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h12"/><path d="M12 19V9"/><path d="M8 13l4-4 4 4"/></svg>
+  </button>
+  <span class="rail__gap"></span>
+  <div class="rail__pair">
+    <button class="rail__b" data-act="prev" aria-label="Previous section">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21"/></svg>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6"/><path d="M7 11l5-5 5 5"/></svg>
+    </button>
+    <span class="rail__sep"></span>
+    <button class="rail__b" data-act="next" aria-label="Next section">
+      <svg class="ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21"/></svg>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v13"/><path d="M7 13l5 5 5-5"/></svg>
+    </button>
+  </div>
+</nav>
+
+<script src="assets/js/03-nav-rail.js" defer></script>
+
+
+<script src="assets/js/04-reveal-settle.js" defer></script>
+
+<script src="assets/js/05-pillar-flow.js" defer></script>
+
+<div class="dlg" id="reqDlg" role="dialog" aria-modal="true" aria-labelledby="reqDlgT" hidden>
+  <div class="dlg__panel">
+    <button class="dlg__x" type="button" id="reqDlgX" aria-label="Close">
+      <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13"/></svg>
+    </button>
+    <h3 class="dlg__t" id="reqDlgT">Request full index</h3>
+    <p class="dlg__s">Tell us who you are and we will send the current edition over.</p>
+    <form id="reqForm" data-validate novalidate>
+      <div class="form-row"><input class="ctrl" type="text" name="first" autocomplete="given-name" placeholder="First name"></div>
+      <div class="form-row"><input class="ctrl" type="text" name="last" autocomplete="family-name" placeholder="Last name"></div>
+      <div class="form-row"><input class="ctrl" type="text" name="company" autocomplete="organization" placeholder="Company name"></div>
+      <div class="form-row"><input class="ctrl" type="text" name="position" autocomplete="organization-title" placeholder="Position"></div>
+      <div class="form-row"><input class="ctrl" type="email" name="email" autocomplete="email" placeholder="Email address"></div>
+      <div class="dlg__foot">
+        <button class="rb-btn" type="submit">Send request <span class="rb-btn__arrow"></span>
+          <svg class="rb-btn__ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="21"/></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<script src="assets/js/06-request-dialog.js" defer></script>
+
+<script src="assets/js/07-email-validation.js" defer></script>
+</body>
+</html>

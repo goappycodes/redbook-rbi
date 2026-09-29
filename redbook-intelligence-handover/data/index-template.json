@@ -1,0 +1,247 @@
+{
+  "_readme": [
+    "Fill in the `a` arrays. Everything else is already correct.",
+    "Each `a` is the three readings for that index, oldest first: 2024/25, 2025/26, 2026/27.",
+    "Use plain numbers to one decimal place, e.g. 112.6. Do not quote them.",
+    "`v`, `y` and `b` are worked out from `a` and only need adding if you want to override them.",
+    "`axis.head` must stay above the largest number in the file, or that line is clipped."
+  ],
+  "meta": {
+    "year": "2026/27",
+    "base_year": "2024/25",
+    "readings": [
+      "2024/25",
+      "2025/26",
+      "2026/27"
+    ],
+    "axis": {
+      "foot": 100,
+      "head": 150
+    },
+    "regions": [
+      {
+        "key": "country",
+        "label": "Country"
+      },
+      {
+        "key": "international",
+        "label": "International"
+      }
+    ],
+    "locked": "overall",
+    "max_selected": 4
+  },
+  "order": [
+    "overall",
+    "labour",
+    "materials",
+    "rawbuild",
+    "construction",
+    "fees",
+    "ohp",
+    "prelims",
+    "landscaping",
+    "ffe",
+    "allin"
+  ],
+  "series": {
+    "overall": {
+      "label": "Overall Luxury Projects Index",
+      "note": "The headline measure. What it costs to deliver a luxury residential scheme end to end, set at 100 in the base year and weighted across every sub-index at its share of a typical project.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "labour": {
+      "label": "Labour Index",
+      "note": "Site labour: trades, supervision and site management, measured as the cost of getting a unit of work done rather than as headline wage rates.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "materials": {
+      "label": "Materials Index",
+      "note": "The basket of materials prime residential work actually uses, from structure and glazing to joinery, stone and finishes, weighted by typical spend.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "rawbuild": {
+      "label": "Raw Build Cost Index",
+      "note": "Construction cost before anything is added on top: labour and materials in place, without preliminaries, overheads or profit.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "construction": {
+      "label": "Construction Cost Index",
+      "note": "The contractor's full figure for building the scheme, being raw build cost plus preliminaries, overheads and profit.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "fees": {
+      "label": "Professional Fees Index",
+      "note": "Architects, engineers, project managers, cost consultants and specialist designers, tracked against construction cost.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "ohp": {
+      "label": "Contractors OH&Ps Index",
+      "note": "The overhead and profit a contractor adds to the raw build cost, tracked as a percentage of it.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "prelims": {
+      "label": "Contractors Preliminaries Index",
+      "note": "Running the site rather than building on it: welfare, scaffolding, plant, site management, insurances and programme costs.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "landscaping": {
+      "label": "Landscaping Index",
+      "note": "Everything outside the building line: hard and soft landscaping, garden structures, drainage, external lighting and planting.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "ffe": {
+      "label": "FF&E Index",
+      "note": "Loose furniture, fittings and equipment specified for the finished house. Anything built in sits under construction cost instead.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    "allin": {
+      "label": "All-in Project Cost Index",
+      "note": "The whole bill a client carries: construction, professional fees, FF&E, landscaping, statutory costs and contingency.",
+      "country": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      },
+      "international": {
+        "a": [
+          null,
+          null,
+          null
+        ]
+      }
+    }
+  }
+}
