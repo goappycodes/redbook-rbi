@@ -269,7 +269,7 @@ function Reports({ c }: { c: SiteContent }) {
               const inner = (
                 <>
                   <span className="cover__plate">
-                    <img className="cover__img" src={mediaUrl(card.image)} alt="" loading={yi > 0 ? 'lazy' : undefined} />
+                    <img className="cover__img" src={mediaUrl(card.image)} alt={card.alt || ''} loading={yi > 0 ? 'lazy' : undefined} />
                     <span className="cover__hint">{r.hintLabel}</span>
                     {card.locked && LOCK}
                   </span>
@@ -496,7 +496,7 @@ function Newshub({ c }: { c: SiteContent }) {
             <div className="grid g-2" style={{ gap: 24 }}>
               {n.tiles.map((tile, i) => (
                 <div data-reveal="" style={iv(i)} key={i}>
-                  <div className="media media--1x1"><img src={mediaUrl(tile.image)} alt="" /></div>
+                  <div className="media media--1x1"><img src={mediaUrl(tile.image)} alt={tile.alt || ''} /></div>
                   <T as="p" className="tracked" style={{ margin: '16px 0 6px' }} html={rt(tile.label, { mobileBreaks: true })} />
                   <T as="p" className="small" html={rt(tile.body)} />
                 </div>

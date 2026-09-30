@@ -16,9 +16,13 @@ const PAGE = 100
 const when = (iso: string) =>
   new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 
-export default async function Submissions({ searchParams }: { searchParams: Promise<{ source?: string; page?: string }> }) {
+export default async function Submissions({ searchParams }: { searchParams: Promise<{ source?: string; page?: string; q?: string }> }) {
   const sp = await searchParams
   const source = sp.source && SOURCES[sp.source] ? sp.source : undefined
+  const search = (sp.q ?? '').trim().slice(0, 100)
+  /* strip characters that would break the PostgREST or() filter, then match as a
+     substring across the columns a person would search by */
+  const safe = search.replace(/[,()%\\*]/g, ' ').trim()
   const page = Math.max(1, Number(sp.page) || 1)
   const { supabase } = await requireEditor()
 
@@ -28,11 +32,13 @@ export default async function Submissions({ searchParams }: { searchParams: Prom
     .order('created_at', { ascending: false })
     .range((page - 1) * PAGE, page * PAGE - 1)
   if (source) q = q.eq('source', source)
+  if (safe) q = q.or(`email.ilike.%${safe}%,first_name.ilike.%${safe}%,last_name.ilike.%${safe}%,company.ilike.%${safe}%`)
   const { data: rows, count } = await q
   const pages = Math.max(1, Math.ceil((count ?? 0) / PAGE))
   const href = (s?: string, p?: number) => {
     const u = new URLSearchParams()
     if (s) u.set('source', s)
+    if (search) u.set('q', search)
     if (p && p > 1) u.set('page', String(p))
     const qs = u.toString()
     return `/admin/submissions${qs ? `?${qs}` : ''}`
@@ -50,29 +56,38 @@ export default async function Submissions({ searchParams }: { searchParams: Prom
         </div>
       </div>
 
-      <nav className="filters" aria-label="Filter by form">
-        <Link className="btn btn--sm" href={href()} aria-current={!source ? 'page' : undefined}>All</Link>
-        {Object.entries(SOURCES).map(([k, v]) => (
-          <Link key={k} className="btn btn--sm" href={href(k)} aria-current={source === k ? 'page' : undefined}>{v}</Link>
-        ))}
-      </nav>
+      <div className="subs-toolbar">
+        <nav className="filters" aria-label="Filter by form">
+          <Link className="btn btn--sm" href={href()} aria-current={!source ? 'page' : undefined}>All</Link>
+          {Object.entries(SOURCES).map(([k, v]) => (
+            <Link key={k} className="btn btn--sm" href={href(k)} aria-current={source === k ? 'page' : undefined}>{v}</Link>
+          ))}
+        </nav>
+
+        <form className="search-bar" method="get" action={`${BASE_PATH}/admin/submissions`} role="search">
+          {source && <input type="hidden" name="source" value={source} />}
+          <input className="input" type="search" name="q" defaultValue={search} placeholder="Search email, name or company" aria-label="Search submissions" />
+          <button className="btn btn--sm" type="submit">Search</button>
+          {search && <Link className="btn btn--sm btn--ghost" href={source ? `/admin/submissions?source=${source}` : '/admin/submissions'}>Clear</Link>}
+        </form>
+      </div>
 
       <div className="table-wrap">
-        <table className="table">
+        <table className="table table--stack">
           <thead>
             <tr><th>Received</th><th>Form</th><th>Email</th><th>First name</th><th>Last name</th><th>Company</th><th>Position</th><th /></tr>
           </thead>
           <tbody>
             {(rows ?? []).map((r) => (
               <tr key={r.id}>
-                <td className="nowrap">{when(r.created_at)}</td>
-                <td className="nowrap"><span className="badge">{SOURCES[r.source] ?? r.source}</span></td>
-                <td><a href={`mailto:${r.email}`}>{r.email}</a></td>
-                <td>{r.first_name || <span className="muted">—</span>}</td>
-                <td>{r.last_name || <span className="muted">—</span>}</td>
-                <td>{r.company || <span className="muted">—</span>}</td>
-                <td>{r.position || <span className="muted">—</span>}</td>
-                <td><div className="actions"><DeleteSubmission id={r.id} /></div></td>
+                <td className="nowrap" data-label="Received">{when(r.created_at)}</td>
+                <td className="nowrap" data-label="Form"><span className="badge">{SOURCES[r.source] ?? r.source}</span></td>
+                <td data-label="Email"><a href={`mailto:${r.email}`}>{r.email}</a></td>
+                <td data-label="First name">{r.first_name || <span className="muted">—</span>}</td>
+                <td data-label="Last name">{r.last_name || <span className="muted">—</span>}</td>
+                <td data-label="Company">{r.company || <span className="muted">—</span>}</td>
+                <td data-label="Position">{r.position || <span className="muted">—</span>}</td>
+                <td className="table__actions-cell"><div className="actions"><DeleteSubmission id={r.id} /></div></td>
               </tr>
             ))}
             {!rows?.length && <tr><td colSpan={8} className="empty">Nothing yet.</td></tr>}

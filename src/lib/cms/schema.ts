@@ -121,6 +121,7 @@ export const SECTIONS: SectionSchema[] = [
               { type: 'text', key: 'published', label: 'Published (MM/YY)', placeholder: '10/25', pattern: MMYY },
               { type: 'textarea', key: 'blurb', label: 'Blurb', rows: 3, help: 'Optional. Hidden on phones.' },
               { type: 'image', key: 'image', label: 'Cover image', help: '3:4 portrait, e.g. 640 × 853.' },
+              { type: 'text', key: 'alt', label: 'Cover alt text', help: 'Describes the cover for screen readers. Leave empty if it is purely decorative.' },
               { type: 'text', key: 'href', label: 'Link', help: HREF },
               { type: 'checkbox', key: 'newTab', label: 'Open the link in a new tab' },
               { type: 'checkbox', key: 'locked', label: 'Locked', help: 'Decorative only - shows a padlock and removes the link. There is no access control behind it.' },
@@ -220,6 +221,7 @@ export const SECTIONS: SectionSchema[] = [
         type: 'list', key: 'tiles', label: 'Tiles', itemName: 'tile', summary: 'label', min: 2, max: 2,
         fields: [
           { type: 'image', key: 'image', label: 'Image', help: 'Square.' },
+          { type: 'text', key: 'alt', label: 'Image alt text', help: 'Describes the image for screen readers. Leave empty if decorative.' },
           { type: 'textarea', key: 'label', label: 'Label', rows: 2, help: 'Press Enter where the label should break on phones only, so the two tiles stay aligned.' },
           { type: 'textarea', key: 'body', label: 'Body', rows: 2 },
         ],
@@ -243,7 +245,7 @@ export const SECTIONS: SectionSchema[] = [
   {
     key: 'request',
     title: 'Request form',
-    description: 'The "Request full index" dialog. Submissions notify index@ and vihaan@.',
+    description: 'The "Request full index" dialog.',
     fields: [
       { type: 'text', key: 'title', label: 'Title' },
       { type: 'textarea', key: 'standfirst', label: 'Standfirst', rows: 2 },
@@ -323,6 +325,15 @@ export const SECTIONS: SectionSchema[] = [
       { type: 'text', key: 'title', label: 'Page title' },
       { type: 'textarea', key: 'description', label: 'Description', rows: 3 },
       { type: 'image', key: 'ogImage', label: 'Share image', help: '1200 × 630.' },
+    ],
+  },
+  {
+    key: 'notify',
+    title: 'Notifications',
+    description: 'Who is emailed when a form is submitted. Needs the Resend key configured; without it submissions are still stored and shown here.',
+    fields: [
+      { type: 'text', key: 'requestRecipients', label: '"Request full index" recipients', help: 'Comma-separated email addresses. Leave empty to fall back to the server default.' },
+      { type: 'text', key: 'formRecipients', label: 'Other forms recipients', help: 'Contribute, Contact and Newshub. Comma-separated. Leave empty for the server default.' },
     ],
   },
 ]

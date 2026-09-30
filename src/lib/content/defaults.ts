@@ -263,4 +263,9 @@ export const DEFAULT_CONTENT: SiteContent = {
     submitLabel: 'Send request',
     successMessage: 'Thank you. We will send the index over shortly.',
   },
+
+  notify: {
+    requestRecipients: 'index@redbookagency.com, vihaan@redbookagency.com',
+    formRecipients: 'index@redbookagency.com',
+  },
 }

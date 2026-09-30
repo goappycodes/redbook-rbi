@@ -10,7 +10,7 @@ import SideLink from './SideLink'
 export const dynamic = 'force-dynamic'
 
 const PAGE = ['hero', 'about', 'pillars', 'reports', 'index', 'tools', 'exchange', 'newshub', 'request']
-const SITE = ['nav', 'header', 'footer', 'seo']
+const SITE = ['nav', 'header', 'footer', 'seo', 'notify']
 
 export default async function AppLayout({ children }: { children: ReactNode }) {
   const { user } = await requireEditor()
@@ -19,17 +19,17 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
     <div className="shell">
       <Sidebar>
         <nav className="side__group" aria-label="Overview">
-          <SideLink href="/admin" exact>Dashboard</SideLink>
-          <SideLink href="/admin/index-data">Index data</SideLink>
-          <SideLink href="/admin/submissions">Form submissions</SideLink>
+          <SideLink href="/admin" exact icon="dashboard">Dashboard</SideLink>
+          <SideLink href="/admin/index-data" icon="index-data">Index data</SideLink>
+          <SideLink href="/admin/submissions" icon="submissions">Form submissions</SideLink>
         </nav>
         <nav className="side__group" aria-label="Page sections">
           <span className="side__label">Page, top to bottom</span>
-          {PAGE.map((k) => <SideLink key={k} href={`/admin/content/${k}`}>{byKey[k].title}</SideLink>)}
+          {PAGE.map((k) => <SideLink key={k} href={`/admin/content/${k}`} icon={k}>{byKey[k].title}</SideLink>)}
         </nav>
         <nav className="side__group" aria-label="Site furniture">
           <span className="side__label">Around the page</span>
-          {SITE.map((k) => <SideLink key={k} href={`/admin/content/${k}`}>{byKey[k].title}</SideLink>)}
+          {SITE.map((k) => <SideLink key={k} href={`/admin/content/${k}`} icon={k}>{byKey[k].title}</SideLink>)}
         </nav>
         <div className="side__foot">
           <span className="side__user">{user.email}</span>

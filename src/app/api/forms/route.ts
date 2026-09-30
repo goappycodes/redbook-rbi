@@ -85,7 +85,9 @@ export async function POST(req: NextRequest) {
 
   /* the row is the record; a failed email is logged, not shown to the visitor */
   try {
-    await notifySubmission(row)
+    const { data: n } = await db.from('site_content').select('data').eq('key', 'notify').maybeSingle()
+    const notify = n?.data as { requestRecipients?: string; formRecipients?: string } | null
+    await notifySubmission(row, { request: notify?.requestRecipients, form: notify?.formRecipients })
   } catch (e) {
     console.error('[forms] notification failed:', e)
   }
