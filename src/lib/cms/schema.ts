@@ -225,7 +225,12 @@ export const SECTIONS: SectionSchema[] = [
         ],
       },
       {
+        type: 'checkbox', key: 'journalFromWordpress', label: 'Pull journal from WordPress',
+        help: 'When on, the journal list is pulled live from the WordPress “press” posts (newest first) and the entries below are ignored. If WordPress is unreachable, the entries below are used instead.',
+      },
+      {
         type: 'list', key: 'journal', label: 'Journal', itemName: 'entry', summary: 'title',
+        help: 'Used when “Pull journal from WordPress” is off (or as the fallback when it is on).',
         fields: [
           { type: 'text', key: 'date', label: 'Date', placeholder: 'Sep 2026' },
           { type: 'text', key: 'title', label: 'Title' },
