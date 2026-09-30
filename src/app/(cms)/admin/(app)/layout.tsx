@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { requireEditor } from '@/lib/cms/auth'
 import { SECTIONS } from '@/lib/cms/schema'
-import { BASE_PATH } from '@/lib/supabase/env'
 import { signOut } from '../actions'
+import Sidebar from './Sidebar'
 import SideLink from './SideLink'
 
 /* Every page under here is for editors only. Dynamic, because it depends on
@@ -17,11 +17,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
   const byKey = Object.fromEntries(SECTIONS.map((s) => [s.key, s]))
   return (
     <div className="shell">
-      <aside className="side">
-        <div className="side__brand">
-          RedBook Intelligence
-          <small>Content manager</small>
-        </div>
+      <Sidebar>
         <nav className="side__group" aria-label="Overview">
           <SideLink href="/admin" exact>Dashboard</SideLink>
           <SideLink href="/admin/index-data">Index data</SideLink>
@@ -36,11 +32,18 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
           {SITE.map((k) => <SideLink key={k} href={`/admin/content/${k}`}>{byKey[k].title}</SideLink>)}
         </nav>
         <div className="side__foot">
-          <a href={`${BASE_PATH}/`} target="_blank" rel="noopener">View the live page ↗</a>
-          <span>{user.email}</span>
-          <form action={signOut}><button type="submit">Sign out</button></form>
+          <span className="side__user">{user.email}</span>
+          <form action={signOut}>
+            <button type="submit" className="side__signout" aria-label="Sign out" title="Sign out">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <path d="M16 17l5-5-5-5" />
+                <path d="M21 12H9" />
+              </svg>
+            </button>
+          </form>
         </div>
-      </aside>
+      </Sidebar>
       <main className="main">{children}</main>
     </div>
   )

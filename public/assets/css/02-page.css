@@ -42,7 +42,7 @@
 }
 .mnav.is-open{opacity:1;visibility:visible;}
 .mnav__panel{
-  background:var(--plum);color:#fff;width:min(360px,84%);height:100%;
+  background:var(--red);color:#fff;width:min(360px,84%);height:100%;
   padding:78px 32px 32px;position:relative;
   transform:translateX(100%);transition:transform .4s var(--ease);
   display:flex;flex-direction:column;
