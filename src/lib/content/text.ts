@@ -27,5 +27,13 @@ export function mediaUrl(src: string | undefined | null): string {
 
 export const asset = (p: string) => BASE_PATH + p
 
+/* The /assets files are served `immutable` for a year at fixed URLs (see
+   next.config.ts), so edits never reach a returning visitor unless the URL
+   changes. `assetV` stamps a version onto CSS/JS links: Vercel's commit SHA at
+   build, an explicit override, or 'dev' locally. Each deploy is a fresh URL. */
+export const ASSET_VERSION =
+  process.env.NEXT_PUBLIC_ASSET_VERSION || process.env.VERCEL_GIT_COMMIT_SHA || 'dev'
+export const assetV = (p: string) => `${BASE_PATH}${p}?v=${ASSET_VERSION}`
+
 /** "#pillars" stays a page anchor; anything else is a link out. Empty means no link. */
 export const isExternal = (href: string) => /^https?:\/\//.test(href)
