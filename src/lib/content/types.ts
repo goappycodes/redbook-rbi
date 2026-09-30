@@ -129,6 +129,8 @@ export type ExchangeContent = {
   contact: ExchangeColumn
 }
 
+export type JournalEntry = { date: string; title: string; kind: string; href: string }
+
 export type NewshubContent = {
   eyebrow: string
   headline: string
@@ -136,7 +138,9 @@ export type NewshubContent = {
   buttonLabel: string
   successMessage: string
   tiles: { image: string; label: string; body: string }[]
-  journal: { date: string; title: string; kind: string; href: string }[]
+  /** When true, the journal list is pulled live from WordPress `press` posts. */
+  journalFromWordpress: boolean
+  journal: JournalEntry[]
 }
 
 export type FooterContent = {

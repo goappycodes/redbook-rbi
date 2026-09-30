@@ -218,6 +218,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       { image: img('newshub-the-podcast.jpg'), label: 'The\npodcast', body: 'Monthly, with a designer, data expert or industry CEO.' },
       { image: img('newshub-news-and-lifestyle.jpg'), label: 'News &\nLifestyle', body: 'Where human-interest and talking-head material lives.' },
     ],
+    journalFromWordpress: false,
     journal: [
       { date: 'Sep 2026', title: 'What the Q3 tender returns are telling us', kind: 'Journal', href: '#' },
       { date: 'Aug 2026', title: 'Why professional fees are lagging build costs', kind: 'Article', href: '#' },
