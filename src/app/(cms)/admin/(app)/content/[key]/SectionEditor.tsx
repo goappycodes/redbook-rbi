@@ -158,11 +158,11 @@ function FieldInput({ field: f, value, onChange }: { field: Field; value: unknow
     case 'checkbox':
       return (
         <div className="check">
-          <input id={id} type="checkbox" checked={!!value} onChange={(e) => onChange(e.target.checked)} />
-          <div>
-            <label htmlFor={id}>{f.label}</label>
-            {help && <div>{help}</div>}
-          </div>
+          <label className="check__row">
+            <input id={id} type="checkbox" checked={!!value} onChange={(e) => onChange(e.target.checked)} />
+            <span>{f.label}</span>
+          </label>
+          {help && <div className="check__help">{help}</div>}
         </div>
       )
     case 'select':

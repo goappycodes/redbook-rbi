@@ -24,7 +24,7 @@ export default async function Submissions({ searchParams }: { searchParams: Prom
 
   let q = supabase
     .from('form_submissions')
-    .select('id, source, email, first_name, last_name, company, position, page_url, referrer, utm, created_at', { count: 'exact' })
+    .select('id, source, email, first_name, last_name, company, position, created_at', { count: 'exact' })
     .order('created_at', { ascending: false })
     .range((page - 1) * PAGE, page * PAGE - 1)
   if (source) q = q.eq('source', source)
@@ -60,26 +60,22 @@ export default async function Submissions({ searchParams }: { searchParams: Prom
       <div className="table-wrap">
         <table className="table">
           <thead>
-            <tr><th>Received</th><th>Form</th><th>Email</th><th>Name</th><th>Company · Position</th><th>Came from</th><th /></tr>
+            <tr><th>Received</th><th>Form</th><th>Email</th><th>First name</th><th>Last name</th><th>Company</th><th>Position</th><th /></tr>
           </thead>
           <tbody>
-            {(rows ?? []).map((r) => {
-              const utm = r.utm as Record<string, string> | null
-              return (
-                <tr key={r.id}>
-                  <td className="nowrap">{when(r.created_at)}</td>
-                  <td className="nowrap"><span className="badge">{SOURCES[r.source] ?? r.source}</span></td>
-                  <td><a href={`mailto:${r.email}`}>{r.email}</a></td>
-                  <td>{[r.first_name, r.last_name].filter(Boolean).join(' ') || <span className="muted">—</span>}</td>
-                  <td>{[r.company, r.position].filter(Boolean).join(' · ') || <span className="muted">—</span>}</td>
-                  <td className="muted" style={{ maxWidth: 220, overflowWrap: 'anywhere' }}>
-                    {utm && Object.keys(utm).length ? Object.entries(utm).map(([k, v]) => `${k.replace('utm_', '')}: ${v}`).join(', ') : r.referrer || '—'}
-                  </td>
-                  <td><div className="actions"><DeleteSubmission id={r.id} /></div></td>
-                </tr>
-              )
-            })}
-            {!rows?.length && <tr><td colSpan={7} className="empty">Nothing yet.</td></tr>}
+            {(rows ?? []).map((r) => (
+              <tr key={r.id}>
+                <td className="nowrap">{when(r.created_at)}</td>
+                <td className="nowrap"><span className="badge">{SOURCES[r.source] ?? r.source}</span></td>
+                <td><a href={`mailto:${r.email}`}>{r.email}</a></td>
+                <td>{r.first_name || <span className="muted">—</span>}</td>
+                <td>{r.last_name || <span className="muted">—</span>}</td>
+                <td>{r.company || <span className="muted">—</span>}</td>
+                <td>{r.position || <span className="muted">—</span>}</td>
+                <td><div className="actions"><DeleteSubmission id={r.id} /></div></td>
+              </tr>
+            ))}
+            {!rows?.length && <tr><td colSpan={8} className="empty">Nothing yet.</td></tr>}
           </tbody>
         </table>
       </div>

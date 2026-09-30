@@ -132,9 +132,11 @@ code { font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; backgrou
 .textarea { resize: vertical; min-height: 44px; }
 .input:focus, .textarea:focus, .select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(111,33,35,.12); }
 .input[aria-invalid="true"] { border-color: var(--bad); }
-.check { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px; }
-.check input { margin-top: 3px; accent-color: var(--red); }
-.check label { font-weight: 500; font-size: 13px; color: var(--plum); }
+.check { margin-bottom: 12px; }
+.check__row { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.check__row input { width: 16px; height: 16px; margin: 0; flex: none; accent-color: var(--red); cursor: pointer; }
+.check__row span { font-weight: 500; font-size: 13px; color: var(--plum); }
+.check__help { margin-top: 4px; padding-left: 24px; }
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
 @media (max-width: 640px) { .row-2 { grid-template-columns: 1fr; } }
 
@@ -192,7 +194,7 @@ code { font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; backgrou
 /* tables */
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
 table.table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.table th, .table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table th, .table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
 .table th { font-weight: 500; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--mute); background: var(--parch-1); white-space: nowrap; }
 .table tr:last-child td { border-bottom: 0; }
 .table td.nowrap { white-space: nowrap; }
