@@ -31,7 +31,37 @@
 .wf-nav a:hover{opacity:.7;}
 .wf-nav a.is-active{border-bottom-color:currentColor;}
 .wf-menu{display:none;font-size:14px;letter-spacing:3px;text-transform:uppercase;
-  font-weight:500;color:currentColor;justify-self:end;}
+  font-weight:500;color:currentColor;justify-self:end;
+  background:none;border:0;padding:0;cursor:pointer;font-family:inherit;}
+
+/* ---------- mobile menu overlay ---------- */
+.mnav{
+  position:fixed;inset:0;z-index:130;display:flex;justify-content:flex-end;
+  background:rgba(43,8,21,.42);
+  opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s;
+}
+.mnav.is-open{opacity:1;visibility:visible;}
+.mnav__panel{
+  background:var(--plum);color:#fff;width:min(360px,84%);height:100%;
+  padding:78px 32px 32px;position:relative;
+  transform:translateX(100%);transition:transform .4s var(--ease);
+  display:flex;flex-direction:column;
+}
+.mnav.is-open .mnav__panel{transform:none;}
+.mnav__x{
+  position:absolute;top:20px;right:20px;width:36px;height:36px;padding:0;
+  background:none;border:0;cursor:pointer;color:#fff;display:grid;place-items:center;
+}
+.mnav__x svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.4;}
+.mnav__links{display:flex;flex-direction:column;}
+.mnav__links a{
+  color:rgba(255,255,255,.72);text-decoration:none;
+  font-family:'MinervaModern',Georgia,serif;text-transform:uppercase;
+  font-size:20px;letter-spacing:1px;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.12);transition:color .3s ease;
+}
+.mnav__links a:hover,.mnav__links a.is-active{color:#fff;}
+@media (min-width:981px){ .mnav{display:none;} }
 
 /* ---------- section bar: appears once the hero is behind you ---------- */
 .sec-nav{

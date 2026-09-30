@@ -15,6 +15,7 @@ export const DEFAULT_CONTENT: SiteContent = {
 
   header: {
     logoHref: '#',
+    logoImage: '',
     left: [
       { label: 'About Us', href: '#' },
       { label: 'Services', href: '#' },
@@ -228,6 +229,7 @@ export const DEFAULT_CONTENT: SiteContent = {
 
   footer: {
     tagline: 'An intelligence hub of research, data and tools.',
+    mark: '',
     groups: [
       {
         title: 'RedBook Intelligence',

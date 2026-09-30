@@ -7,6 +7,8 @@ export type Link = { label: string; href: string }
 
 export type HeaderContent = {
   logoHref: string
+  /** Optional silhouette that replaces the built-in logo mask. Empty keeps the default. */
+  logoImage: string
   left: Link[]
   right: (Link & { active?: boolean })[]
   menuLabel: string
@@ -139,6 +141,8 @@ export type NewshubContent = {
 
 export type FooterContent = {
   tagline: string
+  /** Optional footer logo image. Empty keeps the built-in mark. */
+  mark: string
   groups: { title: string; links: Link[] }[]
   legal: string
 }

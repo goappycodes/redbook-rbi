@@ -13,6 +13,13 @@ type Props = { content: SiteContent; index: IndexPayload; banner?: ReactNode }
 
 const iv = (i: number, extra?: CSSProperties) => ({ '--i': i, ...extra }) as CSSProperties
 
+/* Override the built-in logo mask with a custom silhouette; the CSS keeps the
+   no-repeat/center/contain and the currentColor fill. */
+const maskStyle = (url: string): CSSProperties => ({
+  WebkitMaskImage: `url("${url}")`,
+  maskImage: `url("${url}")`,
+})
+
 /** Renders editor text through rt(). */
 function T({ as: Tag = 'span', html, ...rest }: { as?: 'p' | 'span' | 'h1' | 'h2' | 'h3'; html: string } & Record<string, unknown>) {
   return <Tag {...rest} dangerouslySetInnerHTML={{ __html: html }} />
@@ -68,13 +75,18 @@ export default function SitePage({ content: c, index, banner }: Props) {
             <nav className="wf-nav wf-nav--l">
               {c.header.left.map((l, i) => <a key={i} {...linkProps(l.href)}>{l.label}</a>)}
             </nav>
-            <a className="wf-logo" href={c.header.logoHref || '#'} aria-label="RedBook" />
+            <a
+              className="wf-logo"
+              href={c.header.logoHref || '#'}
+              aria-label="RedBook"
+              style={c.header.logoImage ? maskStyle(mediaUrl(c.header.logoImage)) : undefined}
+            />
             <nav className="wf-nav wf-nav--r">
               {c.header.right.map((l, i) => (
                 <a key={i} {...linkProps(l.href)} className={l.active ? 'is-active' : undefined}>{l.label}</a>
               ))}
             </nav>
-            <span className="wf-menu">{c.header.menuLabel}</span>
+            <button className="wf-menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileMenu">{c.header.menuLabel}</button>
           </div>
         </div>
       </header>
@@ -122,11 +134,13 @@ export default function SitePage({ content: c, index, banner }: Props) {
       </nav>
 
       <RequestDialog c={c} />
+      <MobileMenu c={c} />
 
       <LegacyScripts
         srcs={[
           '01-hero-flow.js', '02-page.js', '03-nav-rail.js', '04-reveal-settle.js',
           '05-pillar-flow.js', '06-request-dialog.js', '07-email-validation.js',
+          '08-mobile-menu.js',
         ].map((f) => asset(`/assets/js/${f}`))}
       />
     </>
@@ -517,7 +531,7 @@ function Footer({ c }: { c: SiteContent }) {
       <div className="container">
         <div className="grid g-12" style={{ gap: '40px 20px' }}>
           <div className="span-4">
-            <img className="wf-footer__mark" src={asset('/assets/img/footer-mark.png')} alt="RedBook Intelligence" />
+            <img className="wf-footer__mark" src={f.mark ? mediaUrl(f.mark) : asset('/assets/img/footer-mark.png')} alt="RedBook Intelligence" />
             <T as="p" className="small" style={{ color: 'var(--onDark-45)' }} html={rt(f.tagline)} />
           </div>
           {f.groups.map((g, gi) => (
@@ -543,6 +557,23 @@ function Footer({ c }: { c: SiteContent }) {
         </div>
       </div>
     </footer>
+  )
+}
+
+/* ================= MOBILE MENU ================= */
+function MobileMenu({ c }: { c: SiteContent }) {
+  const links = [...c.header.left, ...c.header.right]
+  return (
+    <div className="mnav" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+      <div className="mnav__panel">
+        <button className="mnav__x" type="button" id="menuClose" aria-label="Close menu"><Close /></button>
+        <nav className="mnav__links" aria-label="Site">
+          {links.map((l, i) => (
+            <a key={i} {...linkProps(l.href)} className={'active' in l && l.active ? 'is-active' : undefined}>{l.label}</a>
+          ))}
+        </nav>
+      </div>
+    </div>
   )
 }
 

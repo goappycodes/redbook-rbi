@@ -53,6 +53,8 @@ code { font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; backgrou
 .side a:hover { background: rgba(255,255,255,.08); color: #fff; }
 .side a[aria-current="page"] { background: rgba(255,255,255,.14); color: #fff; }
 .side__foot { margin-top: auto; padding: 0 10px; font-size: 12px; color: rgba(255,255,255,.55); display: flex; flex-direction: column; gap: 8px; }
+.side__foot a { padding: 0; border-radius: 0; font-size: 12px; color: rgba(255,255,255,.82); }
+.side__foot a:hover { background: none; color: #fff; text-decoration: underline; }
 .side__foot button { all: unset; cursor: pointer; color: rgba(255,255,255,.82); }
 .side__foot button:hover { color: #fff; text-decoration: underline; }
 
