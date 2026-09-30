@@ -54,6 +54,10 @@ export async function POST(req: NextRequest) {
   }
 
   const isRequest = source === 'request_index'
+  const first = clip(body.first, 200)
+  if (isRequest && !first) {
+    return NextResponse.json({ ok: false, error: 'Enter your first name' }, { status: 422 })
+  }
   const utm =
     body.utm && typeof body.utm === 'object'
       ? Object.fromEntries(Object.entries(body.utm as object).map(([k, v]) => [k.slice(0, 40), clip(v, 200)]))

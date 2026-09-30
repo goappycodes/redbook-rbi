@@ -20,19 +20,41 @@
     field.setAttribute('aria-invalid', cls === 'form-err' ? 'true' : 'false');
   }
 
+  /* A form can carry data-errsummary="<id>": its fields still light up red, but
+     the wording collects into that one element (top/bottom of the form) instead
+     of a line under each field - the stacked dialog has no room for per-field text. */
+  /* "first name", "email" -> "first name and email"; commas then "and" for more */
+  function joinLabels(a){
+    a = a.filter(Boolean);
+    if(a.length <= 1) return a[0] || 'the required fields';
+    return a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+  }
+
   function check(form){
-    var first = null;
+    var sid = form.getAttribute('data-errsummary');
+    var summary = sid ? document.getElementById(sid) : null;
+    var first = null, firstMsg = '', labels = [];
     [].slice.call(form.querySelectorAll('input:not([data-hp])')).forEach(function(f){
-      var v = (f.value || '').trim(), msg = '';
+      var v = (f.value || '').trim(), msg = '', label = (f.getAttribute('placeholder') || '').trim().toLowerCase();
       if(f.type === 'email'){
-        if(!v) msg = 'Enter your email address';
-        else if(!EMAIL.test(v)) msg = 'That does not look like an email address';
+        if(!v) msg = 'Please enter your email address';
+        else if(!EMAIL.test(v)){ msg = 'Please enter a valid email address.'; label = 'a valid email address'; }
       } else if(f.required && !v){
-        msg = 'This one is needed';
+        msg = label ? 'Please enter your ' + label : 'This one is needed';
       }
-      note(f, 'form-err', msg);
-      if(msg && !first) first = f;
+      if(summary){
+        var row = f.closest('.form-row'); if(row) row.classList.toggle('is-bad', !!msg);
+        f.setAttribute('aria-invalid', msg ? 'true' : 'false');
+        if(msg){ if(!first){ first = f; firstMsg = msg; } labels.push(label); }
+      } else {
+        note(f, 'form-err', msg);
+        if(msg && !first) first = f;
+      }
     });
+    if(summary){
+      if(labels.length){ summary.textContent = labels.length === 1 ? firstMsg : 'Please enter your ' + joinLabels(labels) + '.'; summary.hidden = false; }
+      else { summary.textContent = ''; summary.hidden = true; }
+    }
     if(first) first.focus();
     return !first;
   }
@@ -85,9 +107,19 @@
   /* a field clears its own complaint as soon as it is put right */
   document.addEventListener('input', function(e){
     var f = e.target;
-    if(f && f.tagName === 'INPUT' && f.getAttribute('aria-invalid') === 'true'){
-      var v = (f.value || '').trim();
-      if(f.type === 'email' ? EMAIL.test(v) : !!v) note(f, '', '');
+    if(!(f && f.tagName === 'INPUT') || f.getAttribute('aria-invalid') !== 'true') return;
+    var v = (f.value || '').trim();
+    if(!(f.type === 'email' ? EMAIL.test(v) : !!v)) return;
+    var form = f.closest('form');
+    var sid = form && form.getAttribute('data-errsummary');
+    if(sid){
+      f.setAttribute('aria-invalid', 'false');
+      var row = f.closest('.form-row'); if(row) row.classList.remove('is-bad');
+      if(!form.querySelector('[aria-invalid="true"]')){
+        var s = document.getElementById(sid); if(s){ s.hidden = true; s.textContent = ''; }
+      }
+    } else {
+      note(f, '', '');
     }
   });
 })();

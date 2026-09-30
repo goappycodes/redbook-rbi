@@ -51,15 +51,22 @@
     var btn = form.querySelector('button[type="submit"]');
     var mail = form.querySelector('input[type="email"]');
     if(btn) btn.disabled = true;
+    /* the panel's result shares the one summary line the validation uses, so it
+       keeps the same gap below the fields instead of crowding the email field */
+    var sum = document.getElementById(form.getAttribute('data-errsummary') || '');
+    function say(msg, ok){
+      if(sum){ sum.textContent = msg; sum.hidden = !msg; sum.classList.toggle('dlg__err--ok', !!ok && !!msg); }
+      else if(mail) window.rbFormNote(mail, ok ? 'form-ok' : 'form-err', msg);
+    }
     window.rbPostForm(form).then(function(){
-      window.rbFormNote(mail, 'form-ok', form.getAttribute('data-ok') || 'Thank you.');
+      say(form.getAttribute('data-ok') || 'Thank you.', true);
       setTimeout(function(){
         hide();
         form.reset();
-        window.rbFormNote(mail, '', '');
+        say('', true);
       }, 1600);
     }, function(err){
-      window.rbFormNote(mail, 'form-err', err.message);
+      say(err.message, false);
     }).then(function(){
       busy = false;
       if(btn) btn.disabled = false;
