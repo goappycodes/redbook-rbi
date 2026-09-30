@@ -146,7 +146,7 @@ export const SECTIONS: SectionSchema[] = [
   },
   {
     key: 'index',
-    title: 'The RedBook Index - copy',
+    title: 'The RedBook Index',
     anchor: 'index',
     description: 'The words around the chart. The figures themselves are uploaded under Index data.',
     fields: [
@@ -275,6 +275,10 @@ export const SECTIONS: SectionSchema[] = [
     description: 'The top bar - normally kept in step with the rest of redbookagency.com.',
     fields: [
       { type: 'text', key: 'logoHref', label: 'Logo link' },
+      {
+        type: 'image', key: 'logoImage', label: 'Logo',
+        help: 'Optional. The logo is tinted to match the header (red normally, white over the hero), so upload a solid silhouette on a transparent background (SVG or PNG). A full-colour logo would show as a solid red/white shape. Leave empty for the built-in mark.',
+      },
       { type: 'list', key: 'left', label: 'Left links', itemName: 'link', summary: 'label', fields: link() },
       {
         type: 'list', key: 'right', label: 'Right links', itemName: 'link', summary: 'label',
@@ -289,6 +293,10 @@ export const SECTIONS: SectionSchema[] = [
     description: 'Tagline, link groups and the company line.',
     fields: [
       { type: 'text', key: 'tagline', label: 'Tagline' },
+      {
+        type: 'image', key: 'mark', label: 'Logo',
+        help: 'Optional. Shown top-left of the footer, 40px tall on a dark background. Leave empty for the built-in mark.',
+      },
       {
         type: 'list', key: 'groups', label: 'Link groups', itemName: 'group', summary: 'title', max: 2,
         fields: [
