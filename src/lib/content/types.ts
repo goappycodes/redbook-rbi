@@ -53,6 +53,8 @@ export type ReportCard = {
   published: string
   blurb: string
   image: string
+  /** Screen-reader description of the cover; empty means decorative. */
+  alt?: string
   href: string
   newTab: boolean
   locked: boolean
@@ -137,7 +139,7 @@ export type NewshubContent = {
   placeholder: string
   buttonLabel: string
   successMessage: string
-  tiles: { image: string; label: string; body: string }[]
+  tiles: { image: string; alt?: string; label: string; body: string }[]
   /** When true, the journal list is pulled live from WordPress `press` posts. */
   journalFromWordpress: boolean
   journal: JournalEntry[]
@@ -169,6 +171,12 @@ export type SeoContent = {
   ogImage: string
 }
 
+export type NotifyContent = {
+  /** Comma-separated recipient lists. Empty falls back to the server env/default. */
+  requestRecipients: string
+  formRecipients: string
+}
+
 export type SiteContent = {
   seo: SeoContent
   header: HeaderContent
@@ -183,6 +191,7 @@ export type SiteContent = {
   newshub: NewshubContent
   footer: FooterContent
   request: RequestModalContent
+  notify: NotifyContent
 }
 
 export type ContentKey = keyof SiteContent

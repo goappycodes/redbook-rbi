@@ -31,7 +31,7 @@ export default async function EditSection({ params }: { params: Promise<{ key: s
         </div>
         <div className="head__actions">
           <a className="btn" href={`${BASE_PATH}/${section.anchor ? `#${section.anchor}` : ''}`} target="_blank" rel="noopener">
-            View on page ↗
+            View page ↗
           </a>
         </div>
       </div>

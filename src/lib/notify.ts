@@ -24,14 +24,16 @@ const list = (v: string | undefined) => (v || '').split(',').map((s) => s.trim()
 
 /* Notification email via Resend's HTTP API. Without RESEND_API_KEY it does
    nothing - the submission is still stored and visible in the admin. */
-export async function notifySubmission(row: Row) {
+/* Recipients can be set in the CMS (Notifications section); an empty value falls
+   back to the server env, then to the built-in default. */
+export async function notifySubmission(row: Row, recipients?: { request?: string; form?: string }) {
   const key = process.env.RESEND_API_KEY
   if (!key) return
 
   const to =
     row.source === 'request_index'
-      ? list(process.env.NOTIFY_TO_REQUEST_INDEX || 'index@redbookagency.com,vihaan@redbookagency.com')
-      : list(process.env.NOTIFY_TO || 'index@redbookagency.com')
+      ? list(recipients?.request || process.env.NOTIFY_TO_REQUEST_INDEX || 'index@redbookagency.com,vihaan@redbookagency.com')
+      : list(recipients?.form || process.env.NOTIFY_TO || 'index@redbookagency.com')
   if (!to.length) return
 
   const label = LABELS[row.source] ?? row.source
