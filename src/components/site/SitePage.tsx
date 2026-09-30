@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties, type ReactNode } from 'react'
 import type { SiteContent } from '@/lib/content/types'
-import { asset, isExternal, mediaUrl, rt } from '@/lib/content/text'
+import { asset, assetV, isExternal, mediaUrl, rt } from '@/lib/content/text'
 import { sinceLabel, type IndexPayload } from '@/lib/index-data'
 import { FLOW_FS, FLOW_VS } from './shaders'
 import LegacyScripts from './LegacyScripts'
@@ -141,7 +141,7 @@ export default function SitePage({ content: c, index, banner }: Props) {
           '01-hero-flow.js', '02-page.js', '03-nav-rail.js', '04-reveal-settle.js',
           '05-pillar-flow.js', '06-request-dialog.js', '07-email-validation.js',
           '08-mobile-menu.js',
-        ].map((f) => asset(`/assets/js/${f}`))}
+        ].map((f) => assetV(`/assets/js/${f}`))}
       />
     </>
   )
