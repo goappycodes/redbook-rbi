@@ -586,13 +586,14 @@ function RequestDialog({ c }: { c: SiteContent }) {
         <button className="dlg__x" type="button" id="reqDlgX" aria-label="Close"><Close /></button>
         <h3 className="dlg__t" id="reqDlgT">{r.title}</h3>
         <T as="p" className="dlg__s" html={rt(r.standfirst)} />
-        <form id="reqForm" data-validate="" data-source="request_index" data-ok={r.successMessage} noValidate>
+        <form id="reqForm" data-validate="" data-source="request_index" data-ok={r.successMessage} data-errsummary="reqErr" noValidate>
           <Honeypot />
-          <div className="form-row"><input className="ctrl" type="text" name="first" autoComplete="given-name" placeholder={r.firstName} /></div>
+          <div className="form-row"><input className="ctrl" type="text" name="first" autoComplete="given-name" placeholder={r.firstName} required /></div>
           <div className="form-row"><input className="ctrl" type="text" name="last" autoComplete="family-name" placeholder={r.lastName} /></div>
           <div className="form-row"><input className="ctrl" type="text" name="company" autoComplete="organization" placeholder={r.company} /></div>
           <div className="form-row"><input className="ctrl" type="text" name="position" autoComplete="organization-title" placeholder={r.position} /></div>
           <div className="form-row"><input className="ctrl" type="email" name="email" autoComplete="email" placeholder={r.email} /></div>
+          <p className="dlg__err" id="reqErr" role="alert" hidden />
           <div className="dlg__foot">
             <button className="rb-btn" type="submit">{r.submitLabel} <Arrow /></button>
           </div>

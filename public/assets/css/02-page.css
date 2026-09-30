@@ -677,6 +677,22 @@
 .form-row:focus-within .ctrl,
 .form-row:focus-within .rb-btn{border-color:var(--red);}
 .form-row input.ctrl:focus{outline:none;}
+/* Chrome/Safari wash autofilled fields blue (or yellow); keep them white with
+   the field's own text colour. The inset shadow paints over the UA background.
+   Kept as two rules: an unknown selector would drop the whole list otherwise. */
+.form-row input.ctrl:-webkit-autofill,
+.form-row input.ctrl:-webkit-autofill:hover,
+.form-row input.ctrl:-webkit-autofill:focus{
+  -webkit-box-shadow:0 0 0 1000px #fff inset;
+  box-shadow:0 0 0 1000px #fff inset;
+  -webkit-text-fill-color:var(--plum);
+  caret-color:var(--plum);
+}
+.form-row input.ctrl:autofill{
+  box-shadow:0 0 0 1000px #fff inset;
+  -webkit-text-fill-color:var(--plum);
+  caret-color:var(--plum);
+}
 .form-row{position:relative;}
 /* the message is taken out of the flow, so a field turning red cannot shove
    the layout around it */
@@ -692,6 +708,10 @@
 .form-row.is-bad .rb-btn{border-color:var(--red);}
 .dlg .form-row{margin-bottom:12px;}
 .dlg .form-err,.dlg .form-ok{top:calc(100% + 2px);font-size:11.5px;}
+/* one consolidated message for the whole dialog, so the tight field gaps stay */
+.dlg__err{margin:8px 0 0;color:var(--red);font-size:12.5px;line-height:16px;}
+.dlg__err[hidden]{display:none;}
+.dlg__err--ok{color:var(--mute);}
 
 /* ---------- the exchange, halved ----------
    The two sides share one grid rather than sitting in separate columns, so a
