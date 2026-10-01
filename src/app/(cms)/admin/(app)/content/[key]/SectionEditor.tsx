@@ -1,10 +1,12 @@
 'use client'
-import { useEffect, useId, useMemo, useState, useTransition } from 'react'
+import { useId, useMemo, useState, useTransition } from 'react'
 import { sectionByKey, type Field } from '@/lib/cms/schema'
 import { mediaUrl } from '@/lib/content/text'
 import { createBrowserSupabase } from '@/lib/supabase/browser'
 import { STORAGE_BUCKET } from '@/lib/supabase/env'
 import { restoreRevision, saveSection, type ActionResult } from '../../../actions'
+import { useDialog } from '../../dialog'
+import { useLeaveConfirm } from '../../useLeaveConfirm'
 
 type Obj = Record<string, unknown>
 
@@ -38,14 +40,14 @@ export default function SectionEditor({
   const [saved, setSaved] = useState(() => JSON.stringify(initial))
   const [result, setResult] = useState<ActionResult | null>(null)
   const [pending, start] = useTransition()
+  const { confirm } = useDialog()
   const dirty = useMemo(() => JSON.stringify(data) !== saved, [data, saved])
 
-  useEffect(() => {
-    if (!dirty) return
-    const warn = (e: BeforeUnloadEvent) => { e.preventDefault() }
-    window.addEventListener('beforeunload', warn)
-    return () => window.removeEventListener('beforeunload', warn)
-  }, [dirty])
+  useLeaveConfirm(dirty, {
+    title: 'Unsaved changes',
+    message: 'You have unsaved changes. Leave this page and lose them?',
+    confirmText: 'Leave',
+  })
 
   function save() {
     start(async () => {
@@ -55,8 +57,12 @@ export default function SectionEditor({
     })
   }
 
-  function restore(id: number) {
-    if (!confirm('Replace the live content of this section with that earlier version? The current version is kept in the history.')) return
+  async function restore(id: number) {
+    if (!(await confirm({
+      title: 'Restore this version?',
+      message: 'This replaces the live content of the section with that earlier version. The current version is kept in the history.',
+      confirmText: 'Restore',
+    }))) return
     start(async () => {
       const res = await restoreRevision(contentKey, id)
       if (res.ok) location.reload()
@@ -192,6 +198,7 @@ function FieldInput({ field: f, value, onChange }: { field: Field; value: unknow
 
 function ListField({ field: f, value, onChange }: { field: Extract<Field, { type: 'list' }>; value: Obj[]; onChange: (v: Obj[]) => void }) {
   const [open, setOpen] = useState<number | null>(null)
+  const { confirm } = useDialog()
   const move = (i: number, d: number) => {
     const j = i + d
     if (j < 0 || j >= value.length) return
@@ -200,9 +207,14 @@ function ListField({ field: f, value, onChange }: { field: Extract<Field, { type
     onChange(next)
     if (open === i) setOpen(j)
   }
-  const remove = (i: number) => {
+  const remove = async (i: number) => {
     const label = String(value[i]?.[f.summary] ?? '').split('\n')[0]
-    if (!confirm(`Remove this ${f.itemName}${label ? ` ("${label}")` : ''}?`)) return
+    if (!(await confirm({
+      title: `Remove ${f.itemName}?`,
+      message: label ? `Remove this ${f.itemName} ("${label}")?` : `Remove this ${f.itemName}?`,
+      confirmText: 'Remove',
+      danger: true,
+    }))) return
     onChange(value.filter((_, k) => k !== i))
     setOpen(null)
   }

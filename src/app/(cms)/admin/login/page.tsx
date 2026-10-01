@@ -8,10 +8,13 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   return (
     <main className="auth">
       <div className="auth__card">
-        <p className="auth__eyebrow">Content manager</p>
-        <h1>RedBook Intelligence</h1>
-        <p className="auth__sub">Sign in to edit the page.</p>
-        <LoginForm next={safeNext} notEditor={error === 'not-an-editor'} />
+        <div className="auth__head">
+          <span className="auth__logo" role="img" aria-label="RedBook Intelligence" />
+          <p className="auth__eyebrow">Content manager</p>
+        </div>
+        <div className="auth__body">
+          <LoginForm next={safeNext} notEditor={error === 'not-an-editor'} />
+        </div>
       </div>
     </main>
   )

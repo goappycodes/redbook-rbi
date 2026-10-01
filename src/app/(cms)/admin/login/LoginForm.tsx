@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { createBrowserSupabase } from '@/lib/supabase/browser'
 import { BASE_PATH } from '@/lib/supabase/env'
+import { requestPasswordReset } from '../actions'
 
 const NOT_EDITOR = 'That account is not on the editor list. Ask an existing editor to add it.'
 
@@ -20,11 +21,9 @@ export default function LoginForm({ next, notEditor }: { next: string; notEditor
     setMsg(null)
     const supabase = createBrowserSupabase()
     if (mode === 'reset') {
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${location.origin}${BASE_PATH}/admin/auth/callback?next=/admin/reset`,
-      })
+      const res = await requestPasswordReset(email, location.origin)
       setBusy(false)
-      setMsg(error ? { kind: 'bad', text: error.message } : { kind: 'ok', text: 'If that address has an account, a reset link is on its way.' })
+      setMsg({ kind: res.ok ? 'ok' : 'bad', text: res.message ?? '' })
       return
     }
     const { error } = await supabase.auth.signInWithPassword({ email, password })

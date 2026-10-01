@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { problems, sanitize, sectionByKey } from '@/lib/cms/schema'
 import { requireEditor } from '@/lib/cms/auth'
+import { createPublicClient, createServiceClient } from '@/lib/supabase/server'
+import { BASE_PATH } from '@/lib/supabase/env'
 import { csvToIndex, DEFAULT_INDEX, validateIndex, type IndexPayload } from '@/lib/index-data'
 
 export type ActionResult = { ok: boolean; message?: string; errors?: string[]; warnings?: string[] }
@@ -123,4 +125,32 @@ export async function signOut() {
   const { supabase } = await requireEditor()
   await supabase.auth.signOut()
   redirect('/admin/login')
+}
+
+/* ---------- password reset ----------
+   A reset link is only sent to an email that is actually an editor (on the
+   `admins` allowlist); any other address is told plainly that there is no
+   account. This drops the usual "if that address exists" wording, so it does
+   reveal which emails are editors - an accepted trade-off for this editor-only
+   CMS, where sign-ups are off and the admin team is small and known. */
+export async function requestPasswordReset(email: string, origin: string): Promise<ActionResult> {
+  const addr = email.trim().toLowerCase()
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(addr)) return { ok: false, message: 'Enter a valid email address.' }
+
+  const redirectTo = `${origin}${BASE_PATH}/admin/auth/callback?next=/admin/reset`
+  const service = createServiceClient()
+
+  /* Without the service-role key we cannot check the allowlist; fall back to the
+     safe, non-revealing flow rather than leaking or failing. */
+  if (!service) {
+    await createPublicClient().auth.resetPasswordForEmail(addr, { redirectTo })
+    return { ok: true, message: 'If that address has an account, a reset link is on its way.' }
+  }
+
+  const { data: editor } = await service.from('admins').select('email').eq('email', addr).maybeSingle()
+  if (!editor) return { ok: false, message: 'No account found with that email address.' }
+
+  const { error } = await createPublicClient().auth.resetPasswordForEmail(addr, { redirectTo })
+  if (error) return { ok: false, message: error.message }
+  return { ok: true, message: `A reset link is on its way to ${addr}.` }
 }
