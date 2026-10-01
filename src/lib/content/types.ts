@@ -58,6 +58,8 @@ export type ReportCard = {
   href: string
   newTab: boolean
   locked: boolean
+  /** WordPress 3D FlipBook book id. When set, the card opens the flipbook. */
+  flipbookId?: string
 }
 
 export type FutureReport = {

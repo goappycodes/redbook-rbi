@@ -122,6 +122,7 @@ export const SECTIONS: SectionSchema[] = [
               { type: 'textarea', key: 'blurb', label: 'Blurb', rows: 3, help: 'Optional. Hidden on phones.' },
               { type: 'image', key: 'image', label: 'Cover image', help: '3:4 portrait, e.g. 640 × 853.' },
               { type: 'text', key: 'alt', label: 'Cover alt text', help: 'Describes the cover for screen readers. Leave empty if it is purely decorative.' },
+              { type: 'text', key: 'flipbookId', label: 'Flipbook ID', help: 'WordPress 3D FlipBook book id. When set, clicking the cover opens the flipbook instead of following the link.' },
               { type: 'text', key: 'href', label: 'Link', help: HREF },
               { type: 'checkbox', key: 'newTab', label: 'Open the link in a new tab' },
               { type: 'checkbox', key: 'locked', label: 'Locked', help: 'Decorative only - shows a padlock and removes the link. There is no access control behind it.' },
