@@ -142,7 +142,7 @@ export default function SitePage({ content: c, index, banner }: Props) {
         srcs={[
           '01-hero-flow.js', '02-page.js', '03-nav-rail.js', '04-reveal-settle.js',
           '05-pillar-flow.js', '06-request-dialog.js', '07-email-validation.js',
-          '08-mobile-menu.js',
+          '08-mobile-menu.js', '09-anchor-scroll.js',
         ].map((f) => assetV(`/assets/js/${f}`))}
       />
     </>
