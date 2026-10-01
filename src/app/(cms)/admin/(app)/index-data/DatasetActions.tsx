@@ -1,22 +1,33 @@
 'use client'
 import { useTransition } from 'react'
 import { deleteIndex, publishIndex } from '../../actions'
+import { useDialog } from '../dialog'
 
 export default function DatasetActions({ id, status, previewHref, downloadHref }: { id: string; status: string; previewHref: string; downloadHref: string }) {
   const [pending, start] = useTransition()
+  const { confirm, alert } = useDialog()
 
-  const publish = () => {
-    if (!confirm('Publish this dataset? It replaces the figures on the live page straight away.')) return
+  const publish = async () => {
+    if (!(await confirm({
+      title: 'Publish dataset?',
+      message: 'This replaces the figures on the live page straight away.',
+      confirmText: 'Publish',
+    }))) return
     start(async () => {
       const res = await publishIndex(id)
-      if (!res.ok) alert(res.message)
+      if (!res.ok) await alert({ title: "Couldn't publish", message: res.message })
     })
   }
-  const remove = () => {
-    if (!confirm('Delete this dataset? This cannot be undone.')) return
+  const remove = async () => {
+    if (!(await confirm({
+      title: 'Delete dataset?',
+      message: 'This cannot be undone.',
+      confirmText: 'Delete',
+      danger: true,
+    }))) return
     start(async () => {
       const res = await deleteIndex(id)
-      if (!res.ok) alert(res.message)
+      if (!res.ok) await alert({ title: "Couldn't delete", message: res.message })
     })
   }
 
