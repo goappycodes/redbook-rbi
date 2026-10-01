@@ -172,10 +172,10 @@
   margin-bottom:8px;
 }
 /* restricted: the card is shown and dated, but it does not open */
-.cover--locked{cursor:default;}
-.cover--locked:hover{transform:none;box-shadow:none;background:var(--parch-2);}
-.cover--locked:hover .cover__img{transform:none;}
-.cover--locked .cover__hint{display:none;}
+.cover--locked,.cover--inert{cursor:default;}
+.cover--locked:hover,.cover--inert:hover{transform:none;box-shadow:none;background:var(--parch-2);}
+.cover--locked:hover .cover__img,.cover--inert:hover .cover__img{transform:none;}
+.cover--locked .cover__hint,.cover--inert .cover__hint{display:none;}
 .cover__lock{
   position:absolute;right:10px;top:10px;z-index:4;
   width:30px;height:30px;display:grid;place-items:center;border-radius:50%;
@@ -712,6 +712,17 @@
 .dlg__err{margin:8px 0 0;color:var(--red);font-size:12.5px;line-height:16px;}
 .dlg__err[hidden]{display:none;}
 .dlg__err--ok{color:var(--mute);}
+
+/* ---------- flipbook modal (report viewer) — matches the main site's popup ---------- */
+.fbx{position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);}
+.fbx__frame{width:100%;height:100%;border:0;background:transparent;}
+.fbx__x{
+  position:absolute;top:50px;right:50px;width:35px;height:35px;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.6);border:0;border-radius:50%;color:#fff;font-size:26px;line-height:1;
+  display:grid;place-items:center;transition:background .2s,color .2s;
+}
+.fbx__x:hover{background:rgba(255,255,255,.9);color:#2B0815;}
+@media (max-width:600px){ .fbx__x{top:14px;right:14px;} }
 
 /* ---------- the exchange, halved ----------
    The two sides share one grid rather than sitting in separate columns, so a

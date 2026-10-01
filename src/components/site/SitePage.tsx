@@ -4,6 +4,7 @@ import { asset, assetV, isExternal, mediaUrl, rt } from '@/lib/content/text'
 import { sinceLabel, type IndexPayload } from '@/lib/index-data'
 import { FLOW_FS, FLOW_VS } from './shaders'
 import LegacyScripts from './LegacyScripts'
+import Flipbook from './Flipbook'
 
 /* The prototype's markup (prototype/extracted/index.html), class for class, with
    the copy coming from the CMS. The behaviour is the prototype's own scripts,
@@ -135,6 +136,7 @@ export default function SitePage({ content: c, index, banner }: Props) {
 
       <RequestDialog c={c} />
       <MobileMenu c={c} />
+      <Flipbook />
 
       <LegacyScripts
         srcs={[
@@ -282,12 +284,22 @@ function Reports({ c }: { c: SiteContent }) {
                   </span>
                 </>
               )
+              /* A card is interactive only if it opens something - a flipbook or a
+                 real link (not #) - whether locked or not. */
+              const hasLink = !!card.href && card.href !== '#'
+              const clickable = hasLink || !!card.flipbookId
               return (
                 <div data-reveal="" style={iv(i)} key={i}>
-                  {card.locked ? (
-                    <div className="cover cover--locked" aria-disabled="true" title={r.lockedTitle}>{inner}</div>
+                  {clickable ? (
+                    <a
+                      className="cover"
+                      {...linkProps(card.href, card.newTab)}
+                      data-flipbook-id={card.flipbookId || undefined}
+                      data-flipbook-title={card.flipbookId ? card.title : undefined}
+                      title={card.locked ? r.lockedTitle : undefined}
+                    >{inner}</a>
                   ) : (
-                    <a className="cover" {...linkProps(card.href, card.newTab)}>{inner}</a>
+                    <div className={card.locked ? 'cover cover--locked' : 'cover cover--inert'} aria-disabled="true" title={card.locked ? r.lockedTitle : undefined}>{inner}</div>
                   )}
                   {card.blurb && <T as="p" className="small" style={{ marginTop: 16 }} html={rt(card.blurb)} />}
                 </div>

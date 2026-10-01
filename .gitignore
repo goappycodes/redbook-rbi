@@ -17,3 +17,5 @@ next-env.d.ts
 
 # local tooling
 .claude/
+
+/3d-flip-book
