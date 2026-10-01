@@ -1,3 +1,6 @@
+/* anchor jumps (#newsletter etc.) clear the fixed section-nav bar (~40px) */
+html{scroll-padding-top:56px;}
+
 /* ---------- header: no fill, logo centred, nav split either side ---------- */
 .wf-header{
   position:fixed;top:0;left:0;right:0;z-index:100;
