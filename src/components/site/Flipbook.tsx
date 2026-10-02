@@ -45,7 +45,11 @@ export default function Flipbook() {
   const src = `${EMBED}${EMBED.includes('?') ? '&' : '?'}id=${encodeURIComponent(open.id)}`
   return (
     <div className="fbx" role="dialog" aria-modal="true" aria-label={open.title} onMouseDown={(e) => { if (e.target === e.currentTarget) setOpen(null) }}>
-      <button className="fbx__x" type="button" aria-label="Close" onClick={() => setOpen(null)}>×</button>
+      <button className="fbx__x" type="button" aria-label="Close" onClick={() => setOpen(null)}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
       <iframe className="fbx__frame" src={src} title={open.title} loading="lazy" allow="fullscreen" allowFullScreen />
     </div>
   )
