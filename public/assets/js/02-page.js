@@ -568,7 +568,8 @@
     var cols = head ? [].slice.call(head.children).slice(1).map(function(s){ return s.textContent.trim(); }) : ['Last year', 'From base'];
     var q = function(v){ v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     var rows = [['Index', 'Region'].concat(READINGS, cols)];
-    ordered().forEach(function(key){
+    /* the full dataset (every series), matching the PDF export - not just the plotted ones */
+    ORDER.forEach(function(key){
       var d = SERIES[key][region];
       rows.push([SERIES[key].label, regionLabel()]
         .concat(d.a.map(function(v){ return v == null ? '' : v; }))
@@ -622,17 +623,22 @@
     g.strokeStyle = '#E2DDD8'; g.lineWidth = 1;
     g.beginPath(); g.moveTo(left, hy + 8.5); g.lineTo(left + TW, hy + 8.5); g.stroke();
     g.font = '400 12px Barlow, sans-serif';
-    ordered().forEach(function(key, ri){
-      var y = hy + 24 + ri * rowH, d = SERIES[key][region];
+    /* every series, not just the plotted ones, so the export is the full dataset;
+       a series that is on the chart keeps its line colour, the rest get a neutral chip */
+    ORDER.forEach(function(key, ri){
+      var y = hy + 24 + ri * rowH, d = SERIES[key][region], plotted = picked.indexOf(key) > -1;
       g.textAlign = 'left';
-      g.fillStyle = colourOf(key); g.fillRect(left, y - 9, 11, key === LOCKED ? 4 : 3);
+      g.fillStyle = plotted ? colourOf(key) : '#CDC7C0'; g.fillRect(left, y - 9, 11, key === LOCKED ? 4 : 3);
       g.fillStyle = '#212529'; g.fillText(SERIES[key].label, left + 18, y);
       g.textAlign = 'right';
       var vals = d.a.map(function(v){ return v == null ? '—' : String(v); })
         .concat([d.y == null ? '—' : d.y.toFixed(1) + '%', d.b == null ? '—' : d.b.toFixed(1) + '%']);
       vals.forEach(function(v, j){ g.fillText(v, colR(j), y); });
     });
-    return hy + 24 + ordered().length * rowH + 12;
+    var endY = hy + 24 + ORDER.length * rowH;
+    g.font = '400 11px Barlow, sans-serif'; g.fillStyle = '#8B857F'; g.textAlign = 'left';
+    g.fillText('Series plotted on the chart are shown in colour.', left, endY + 4);
+    return endY + 22;
   }
 
   function exportPdf(){
@@ -651,7 +657,7 @@
       /* the table may be wider than the chart; the page is sized to whichever is wider */
       var contentW = Math.max(W, tableWidth());
       var tableTop = legendBottom(H) + 24;
-      var fullH = tableTop + 48 + ordered().length * TBL.rowH + 12;
+      var fullH = tableTop + 48 + ORDER.length * TBL.rowH + 30;
       var cv = document.createElement('canvas');
       cv.width = (contentW + P * 2) * S; cv.height = fullH * S;
       var g = cv.getContext('2d'); g.scale(S, S);
@@ -663,38 +669,51 @@
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(clone));
   }
 
-  /* A minimal single-page PDF holding one JPEG, scaled to fit a Letter page -
-     no library, so nothing is vendored in. The JPEG embeds directly (DCTDecode).
-     Binary is written via char codes, so the file is assembled as a Uint8Array
-     rather than a string (a UTF-8 Blob would corrupt bytes above 127). */
+  /* A minimal PDF holding one JPEG, fitted to the Letter page width and flowed
+     onto as many pages as its height needs - so a full-series export stays
+     readable instead of shrinking to fit one page. The image is embedded once
+     and shown on each page through a clip + offset, keeping the file small. No
+     library is vendored in; the JPEG embeds directly (DCTDecode), and the file
+     is assembled as a Uint8Array because a UTF-8 Blob would corrupt bytes >127. */
   function buildPdf(jpegDataUrl, iw, ih){
     var jpg = atob(jpegDataUrl.split(',')[1]);
     var PW = 612, PH = 792, M = 36, aw = PW - 2 * M, ah = PH - 2 * M;
-    var sc = Math.min(aw / iw, ah / ih), dw = iw * sc, dh = ih * sc;
-    var x = M + (aw - dw) / 2, y = PH - M - dh;
-    var content = 'q ' + dw.toFixed(2) + ' 0 0 ' + dh.toFixed(2) + ' ' + x.toFixed(2) + ' ' + y.toFixed(2) + ' cm /Im0 Do Q';
+    var sc = aw / iw, Hs = ih * sc;            /* fit to width; height then paginates */
+    var pages = Math.max(1, Math.ceil(Hs / ah - 1e-4));
+    var top = PH - M, clipBottom = PH - M - ah;
+
     var objs = [
       null,
       '<< /Type /Catalog /Pages 2 0 R >>',
-      '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',
-      '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>',
+      null, /* Pages - filled once the page kids are known */
       { dict: '<< /Type /XObject /Subtype /Image /Width ' + iw + ' /Height ' + ih + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + jpg.length + ' >>', stream: jpg },
-      { dict: '<< /Length ' + content.length + ' >>', stream: content },
-    ];
-    var out = '%PDF-1.4\n', off = [];
-    for(var i = 1; i < objs.length; i++){
-      off[i] = out.length;
+    ]
+    var kids = [], next = 4
+    for(var pIdx = 0; pIdx < pages; pIdx++){
+      var yBottom = top + pIdx * ah - Hs;      /* shift the full image up one page-height each page */
+      var content = 'q\n' + M + ' ' + clipBottom + ' ' + aw + ' ' + ah + ' re W n\n' +
+        aw.toFixed(2) + ' 0 0 ' + Hs.toFixed(2) + ' ' + M + ' ' + yBottom.toFixed(2) + ' cm\n/Im0 Do\nQ'
+      var contentNo = next++, pageNo = next++
+      objs[contentNo] = { dict: '<< /Length ' + content.length + ' >>', stream: content }
+      objs[pageNo] = '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /XObject << /Im0 3 0 R >> >> /Contents ' + contentNo + ' 0 R >>'
+      kids.push(pageNo + ' 0 R')
+    }
+    objs[2] = '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + pages + ' >>'
+
+    var out = '%PDF-1.4\n', off = [], count = next
+    for(var i = 1; i < count; i++){
+      off[i] = out.length
       out += i + ' 0 obj\n' + (typeof objs[i] === 'string'
         ? objs[i]
-        : objs[i].dict + '\nstream\n' + objs[i].stream + '\nendstream') + '\nendobj\n';
+        : objs[i].dict + '\nstream\n' + objs[i].stream + '\nendstream') + '\nendobj\n'
     }
-    var xref = out.length;
-    out += 'xref\n0 ' + objs.length + '\n0000000000 65535 f \n';
-    for(var j = 1; j < objs.length; j++) out += ('0000000000' + off[j]).slice(-10) + ' 00000 n \n';
-    out += 'trailer\n<< /Size ' + objs.length + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF';
-    var bytes = new Uint8Array(out.length);
-    for(var k = 0; k < out.length; k++) bytes[k] = out.charCodeAt(k) & 0xff;
-    save(new Blob([bytes], { type: 'application/pdf' }), slug() + '.pdf');
+    var xref = out.length
+    out += 'xref\n0 ' + count + '\n0000000000 65535 f \n'
+    for(var j = 1; j < count; j++) out += ('0000000000' + off[j]).slice(-10) + ' 00000 n \n'
+    out += 'trailer\n<< /Size ' + count + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF'
+    var bytes = new Uint8Array(out.length)
+    for(var k = 0; k < out.length; k++) bytes[k] = out.charCodeAt(k) & 0xff
+    save(new Blob([bytes], { type: 'application/pdf' }), slug() + '.pdf')
   }
 
   var exportBtn = document.getElementById('exportGraph');
