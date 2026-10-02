@@ -568,7 +568,8 @@
     var cols = head ? [].slice.call(head.children).slice(1).map(function(s){ return s.textContent.trim(); }) : ['Last year', 'From base'];
     var q = function(v){ v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     var rows = [['Index', 'Region'].concat(READINGS, cols)];
-    ordered().forEach(function(key){
+    /* the full dataset (every series), matching the PDF export - not just the plotted ones */
+    ORDER.forEach(function(key){
       var d = SERIES[key][region];
       rows.push([SERIES[key].label, regionLabel()]
         .concat(d.a.map(function(v){ return v == null ? '' : v; }))
@@ -576,7 +577,71 @@
     });
     save(new Blob(['﻿' + rows.map(function(r){ return r.map(q).join(','); }).join('\r\n')], { type:'text/csv;charset=utf-8' }), slug() + '.csv');
   }
-  function exportPng(){
+  /* The chart SVG as a bitmap, plus title, axis labels and a colour legend -
+     the shared top of both the PNG (unused now) and the PDF. P/TOP/FOOT frame
+     it; returns the y just below the legend so a caller can carry on. */
+  var EXP = { P: 48, TOP: 84, FOOT: 40, S: 2 };
+  function legendBottom(H){ return EXP.TOP + H + EXP.FOOT + 12 + ordered().length * 26; }
+  function drawExportChart(g, img, W, H){
+    var P = EXP.P, TOP = EXP.TOP, FOOT = EXP.FOOT;
+    g.fillStyle = '#2B0815'; g.font = '500 20px Barlow, sans-serif'; g.textAlign = 'left';
+    g.fillText('The RedBook Index — ' + regionLabel(), P, 38);
+    g.fillStyle = '#8B857F'; g.font = '400 13px Barlow, sans-serif';
+    g.fillText(READINGS[0] + ' – ' + READINGS[READINGS.length - 1] + ', base 100', P, 60);
+    g.strokeStyle = '#E2DDD8'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(P, TOP + 0.5); g.lineTo(P + W, TOP + 0.5); g.moveTo(P, TOP + H - 0.5); g.lineTo(P + W, TOP + H - 0.5); g.stroke();
+    g.drawImage(img, P, TOP, W, H);
+    g.fillStyle = '#8B857F'; g.font = '400 11px Barlow, sans-serif'; g.textAlign = 'right';
+    g.fillText(String(AXIS_HEAD), P - 8, TOP + 4); g.fillText(String(AXIS_FOOT), P - 8, TOP + H);
+    READINGS.forEach(function(lbl, i){
+      g.textAlign = i === 0 ? 'left' : (i === READINGS.length - 1 ? 'right' : 'center');
+      g.fillText(lbl, P + W * i / Math.max(1, READINGS.length - 1), TOP + H + 22);
+    });
+    g.textAlign = 'left'; g.font = '400 13px Barlow, sans-serif';
+    ordered().forEach(function(key, i){
+      var y = TOP + H + FOOT + 12 + i * 26;
+      g.fillStyle = colourOf(key); g.fillRect(P, y - 2, 18, key === LOCKED ? 3 : 2);
+      g.fillStyle = '#212529'; g.fillText(SERIES[key].label, P + 28, y + 3);
+    });
+  }
+
+  /* The data table (the same figures as the CSV) drawn beneath the chart, so the
+     PDF carries both the picture and the numbers. Returns the y below the table. */
+  var TBL = { seriesW: 210, colW: 64, rowH: 24 }; /* table metrics; width derives from these */
+  function tableWidth(){ return TBL.seriesW + (READINGS.length + 2) * TBL.colW; }
+  function paintTable(g, y0, left){
+    var seriesW = TBL.seriesW, colW = TBL.colW, rowH = TBL.rowH, TW = tableWidth();
+    var cols = READINGS.concat(['Last yr', 'From base']);
+    var colR = function(j){ return left + seriesW + (j + 1) * colW - 10; }; /* right edge of a numeric cell */
+    g.fillStyle = '#2B0815'; g.font = '500 15px Barlow, sans-serif'; g.textAlign = 'left';
+    g.fillText('Index data — ' + regionLabel(), left, y0);
+    var hy = y0 + 24;
+    g.font = '600 12px Barlow, sans-serif'; g.fillStyle = '#6B655F';
+    g.textAlign = 'left'; g.fillText('Series', left, hy);
+    g.textAlign = 'right';
+    cols.forEach(function(c, j){ g.fillText(c, colR(j), hy); });
+    g.strokeStyle = '#E2DDD8'; g.lineWidth = 1;
+    g.beginPath(); g.moveTo(left, hy + 8.5); g.lineTo(left + TW, hy + 8.5); g.stroke();
+    g.font = '400 12px Barlow, sans-serif';
+    /* every series, not just the plotted ones, so the export is the full dataset;
+       a series that is on the chart keeps its line colour, the rest get a neutral chip */
+    ORDER.forEach(function(key, ri){
+      var y = hy + 24 + ri * rowH, d = SERIES[key][region], plotted = picked.indexOf(key) > -1;
+      g.textAlign = 'left';
+      g.fillStyle = plotted ? colourOf(key) : '#CDC7C0'; g.fillRect(left, y - 9, 11, key === LOCKED ? 4 : 3);
+      g.fillStyle = '#212529'; g.fillText(SERIES[key].label, left + 18, y);
+      g.textAlign = 'right';
+      var vals = d.a.map(function(v){ return v == null ? '—' : String(v); })
+        .concat([d.y == null ? '—' : d.y.toFixed(1) + '%', d.b == null ? '—' : d.b.toFixed(1) + '%']);
+      vals.forEach(function(v, j){ g.fillText(v, colR(j), y); });
+    });
+    var endY = hy + 24 + ORDER.length * rowH;
+    g.font = '400 11px Barlow, sans-serif'; g.fillStyle = '#8B857F'; g.textAlign = 'left';
+    g.fillText('Series plotted on the chart are shown in colour.', left, endY + 4);
+    return endY + 22;
+  }
+
+  function exportPdf(){
     var svg = chart && chart.querySelector('svg');
     if(!svg) return;
     var r = svg.getBoundingClientRect(), W = Math.round(r.width) || 600, H = Math.round(r.height) || 300;
@@ -587,40 +652,74 @@
     [].slice.call(clone.querySelectorAll('.cline')).forEach(function(n){
       n.removeAttribute('style'); n.setAttribute('stroke-linecap', 'butt'); n.setAttribute('stroke-linejoin', 'miter');
     });
-    var img = new Image(), S = 2, P = 48, TOP = 84, LEG = 26 * ordered().length + 24, FOOT = 40;
+    var img = new Image(), S = EXP.S, P = EXP.P;
     img.onload = function(){
+      /* the table may be wider than the chart; the page is sized to whichever is wider */
+      var contentW = Math.max(W, tableWidth());
+      var tableTop = legendBottom(H) + 24;
+      var fullH = tableTop + 48 + ORDER.length * TBL.rowH + 30;
       var cv = document.createElement('canvas');
-      cv.width = (W + P * 2) * S; cv.height = (TOP + H + FOOT + LEG) * S;
+      cv.width = (contentW + P * 2) * S; cv.height = fullH * S;
       var g = cv.getContext('2d'); g.scale(S, S);
-      g.fillStyle = '#F5F3F0'; g.fillRect(0, 0, W + P * 2, TOP + H + FOOT + LEG);
-      g.fillStyle = '#2B0815'; g.font = '500 20px Barlow, sans-serif';
-      g.fillText('The RedBook Index — ' + regionLabel(), P, 38);
-      g.fillStyle = '#8B857F'; g.font = '400 13px Barlow, sans-serif';
-      g.fillText(READINGS[0] + ' – ' + READINGS[READINGS.length - 1] + ', base 100', P, 60);
-      g.strokeStyle = '#E2DDD8'; g.lineWidth = 1;
-      g.beginPath(); g.moveTo(P, TOP + 0.5); g.lineTo(P + W, TOP + 0.5); g.moveTo(P, TOP + H - 0.5); g.lineTo(P + W, TOP + H - 0.5); g.stroke();
-      g.drawImage(img, P, TOP, W, H);
-      g.fillStyle = '#8B857F'; g.font = '400 11px Barlow, sans-serif';
-      g.textAlign = 'right';
-      g.fillText(String(AXIS_HEAD), P - 8, TOP + 4); g.fillText(String(AXIS_FOOT), P - 8, TOP + H);
-      READINGS.forEach(function(lbl, i){
-        g.textAlign = i === 0 ? 'left' : (i === READINGS.length - 1 ? 'right' : 'center');
-        g.fillText(lbl, P + W * i / Math.max(1, READINGS.length - 1), TOP + H + 22);
-      });
-      g.textAlign = 'left'; g.font = '400 13px Barlow, sans-serif';
-      ordered().forEach(function(key, i){
-        var y = TOP + H + FOOT + 12 + i * 26;
-        g.fillStyle = colourOf(key); g.fillRect(P, y - 2, 18, key === LOCKED ? 3 : 2);
-        g.fillStyle = '#212529'; g.fillText(SERIES[key].label, P + 28, y + 3);
-      });
-      cv.toBlob(function(b){ if(b) save(b, slug() + '.png'); }, 'image/png');
+      g.fillStyle = '#F5F3F0'; g.fillRect(0, 0, contentW + P * 2, fullH);
+      drawExportChart(g, img, W, H);
+      paintTable(g, tableTop, P);
+      buildPdf(cv.toDataURL('image/jpeg', 0.92), cv.width, cv.height);
     };
     img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(clone));
   }
+
+  /* A minimal PDF holding one JPEG, fitted to the Letter page width and flowed
+     onto as many pages as its height needs - so a full-series export stays
+     readable instead of shrinking to fit one page. The image is embedded once
+     and shown on each page through a clip + offset, keeping the file small. No
+     library is vendored in; the JPEG embeds directly (DCTDecode), and the file
+     is assembled as a Uint8Array because a UTF-8 Blob would corrupt bytes >127. */
+  function buildPdf(jpegDataUrl, iw, ih){
+    var jpg = atob(jpegDataUrl.split(',')[1]);
+    var PW = 612, PH = 792, M = 36, aw = PW - 2 * M, ah = PH - 2 * M;
+    var sc = aw / iw, Hs = ih * sc;            /* fit to width; height then paginates */
+    var pages = Math.max(1, Math.ceil(Hs / ah - 1e-4));
+    var top = PH - M, clipBottom = PH - M - ah;
+
+    var objs = [
+      null,
+      '<< /Type /Catalog /Pages 2 0 R >>',
+      null, /* Pages - filled once the page kids are known */
+      { dict: '<< /Type /XObject /Subtype /Image /Width ' + iw + ' /Height ' + ih + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + jpg.length + ' >>', stream: jpg },
+    ]
+    var kids = [], next = 4
+    for(var pIdx = 0; pIdx < pages; pIdx++){
+      var yBottom = top + pIdx * ah - Hs;      /* shift the full image up one page-height each page */
+      var content = 'q\n' + M + ' ' + clipBottom + ' ' + aw + ' ' + ah + ' re W n\n' +
+        aw.toFixed(2) + ' 0 0 ' + Hs.toFixed(2) + ' ' + M + ' ' + yBottom.toFixed(2) + ' cm\n/Im0 Do\nQ'
+      var contentNo = next++, pageNo = next++
+      objs[contentNo] = { dict: '<< /Length ' + content.length + ' >>', stream: content }
+      objs[pageNo] = '<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /XObject << /Im0 3 0 R >> >> /Contents ' + contentNo + ' 0 R >>'
+      kids.push(pageNo + ' 0 R')
+    }
+    objs[2] = '<< /Type /Pages /Kids [' + kids.join(' ') + '] /Count ' + pages + ' >>'
+
+    var out = '%PDF-1.4\n', off = [], count = next
+    for(var i = 1; i < count; i++){
+      off[i] = out.length
+      out += i + ' 0 obj\n' + (typeof objs[i] === 'string'
+        ? objs[i]
+        : objs[i].dict + '\nstream\n' + objs[i].stream + '\nendstream') + '\nendobj\n'
+    }
+    var xref = out.length
+    out += 'xref\n0 ' + count + '\n0000000000 65535 f \n'
+    for(var j = 1; j < count; j++) out += ('0000000000' + off[j]).slice(-10) + ' 00000 n \n'
+    out += 'trailer\n<< /Size ' + count + ' /Root 1 0 R >>\nstartxref\n' + xref + '\n%%EOF'
+    var bytes = new Uint8Array(out.length)
+    for(var k = 0; k < out.length; k++) bytes[k] = out.charCodeAt(k) & 0xff
+    save(new Blob([bytes], { type: 'application/pdf' }), slug() + '.pdf')
+  }
+
   var exportBtn = document.getElementById('exportGraph');
   if(exportBtn) exportBtn.addEventListener('click', function(e){
     e.preventDefault();
-    exportPng();
+    exportPdf();
     setTimeout(exportCsv, 400);
   });
 

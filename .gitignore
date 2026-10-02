@@ -19,3 +19,5 @@ next-env.d.ts
 .claude/
 
 /3d-flip-book
+# Local email template previews (generated snapshots)
+/email-templates/
