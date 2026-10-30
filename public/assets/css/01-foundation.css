@@ -87,6 +87,26 @@ button{font:inherit;}
 .nl__l{display:flex;flex-direction:column;align-items:flex-start;}
 .nl__l .body{margin-bottom:0;}
 .nl__l .form-row{margin-top:0;margin-bottom:0;width:100%;}
+/* With a tile hidden (e.g. the podcast, set in the CMS), News & Lifestyle holds
+   the right-hand column, so its right edge stays on the module's right edge
+   rather than drifting to the middle. When both tiles are on show they fall
+   back to normal flow. */
+.nl-tiles > [hidden]{display:none!important;}
+.nl-tiles > .nl-tile:only-of-type,
+.nl-tiles > .nl-tile[hidden] ~ .nl-tile:not([hidden]),
+.nl-tiles:has(> .nl-tile[hidden]) > .nl-tile:not([hidden]){grid-column:2;}
+/* on a phone half a column is too small for the picture to read, so the lone
+   tile takes the full width instead; the selectors repeat the ones above so
+   they carry the same weight and win on order */
+@media (max-width:620px){
+  .nl-tiles > .nl-tile:only-of-type,
+  .nl-tiles > .nl-tile[hidden] ~ .nl-tile:not([hidden]),
+  .nl-tiles:has(> .nl-tile[hidden]) > .nl-tile:not([hidden]){grid-column:1 / -1;}
+  /* the forced break was there for a half-width tile; at full width the label fits on one line */
+  .nl-tiles > .nl-tile:only-of-type .br-m,
+  .nl-tiles > .nl-tile[hidden] ~ .nl-tile:not([hidden]) .br-m,
+  .nl-tiles:has(> .nl-tile[hidden]) > .nl-tile:not([hidden]) .br-m{display:none;}
+}
 .mw-720{max-width:720px;}.mw-620{max-width:620px;}
 .mx-auto{margin-left:auto;margin-right:auto;}
 .center{text-align:center;}

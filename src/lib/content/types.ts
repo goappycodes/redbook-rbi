@@ -141,18 +141,33 @@ export type NewshubContent = {
   placeholder: string
   buttonLabel: string
   successMessage: string
-  tiles: { image: string; alt?: string; label: string; body: string }[]
+  /** `hidden` keeps a tile in the CMS but off the page (e.g. a podcast not yet launched). */
+  tiles: { image: string; alt?: string; label: string; body: string; hidden?: boolean }[]
   /** When true, the journal list is pulled live from WordPress `press` posts. */
   journalFromWordpress: boolean
   journal: JournalEntry[]
 }
 
+/** Mirrors the RedBook Agency site footer. Field names are new (not the old
+ *  mark/groups/legal/tagline) so values saved for the previous footer can't
+ *  leak into this one. */
 export type FooterContent = {
-  tagline: string
-  /** Optional footer logo image. Empty keeps the built-in mark. */
-  mark: string
-  groups: { title: string; links: Link[] }[]
-  legal: string
+  /** Footer logo. Empty uses the RedBook red logo. */
+  logo: string
+  logoHref: string
+  newsletter: string
+  emailPlaceholder: string
+  followLabel: string
+  social: Link[]
+  brochuresLabel: string
+  brochures: Link[]
+  privacy: Link
+  /** Rendered as "© {current year} {copyright}". */
+  copyright: string
+  /** Small italic company line; a new line in the text breaks the line. */
+  company: string
+  /** The We Are Prime member badge, embedded from doslab. */
+  primeBadge: boolean
 }
 
 export type RequestModalContent = {

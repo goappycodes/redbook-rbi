@@ -37,7 +37,10 @@ export default function Flipbook() {
     return () => {
       document.removeEventListener('keydown', onKey)
       b.position = prev.pos; b.top = prev.top; b.width = prev.width; b.overflow = prev.bov; h.overflow = prev.hov
-      window.scrollTo(0, y)
+      /* 'instant': the page's scroll-behavior:smooth would otherwise animate
+         from the top back down to where the reader was - they should simply
+         be back where they left off */
+      window.scrollTo({ top: y, behavior: 'instant' })
     }
   }, [open])
 

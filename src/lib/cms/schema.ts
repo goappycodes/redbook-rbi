@@ -225,6 +225,10 @@ export const SECTIONS: SectionSchema[] = [
           { type: 'text', key: 'alt', label: 'Image alt text', help: 'Describes the image for screen readers. Leave empty if decorative.' },
           { type: 'textarea', key: 'label', label: 'Label', rows: 2, help: 'Press Enter where the label should break on phones only, so the two tiles stay aligned.' },
           { type: 'textarea', key: 'body', label: 'Body', rows: 2 },
+          {
+            type: 'checkbox', key: 'hidden', label: 'Hide this tile',
+            help: 'Keeps the tile here but off the page (e.g. until the podcast launches). With one tile hidden, the other stays in the right-hand column.',
+          },
         ],
       },
       {
@@ -298,24 +302,41 @@ export const SECTIONS: SectionSchema[] = [
   {
     key: 'footer',
     title: 'Footer',
-    description: 'Tagline, link groups and the company line.',
+    description: 'Matches the RedBook Agency site footer: newsletter, social and brochure links, and the company line.',
     fields: [
-      { type: 'text', key: 'tagline', label: 'Tagline' },
       {
-        type: 'image', key: 'mark', label: 'Logo',
-        help: 'Optional. Shown top-left of the footer, 40px tall on a dark background. Leave empty for the built-in mark.',
+        type: 'image', key: 'logo', label: 'Logo',
+        help: 'Optional. Shown top-left, 155px wide on the dark background. Leave empty for the RedBook red logo.',
       },
+      { type: 'text', key: 'logoHref', label: 'Logo link' },
+      { type: 'textarea', key: 'newsletter', label: 'Newsletter text', rows: 3, help: 'Above the email field. Sign-ups go to the RedBook Agency mailing list, as on the main site.' },
+      { type: 'text', key: 'emailPlaceholder', label: 'Email placeholder' },
+      { type: 'text', key: 'followLabel', label: 'Follow label' },
       {
-        type: 'list', key: 'groups', label: 'Link groups', itemName: 'group', summary: 'title', max: 2,
+        type: 'list', key: 'social', label: 'Social links', itemName: 'link', summary: 'label',
         fields: [
-          { type: 'text', key: 'title', label: 'Title' },
-          { type: 'list', key: 'links', label: 'Links', itemName: 'link', summary: 'label', fields: [
-            { type: 'text', key: 'label', label: 'Label' },
-            { type: 'text', key: 'href', label: 'Target', help: 'Leave empty for plain text.' },
-          ] },
+          { type: 'text', key: 'label', label: 'Label', help: 'Shown in capitals.' },
+          { type: 'text', key: 'href', label: 'Link' },
         ],
       },
-      { type: 'textarea', key: 'legal', label: 'Legal line', rows: 2, help: `Shown under the last group. ${BREAKS}` },
+      { type: 'text', key: 'brochuresLabel', label: 'Brochures label' },
+      {
+        type: 'list', key: 'brochures', label: 'Brochures', itemName: 'brochure', summary: 'label',
+        fields: [
+          { type: 'text', key: 'label', label: 'Label' },
+          { type: 'text', key: 'href', label: 'Link', help: 'Usually a PDF; opens in a new tab.' },
+        ],
+      },
+      {
+        type: 'group', key: 'privacy', label: 'Privacy link',
+        fields: [
+          { type: 'text', key: 'label', label: 'Label' },
+          { type: 'text', key: 'href', label: 'Link' },
+        ],
+      },
+      { type: 'text', key: 'copyright', label: 'Copyright holder', help: 'Shown as “© {current year} …”. The year updates itself.' },
+      { type: 'textarea', key: 'company', label: 'Company line', rows: 2, help: 'Small italic text under the copyright. Press Enter to start a new line.' },
+      { type: 'checkbox', key: 'primeBadge', label: 'Show the We Are Prime member badge' },
     ],
   },
   {

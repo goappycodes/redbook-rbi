@@ -179,6 +179,12 @@ html{scroll-padding-top:56px;}
 .cover--locked:hover,.cover--inert:hover{transform:none;box-shadow:none;background:var(--parch-2);}
 .cover--locked:hover .cover__img,.cover--inert:hover .cover__img{transform:none;}
 .cover--locked .cover__hint,.cover--inert .cover__hint{display:none;}
+/* greyed "Coming soon" placeholders that complete a short first row */
+.cover--soon{cursor:default;background:#ecebe9;}
+.cover--soon:hover{transform:none;box-shadow:none;background:#ecebe9;}
+.cover--soon .cover__plate{background:#dcdad7;}
+.cover--soon .cover__n,.cover--soon .cover__t{color:#a3a09c;}
+.cover--soon .cover__d{color:#b3b0ac;}
 .cover__lock{
   position:absolute;right:10px;top:10px;z-index:4;
   width:30px;height:30px;display:grid;place-items:center;border-radius:50%;
@@ -806,9 +812,56 @@ html.is-locked,html.is-locked body{overflow:hidden;}
 @media (max-width:620px){ .dlg__panel{padding:32px 24px 26px;} }
 
 /* ---------- footer ---------- */
-.wf-footer{background:var(--plum);color:var(--onDark);padding:90px 0 44px;}
-.wf-footer__mark{height:40px;width:auto;margin-bottom:26px;}
-.wf-footer a:hover{color:#fff;}
+/* ---------- footer: matches the RedBook Agency site footer -------------
+   Ported from the Appraisals site, which mirrors redbookagency.com exactly -
+   including its own Bootstrap-style widths (up to 1310px), so it lines up
+   with the main site's footer rather than this page's 1140px container. */
+.rb-footer{background:#2B0815;color:#fff;font-family:'Barlow',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;padding:40px 0 50px;margin-top:0;}
+.rb-footer__inner{width:100%;margin:0 auto;padding:0 20px;}
+.rb-footer__grid{display:flex;flex-wrap:wrap;margin-left:-20px;margin-right:-20px;}
+.rb-footer__col{width:100%;min-width:0;padding:0 20px;}
+.rb-footer__col:first-child{margin-bottom:40px;}
+.rb-footer__logo{display:block;width:155px;height:auto;}
+.rb-footer .rb-footer__blurb{font-size:18px;line-height:1.8;color:#fff;margin:40px 0;}
+.rb-footer__honeypot{display:none;}
+.rb-footer__field{position:relative;max-width:437px;}
+.rb-footer__field input{width:100%;height:48px;padding:0 50px 0 0;background:transparent;border:0;border-bottom:1px solid #fff;border-radius:0;color:#fff;font-family:inherit;font-size:14px;font-weight:500;line-height:21px;letter-spacing:3px;text-transform:uppercase;box-shadow:none;}
+.rb-footer__field input::placeholder{color:rgba(255,255,255,.7);}
+.rb-footer__field input:focus{outline:none;border-bottom-color:#C60C1D;}
+.rb-footer__submit{position:absolute;right:0;top:0;width:45px;height:48px;background:none;border:0;padding:0;cursor:pointer;}
+.rb-footer__submit span,.rb-footer__submit span::after,.rb-footer__submit span::before{content:"";position:absolute;display:block;background:#fff;height:1px;}
+.rb-footer__submit span{width:45px;right:0;top:50%;}
+.rb-footer__submit span::after,.rb-footer__submit span::before{width:7px;right:0;}
+.rb-footer__submit span::before{transform:rotate(45deg);transform-origin:right center;}
+.rb-footer__submit span::after{transform:rotate(-45deg);transform-origin:right center;}
+.rb-footer__submit:hover span,.rb-footer__submit:hover span::after,.rb-footer__submit:hover span::before{background:#C60C1D;}
+.rb-footer__row{font-size:14px;letter-spacing:.32px;line-height:1.5;margin-bottom:15px;}
+.rb-footer__row--brochures{font-size:16px;line-height:24px;letter-spacing:normal;}
+.rb-footer__col--right .rb-footer__row:last-child,.rb-footer__row--tight{margin-bottom:0;}
+.rb-footer__link{color:#fff;text-decoration:none;text-transform:uppercase;font-size:14px;letter-spacing:.32px;margin:0 10px;}
+.rb-footer__link--plain{text-transform:none;margin:0;}
+.rb-footer__link:hover{color:#C60C1D;}
+.rb-footer__dlink{color:#fff;text-decoration:underline;font-size:16px;}
+.rb-footer__dlink:hover{color:#C60C1D;}
+.rb-footer__pipe{padding:0 5px;}
+.rb-footer__legal{font-size:12px;font-style:italic;}
+.rb-footer__widget{width:100%;height:200px;}
+.rb-footer__widget iframe{width:100%;height:100%;border:none;display:block;}
+@media (min-width:576px){ .rb-footer__inner{max-width:540px;} }
+@media (min-width:768px){
+  .rb-footer{padding:80px 0 90px;}
+  .rb-footer__inner{max-width:720px;}
+  .rb-footer__grid{justify-content:space-between;}
+  .rb-footer__col{width:50%;}
+  .rb-footer__col:first-child{margin-bottom:0;}
+  .rb-footer__col--right{text-align:right;}
+  .rb-footer .rb-footer__blurb{margin:100px 0 40px;}
+  .rb-footer__row{margin-bottom:20px;}
+  .rb-footer__col--right .rb-footer__row:last-child,.rb-footer__row--tight{margin-bottom:0;}
+}
+@media (min-width:992px){ .rb-footer__inner{max-width:960px;} .rb-footer__col{width:41.6667%;} }
+@media (min-width:1200px){ .rb-footer__inner{max-width:1140px;} .rb-footer__col{width:33.3333%;} }
+@media (min-width:1360px){ .rb-footer__inner{max-width:1310px;} }
 
 /* ---------- responsive ---------- */
 @media (max-width:980px){

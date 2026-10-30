@@ -37,3 +37,16 @@ export const assetV = (p: string) => `${BASE_PATH}${p}?v=${ASSET_VERSION}`
 
 /** "#pillars" stays a page anchor; anything else is a link out. Empty means no link. */
 export const isExternal = (href: string) => /^https?:\/\//.test(href)
+
+/* A page on the RedBook Agency site (not a file such as a brochure PDF). These
+   open in the same tab, so the browser's Back returns the reader to RBi - a new
+   tab has no history to go back through (client feedback, Oct 2026). */
+export function isRedBookPage(href: string): boolean {
+  let u: URL
+  try { u = new URL(href) } catch { return false }
+  if (!/^(www\.)?redbookagency\.com$/i.test(u.hostname)) return false
+  return !/\.(pdf|docx?|xlsx?|pptx?|zip|jpe?g|png|gif|webp|mp4)$/i.test(u.pathname) && !u.pathname.startsWith('/wp-content/')
+}
+
+/* Off-site links open in a new tab - except RedBook Agency pages (see above). */
+export const opensInNewTab = (href: string) => isExternal(href) && !isRedBookPage(href)
