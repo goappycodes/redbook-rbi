@@ -107,4 +107,37 @@
       if(history.pushState) history.pushState(null, '', '#' + id);
     }
   });
+
+  /* Coming back from a RedBook page - the browser's Back, or an article's BACK
+     button, which steps back in history when the reader came from here. The
+     browser does restore the scroll position, but only once and early: if the
+     page isn't fully laid out by then it settles at the top. So the position is
+     kept as the page is left and re-applied once the page has loaded, briefly
+     re-checked while late images settle, and dropped the moment the reader
+     scrolls. A page restored whole from the back/forward cache needs none of
+     this - this script doesn't run again then. */
+  var LEFT_AT = 'rbi:leftAt:' + location.pathname + location.search;
+  window.addEventListener('pagehide', function(){
+    try { sessionStorage.setItem(LEFT_AT, String(Math.round(window.pageYOffset))); } catch(e){}
+  });
+  function restoreOnBack(){
+    var nav = (performance.getEntriesByType && performance.getEntriesByType('navigation')[0]) || {};
+    /* reload too: browsers keep the place on a reload as well, and a reload can
+       stand in for the Back (the dev server forces one, for instance) */
+    if((nav.type !== 'back_forward' && nav.type !== 'reload') || location.hash) return;
+    var y;
+    try { y = parseInt(sessionStorage.getItem(LEFT_AT), 10); } catch(e){ return; }
+    if(!(y > 0)) return;
+    jump(y);
+    var n = 0, done = false;
+    ['wheel','touchstart','pointerdown','keydown'].forEach(function(ev){
+      window.addEventListener(ev, function(){ done = true; }, { passive:true, once:true });
+    });
+    var iv = setInterval(function(){
+      if(done || ++n > 8){ clearInterval(iv); return; }
+      if(Math.abs(window.pageYOffset - y) > 2) jump(y);
+    }, 150);
+  }
+  if(document.readyState === 'complete') restoreOnBack();
+  else window.addEventListener('load', restoreOnBack);
 })();

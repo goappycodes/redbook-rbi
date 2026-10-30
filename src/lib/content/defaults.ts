@@ -43,7 +43,7 @@ export const DEFAULT_CONTENT: SiteContent = {
 
   hero: {
     eyebrow: 'RedBook Intelligence',
-    headline: 'Research,\ndata\n& tools',
+    headline: 'Tools,\nResearch,\n& Data',
     standfirst: 'The intelligence hub for luxury residential projects – built for you.',
     buttonLabel: 'Explore RedBook Intelligence',
     buttonHref: '#pillars',
@@ -66,7 +66,15 @@ export const DEFAULT_CONTENT: SiteContent = {
   pillars: {
     eyebrow: 'The intelligence hub',
     headline: 'RedBook Intelligence',
+    /* order follows the hero headline: Tools, Research, Data */
     cards: [
+      {
+        label: 'Tools',
+        body: 'Where the data stops being something to read about and becomes something you run against your own scheme.',
+        linkLabel: 'Open the tools',
+        href: '#tools',
+        icon: 'tools',
+      },
       {
         label: 'Research',
         body: 'Focused papers segmented by topic and by audience. Written to be read, not to be academic.',
@@ -80,13 +88,6 @@ export const DEFAULT_CONTENT: SiteContent = {
         linkLabel: 'See the index',
         href: '#index',
         icon: 'data',
-      },
-      {
-        label: 'Tools',
-        body: 'Where the data stops being something to read about and becomes something you run against your own scheme.',
-        linkLabel: 'Open the tools',
-        href: '#tools',
-        icon: 'tools',
       },
     ],
   },
@@ -168,7 +169,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     clearLabel: 'Clear all',
     baseColumnLabel: 'From base',
     exportLabel: 'Export your graph',
-    requestLabel: 'Request full index',
+    requestLabel: 'Contact for full index',
   },
 
   tools: {
@@ -228,40 +229,39 @@ export const DEFAULT_CONTENT: SiteContent = {
     ],
   },
 
+  /* matches the RedBook Agency site footer */
   footer: {
-    tagline: 'An intelligence hub of research, data and tools.',
-    mark: '',
-    groups: [
-      {
-        title: 'RedBook Intelligence',
-        links: [
-          { label: 'Reports', href: '#reports' },
-          { label: 'The Index', href: '#index' },
-          { label: 'Tools', href: '#tools' },
-          { label: 'Contribute data', href: '#exchange' },
-        ],
-      },
-      {
-        title: 'Follow',
-        links: [
-          { label: 'Instagram', href: '' },
-          { label: 'LinkedIn', href: '' },
-        ],
-      },
+    logo: '',
+    logoHref: 'https://redbookagency.com/',
+    newsletter: 'Subscribe to our monthly newsletter for insights, expertise & insider knowledge on luxury properties across the globe.',
+    emailPlaceholder: 'Email',
+    followLabel: 'Follow us on:',
+    social: [
+      { label: 'Instagram', href: 'https://www.instagram.com/redbookagency/' },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/company/redbook-agency' },
     ],
-    legal: 'Privacy Policy · © 2026 RedBook\nThe Red Book Agency Limited Trading As RedBook, No. 07534026',
+    brochuresLabel: "Download RedBook's Recent Brochures Here:",
+    brochures: [
+      { label: 'London', href: 'https://redbookagency.com/wp-content/uploads/2024/11/RedBook-Difference_London_web.pdf' },
+      { label: 'Commercial', href: 'https://redbookagency.com/wp-content/uploads/2024/11/RedBook-Difference_Commercial.pdf' },
+      { label: 'International', href: 'https://redbookagency.com/wp-content/uploads/2024/11/RedBook-Difference_Middle-East_Residential_web.pdf' },
+    ],
+    privacy: { label: 'Privacy Policy', href: 'https://redbookagency.com/privacy/' },
+    copyright: 'RedBook',
+    company: 'The Red Book Agency Limited Trading As RedBook,\nNo. 07534026',
+    primeBadge: true,
   },
 
   request: {
-    title: 'Request full index',
-    standfirst: 'Tell us who you are and we will send the current edition over.',
+    title: 'Contact for full index',
+    standfirst: 'Leave your details and a member of the team will be in touch about the full index.',
     firstName: 'First name',
     lastName: 'Last name',
     company: 'Company name',
     position: 'Position',
     email: 'Email address',
-    submitLabel: 'Send request',
-    successMessage: 'Thank you. We will send the index over shortly.',
+    submitLabel: 'Get in touch',
+    successMessage: 'Thank you, we will be in touch.',
   },
 
   notify: {

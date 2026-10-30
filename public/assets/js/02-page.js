@@ -551,8 +551,8 @@
     });
   }
 
-  /* ---------- export: the chart as drawn, and the table as CSV -----------
-     Both open, neither gated (09-decisions.md). One click saves both files. */
+  /* ---------- export: the chart as drawn, with its data, as a PDF ---------
+     One output only (client feedback, Oct 2026: no CSV). Open, not gated. */
   function regionLabel(){
     for(var i = 0; i < META.regions.length; i++) if(META.regions[i].key === region) return META.regions[i].label;
     return region;
@@ -562,20 +562,6 @@
     var url = URL.createObjectURL(blob), a = document.createElement('a');
     a.href = url; a.download = name; document.body.appendChild(a); a.click();
     setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1000);
-  }
-  function exportCsv(){
-    var head = document.querySelector('.stat-head');
-    var cols = head ? [].slice.call(head.children).slice(1).map(function(s){ return s.textContent.trim(); }) : ['Last year', 'From base'];
-    var q = function(v){ v = String(v == null ? '' : v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
-    var rows = [['Index', 'Region'].concat(READINGS, cols)];
-    /* the full dataset (every series), matching the PDF export - not just the plotted ones */
-    ORDER.forEach(function(key){
-      var d = SERIES[key][region];
-      rows.push([SERIES[key].label, regionLabel()]
-        .concat(d.a.map(function(v){ return v == null ? '' : v; }))
-        .concat([d.y == null ? '' : d.y.toFixed(1) + '%', d.b == null ? '' : d.b.toFixed(1) + '%']));
-    });
-    save(new Blob(['﻿' + rows.map(function(r){ return r.map(q).join(','); }).join('\r\n')], { type:'text/csv;charset=utf-8' }), slug() + '.csv');
   }
   /* The chart SVG as a bitmap, plus title, axis labels and a colour legend -
      the shared top of both the PNG (unused now) and the PDF. P/TOP/FOOT frame
@@ -720,7 +706,6 @@
   if(exportBtn) exportBtn.addEventListener('click', function(e){
     e.preventDefault();
     exportPdf();
-    setTimeout(exportCsv, 400);
   });
 
   /* ---------- the index tile settles itself -----------------------------
@@ -759,7 +744,12 @@
         /* only a decisive move is the reader; small drift is the page settling */
         if(expect !== null && Math.abs(y - expect) > 60){ stop(); return; }
         var left = target() - y;
-        if(Math.abs(left) < 1 || ts - t0 > 1600){ raf = null; gliding = false; return; }
+        if(Math.abs(left) < 1 || ts - t0 > 1600){
+          /* the tail is long, so time can run out a few pixels short - close
+             that last gap rather than leave a hairline of the next section */
+          if(Math.abs(left) >= 1 && Math.abs(left) < 30) window.scrollTo({ top: Math.round(y + left), behavior: 'instant' });
+          raf = null; gliding = false; return;
+        }
         var k = 0.11 * Math.min(1, (ts - t0) / 200);
         expect = Math.round(y + left * k);
         window.scrollTo({ top: expect, behavior: 'instant' });
@@ -771,11 +761,27 @@
     });
 
     function target(){
-      var top = navBottom(), vh = window.innerHeight;
+      var top = navBottom(), vh = window.innerHeight, y = window.pageYOffset;
       var r = tile.getBoundingClientRect(), room = vh - top;
-      return Math.max(0, (r.height <= room - 24)
-        ? r.top + window.pageYOffset - top - (room - r.height) / 2
-        : r.top + window.pageYOffset - top - 12);
+      var t = (r.height <= room - 24)
+        ? r.top + y - top - (room - r.height) / 2
+        : r.top + y - top - 12;
+      /* On a tall window, centring the tile leaves more space under it than the
+         section's own padding covers, and the white section below shows as a
+         band along the foot of the screen. The section's bottom edge is
+         therefore the furthest the settle may travel. Should the whole section
+         be shorter than the window, its foot is set on the foot of the screen,
+         so any spare space falls at the top, under the navigation, where it
+         reads as the gap between sections rather than as a fault. */
+      var sec = tile.closest('section');
+      if(sec){
+        var q = sec.getBoundingClientRect();
+        var secTop = q.top + y, secBot = q.bottom + y;
+        t = (q.height >= room)
+          ? Math.max(Math.min(t, secBot - vh), secTop - top)
+          : secBot - vh;
+      }
+      return Math.max(0, t);
     }
     /* Nothing happens while the reports list above is still in play. The gate
        is the rule under its last row (Contributor Report); once that has gone
@@ -841,7 +847,7 @@
   /* ---------- header: hide on scroll down, invert over dark ----------- */
   var header = document.getElementById('siteHeader');
   var bar = document.getElementById('scrollBar');
-  var darkZones = [].slice.call(document.querySelectorAll('.hero, .section--dark, .wf-footer'));
+  var darkZones = [].slice.call(document.querySelectorAll('.hero, .section--dark, .rb-footer'));
   var hero = document.getElementById('hero');
   var heroInner = hero && hero.querySelector('.hero__inner');
   var secNav = document.getElementById('secNav');
@@ -1011,14 +1017,14 @@
   function docTop(el){ var y = 0; while(el){ y += el.offsetTop; el = el.offsetParent; } return y; }
   function alignNewsletter(){
     var form  = document.querySelector('.nl__l .form-row');
-    var media = document.querySelector('.nl .media');
+    var media = document.querySelector('.nl .nl-tile:not([hidden]) .media');
     if(!form || !media) return;
     form.style.marginTop = '0px';
     if(window.innerWidth <= 980){ form.style.marginTop = '28px'; return; }  /* stacked */
     var need = (docTop(media) + media.offsetHeight) - (docTop(form) + form.offsetHeight);
     form.style.marginTop = Math.max(need, 0) + 'px';
   }
-  var nlImg = document.querySelector('.nl .media img');
+  var nlImg = document.querySelector('.nl .nl-tile:not([hidden]) .media img');
   if(nlImg && !nlImg.complete) nlImg.addEventListener('load', alignNewsletter);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(alignNewsletter);
   window.addEventListener('load', alignNewsletter);
@@ -1027,7 +1033,7 @@
      in, an image finally sizing, a heading rewrapping at a new width */
   if('ResizeObserver' in window){
     var nlRO = new ResizeObserver(function(){ alignNewsletter(); });
-    ['.nl .media', '.nl__l', '.nl__l h2'].forEach(function(sel){
+    ['.nl .nl-tile:not([hidden]) .media', '.nl__l', '.nl__l h2'].forEach(function(sel){
       var el = document.querySelector(sel);
       if(el) nlRO.observe(el);
     });

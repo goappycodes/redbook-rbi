@@ -21,3 +21,6 @@ next-env.d.ts
 /3d-flip-book
 # Local email template previews (generated snapshots)
 /email-templates/
+
+# Client feedback docs (local only)
+/docs/

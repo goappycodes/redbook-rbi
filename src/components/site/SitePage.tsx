@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties, type ReactNode } from 'react'
 import type { SiteContent } from '@/lib/content/types'
-import { asset, assetV, isExternal, mediaUrl, rt } from '@/lib/content/text'
+import { asset, assetV, mediaUrl, opensInNewTab, rt } from '@/lib/content/text'
 import { sinceLabel, type IndexPayload } from '@/lib/index-data'
 import { FLOW_FS, FLOW_VS } from './shaders'
 import LegacyScripts from './LegacyScripts'
@@ -26,7 +26,7 @@ function T({ as: Tag = 'span', html, ...rest }: { as?: 'p' | 'span' | 'h1' | 'h2
   return <Tag {...rest} dangerouslySetInnerHTML={{ __html: html }} />
 }
 
-function linkProps(href: string, newTab = isExternal(href)) {
+function linkProps(href: string, newTab = opensInNewTab(href)) {
   return newTab ? { href: href || '#', target: '_blank', rel: 'noopener' } : { href: href || '#' }
 }
 
@@ -505,9 +505,11 @@ function Newshub({ c }: { c: SiteContent }) {
             <EmailBar source="newshub" placeholder={n.placeholder} button={n.buttonLabel} ok={n.successMessage} reveal={3} />
           </div>
           <div className="span-6 pl-col">
-            <div className="grid g-2" style={{ gap: 24 }}>
+            {/* a hidden tile stays in the markup so the next one keeps the
+                right-hand column (02-page.css, .nl-tiles) */}
+            <div className="grid g-2 nl-tiles" style={{ gap: 24 }}>
               {n.tiles.map((tile, i) => (
-                <div data-reveal="" style={iv(i)} key={i}>
+                <div className="nl-tile" data-reveal="" style={iv(i)} key={i} hidden={tile.hidden || undefined}>
                   <div className="media media--1x1"><img src={mediaUrl(tile.image)} alt={tile.alt || ''} /></div>
                   <T as="p" className="tracked" style={{ margin: '16px 0 6px' }} html={rt(tile.label, { mobileBreaks: true })} />
                   <T as="p" className="small" html={rt(tile.body)} />
@@ -535,37 +537,77 @@ function Newshub({ c }: { c: SiteContent }) {
 }
 
 /* ================= FOOTER ================= */
+/* Mirrors the RedBook Agency site footer (and the Appraisals site's port of it),
+   so the group's sites share one footer. Newsletter sign-ups post to the same
+   RedBook mailing list (Directmail) the main site uses. */
+const DIRECTMAIL_ACTION = 'https://dm-mailinglist.com/subscribe'
+const DIRECTMAIL_FORM_ID = '6bb67903'
+const PRIME_BADGE = 'https://public.doslab.co.uk/embedded-prime-score?&member_id=8966557a-a275-4ffd-8f52-79f479120e42&darkmode=true'
+const ext = { target: '_blank', rel: 'noopener' } as const
+
 function Footer({ c }: { c: SiteContent }) {
   const f = c.footer
-  const last = f.groups.length - 1
+  const year = new Date().getFullYear()
+  const company = (f.company || '').split('\n').map((s) => s.trim()).filter(Boolean)
   return (
-    <footer className="wf-footer">
-      <div className="container">
-        <div className="grid g-12" style={{ gap: '40px 20px' }}>
-          <div className="span-4">
-            <img className="wf-footer__mark" src={f.mark ? mediaUrl(f.mark) : asset('/assets/img/footer-mark.png')} alt="RedBook Intelligence" />
-            <T as="p" className="small" style={{ color: 'var(--onDark-45)' }} html={rt(f.tagline)} />
+    <footer className="rb-footer">
+      <div className="rb-footer__inner">
+        <div className="rb-footer__grid">
+          <div className="rb-footer__col">
+            <a href={f.logoHref || 'https://redbookagency.com/'} className="rb-footer__logolink">
+              <img className="rb-footer__logo" src={f.logo ? mediaUrl(f.logo) : asset('/assets/img/redbook-logo-red.svg')} alt="RedBook" width={155} height={30} />
+            </a>
+            {f.newsletter && <p className="rb-footer__blurb">{f.newsletter}</p>}
+            <form className="rb-footer__form" action={DIRECTMAIL_ACTION} method="post" acceptCharset="UTF-8" target="_blank">
+              <input type="hidden" name="form_id" value={DIRECTMAIL_FORM_ID} />
+              <input type="email" name="email" className="rb-footer__honeypot" tabIndex={-1} aria-hidden="true" />
+              <div className="rb-footer__field">
+                <input type="email" name="subscriber_email" placeholder={f.emailPlaceholder || 'Email'} aria-label="Email address" required />
+                <button type="submit" className="rb-footer__submit" aria-label="Subscribe"><span /></button>
+              </div>
+            </form>
           </div>
-          {f.groups.map((g, gi) => (
-            <div className="span-4" key={gi}>
-              <T as="p" className="tracked" style={{ marginBottom: 14 }} html={rt(g.title)} />
-              <p className="small" style={{ color: 'var(--onDark-70)' }}>
-                {g.links.map((l, i) => (
-                  <span key={i}>
-                    {i > 0 && ' · '}
-                    {l.href ? (
-                      <a {...linkProps(l.href)} style={{ color: 'inherit', textDecoration: 'none' }}>{l.label}</a>
-                    ) : (
-                      l.label
-                    )}
-                  </span>
+          <div className="rb-footer__col rb-footer__col--right">
+            {f.social.length > 0 && (
+              <div className="rb-footer__row">
+                {f.followLabel}{' '}
+                {f.social.map((l, i) => (
+                  <Fragment key={i}>
+                    <a className="rb-footer__link" href={l.href || '#'} {...ext}>{l.label}</a>{i < f.social.length - 1 && ' '}
+                  </Fragment>
                 ))}
-              </p>
-              {gi === last && f.legal && (
-                <T as="p" className="small" style={{ marginTop: 20, color: 'var(--onDark-45)' }} html={rt(f.legal)} />
+              </div>
+            )}
+            {f.brochures.length > 0 && (
+              <>
+                <div className="rb-footer__row rb-footer__row--tight">{f.brochuresLabel}</div>
+                <div className="rb-footer__row rb-footer__row--brochures">
+                  {f.brochures.map((l, i) => (
+                    <Fragment key={i}>
+                      <a className="rb-footer__dlink" href={l.href || '#'} {...ext}>{l.label}</a>{i < f.brochures.length - 1 && ', '}
+                    </Fragment>
+                  ))}
+                </div>
+              </>
+            )}
+            <div className="rb-footer__row">
+              {f.privacy?.label && (
+                <>
+                  <a className="rb-footer__link rb-footer__link--plain" href={f.privacy.href || '#'} {...ext}>{f.privacy.label}</a>
+                  <span className="rb-footer__pipe">|</span>
+                </>
+              )}
+              © {year} {f.copyright}
+              {company.map((line, i) => (
+                <span className="rb-footer__legal" key={i}><br />{line}</span>
+              ))}
+              {f.primeBadge && (
+                <div className="rb-footer__widget">
+                  <iframe src={PRIME_BADGE} title="RedBook prime score" scrolling="no" loading="lazy" />
+                </div>
               )}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </footer>
